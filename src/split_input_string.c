@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/04 20:16:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 14:48:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,25 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	return ;
 }
 
-t_list			**split_input_string(char *input_string)
+static char		*string_for_converter(char *start_ptr, t_converter **converter_array)
+{
+	char			*end_ptr;
+	int				i;
+	char			*char_string;
+
+	char_string = (char *)ft_strnew(sizeof(*char_string) * NUM_OF_CONVERTERS);
+	i = 0;
+	while (i < NUM_OF_CONVERTERS)
+	{
+		char_string[i] = converter_array[i]->character;
+		i++;
+	}
+	end_ptr = ft_strchr(start_ptr, char_string[0]);
+	return (end_ptr);
+}
+
+t_list			**split_input_string(char *input_string,
+		t_converter **converter_array)
 {
 	char			*start_ptr;
 	char			*end_ptr;
@@ -48,7 +66,7 @@ t_list			**split_input_string(char *input_string)
 		start_ptr = end_ptr;
 		if (start_ptr)
 		{
-			end_ptr = ft_strchr(start_ptr, 'd');
+			end_ptr = string_for_converter(start_ptr, converter_array);
 			save_substring(list, start_ptr, end_ptr + 1);
 		}
 		start_ptr = end_ptr;

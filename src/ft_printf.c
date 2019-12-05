@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/04 20:06:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 14:59:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ int				ft_printf(const char *restrict format, ...)
 	t_list			**list;
 	t_list			*elem;
 	int				max_num_attrs;
+	t_converter		**converter_array;
 
+	converter_array = create_converters();
 	max_num_attrs = 190;
 	attrs = 0;
 	input_string = (char *)format;
-	list = split_input_string(input_string);
+	list = split_input_string(input_string, converter_array);
 	elem = *list;
 	while (elem)
 	{
@@ -33,6 +35,7 @@ int				ft_printf(const char *restrict format, ...)
 		elem = elem->next;
 	}
 	va_start(ap, format);
+	converter_array[0]->function(&ap);
 /*
 	while (*format && attrs <= max_num_attrs)
 	{
