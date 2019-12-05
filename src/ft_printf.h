@@ -6,22 +6,23 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/05 16:11:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 16:58:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stdarg.h>
 # include "libft.h"
+# include <stdarg.h>
+# include <stdlib.h>
 
-# define NUM_OF_CONVERTERS 1
+# define NUM_OF_CONVERTERS 2
 
 struct						s_converter
 {
 	char		character;
-	char		(*function)(va_list *);
+	void		*(*function_ptr)(va_list *);
 };
 
 typedef struct s_converter		t_converter;

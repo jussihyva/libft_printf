@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/05 16:11:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 16:58:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int				ft_printf(const char *restrict format, ...)
 	t_list			*elem;
 	int				max_num_attrs;
 	t_converter		**converter_array;
+	int				tmp1;
+	char			*tmp2;
 
 	converter_array = create_converters();
 	max_num_attrs = 190;
@@ -35,7 +37,10 @@ int				ft_printf(const char *restrict format, ...)
 		elem = elem->next;
 	}
 	va_start(ap, format);
-	ft_putchar(converter_array[0]->function(&ap));
+	tmp1 = (int)converter_array[0]->function_ptr(&ap);
+	ft_putchar(tmp1);
+	tmp2 = (char *)converter_array[1]->function_ptr(&ap);
+	ft_putstr(tmp2);
 /*
 	while (*format && attrs <= max_num_attrs)
 	{
