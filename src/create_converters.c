@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/05 14:59:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 16:11:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_converter		**create_converters()
 			NUM_OF_CONVERTERS);
 	converter = (t_converter *)ft_memalloc(sizeof(*converter));
 	converter->character = 'c';
-	converter->function = (void *)conv_character;
+	converter->function = conv_character;
 	converter_array[0] = converter;
 	return (converter_array);
 }

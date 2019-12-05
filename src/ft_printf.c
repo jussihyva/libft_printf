@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/05 14:59:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/05 16:11:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				ft_printf(const char *restrict format, ...)
 		elem = elem->next;
 	}
 	va_start(ap, format);
-	converter_array[0]->function(&ap);
+	ft_putchar(converter_array[0]->function(&ap));
 /*
 	while (*format && attrs <= max_num_attrs)
 	{
