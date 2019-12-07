@@ -6,11 +6,11 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 10:42:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 11:02:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 static int			conv_character(va_list *ap)
 {
@@ -32,7 +32,7 @@ static t_converter	*create_converter(void *function, char character)
 	return (converter);
 }
 
-t_converter			**create_converters()
+t_converter			**create_converters(void)
 {
 	t_converter		**converter_array;
 

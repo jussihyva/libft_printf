@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 10:44:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 11:28:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,48 +31,59 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	return ;
 }
 
-static char		*string_for_converter(char *start_ptr, t_converter **converter_array)
+static char		*create_chars_string(t_converter **converter_list)
 {
-	char			*end_ptr;
+	char			*chars_string;
 	int				i;
-	char			*char_string;
 
-	char_string = (char *)ft_strnew(sizeof(*char_string) * NUM_OF_CONVERTERS);
+	chars_string = (char *)ft_strnew(sizeof(*chars_string) *
+						NUM_OF_CONVERTERS);
 	i = 0;
 	while (i < NUM_OF_CONVERTERS)
 	{
-		char_string[i] = converter_array[i]->character;
+		chars_string[i] = converter_list[i]->character;
 		i++;
 	}
-	end_ptr = ft_strchr(start_ptr, char_string[0]);
-	ft_strdel(&char_string);
+	chars_string[i] = '\0';
+	return (chars_string);
+}
+
+static char		*string_for_converter(char *start_ptr,
+					char *chars_string)
+{
+	char			*end_ptr;
+
+	end_ptr = start_ptr;
+	while (*end_ptr && !ft_strchr(chars_string, *end_ptr))
+		end_ptr++;
 	return (end_ptr);
 }
 
 t_list			**split_input_string(char *input_string,
-		t_converter **converter_array)
+		t_converter **converter_list)
 {
 	char			*start_ptr;
 	char			*end_ptr;
-	t_list			**list;
+	t_list			**substring_list;
+	char			*chars_string;
 
-	list = (t_list **)ft_memalloc(sizeof(*list));
+	chars_string = create_chars_string(converter_list);
+	substring_list = (t_list **)ft_memalloc(sizeof(*substring_list));
 	start_ptr = input_string;
 	while (start_ptr && *start_ptr)
 	{
 		end_ptr = ft_strchr(start_ptr, '%');
-		while (end_ptr && *(end_ptr + 1) == '%')
-			end_ptr = ft_strchr(end_ptr + 2, '%');
-		save_substring(list, start_ptr, end_ptr);
+		save_substring(substring_list, start_ptr, end_ptr);
 		start_ptr = end_ptr;
 		if (start_ptr)
 		{
-			end_ptr = string_for_converter(start_ptr, converter_array);
-			save_substring(list, start_ptr, end_ptr + 1);
+			end_ptr = string_for_converter(start_ptr, chars_string);
+			save_substring(substring_list, start_ptr, end_ptr + 1);
 		}
 		start_ptr = end_ptr;
 		if (start_ptr)
 			start_ptr += 1;
 	}
-	return (list);
+	ft_strdel(&chars_string);
+	return (substring_list);
 }
