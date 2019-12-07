@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 11:28:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 13:07:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	t_substring		*substring_elem;
 
 	if (!end_ptr)
-		end_ptr = start_ptr + ft_strlen(start_ptr);
+		end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
+	end_ptr++;
 	substring = (char *)ft_strnew(sizeof(*substring) * (end_ptr - start_ptr));
 	substring = strncpy(substring, start_ptr, end_ptr - start_ptr);
 	substring_elem = (t_substring *)ft_memalloc(sizeof(*substring_elem));
@@ -73,12 +74,13 @@ t_list			**split_input_string(char *input_string,
 	while (start_ptr && *start_ptr)
 	{
 		end_ptr = ft_strchr(start_ptr, '%');
-		save_substring(substring_list, start_ptr, end_ptr);
+		if (input_string != end_ptr)
+			save_substring(substring_list, start_ptr, end_ptr);
 		start_ptr = end_ptr;
-		if (start_ptr)
+		if (start_ptr && *start_ptr)
 		{
-			end_ptr = string_for_converter(start_ptr, chars_string);
-			save_substring(substring_list, start_ptr, end_ptr + 1);
+			end_ptr = string_for_converter(start_ptr + 1, chars_string);
+			save_substring(substring_list, start_ptr, end_ptr);
 		}
 		start_ptr = end_ptr;
 		if (start_ptr)

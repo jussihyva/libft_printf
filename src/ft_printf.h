@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/05 16:58:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 12:14:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 
-# define NUM_OF_CONVERTERS 2
+# define NUM_OF_CONVERTERS 4
 
 struct						s_converter
 {
