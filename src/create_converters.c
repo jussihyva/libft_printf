@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 14:00:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 17:23:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ void				add_converter(t_substring *substring,
 		if (character == converter_list[i]->character)
 			substring->converter = converter_list[i];
 	}
+}
+
+void				convert_substring(t_substring *substring, va_list *ap)
+{
+	(void)ap;
+	if (!substring->converter || substring->converter->character == '%')
+		substring->output_string = substring->input_string;
+	else
+		substring->output_string = ft_strnew(0);
+	return ;
 }
 
 static void			no_conv(va_list *ap)

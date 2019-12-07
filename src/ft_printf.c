@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 14:06:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 17:21:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int				ft_printf(const char *restrict format, ...)
 	attrs = 0;
 	input_string = (char *)format;
 	list = split_input_string(input_string, converter_list);
+	va_start(ap, format);
 	elem = *list;
 	while (elem)
 	{
 		substring = (t_substring *)(elem->content);
 		add_converter(substring, converter_list);
+		convert_substring(substring, &ap);
 		ft_putstr(substring->input_string);
 		ft_putstr("  ");
 		if (substring->converter)
@@ -44,7 +46,15 @@ int				ft_printf(const char *restrict format, ...)
 		ft_putchar('\n');
 		elem = elem->next;
 	}
-	va_start(ap, format);
+	elem = *list;
+	while (elem)
+	{
+		substring = (t_substring *)(elem->content);
+		if (substring->output_string)
+			ft_putstr(substring->output_string);
+		elem = elem->next;
+	}
+	ft_putchar('\n');
 //	tmp1 = (int)converter_list[0]->function_ptr(&ap);
 //	ft_putchar(tmp1);
 //	tmp2 = (char *)converter_array[1]->function_ptr(&ap);

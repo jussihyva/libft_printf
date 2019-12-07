@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 13:52:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 17:10:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ t_list			**split_input_string(char *input_string,
 t_converter		**create_converters();
 void			add_converter(t_substring *substring,
 							t_converter **converter_list);
+void			convert_substring(t_substring *substring, va_list *ap);
 
 #endif
