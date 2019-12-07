@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 12:13:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 14:06:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,33 @@ int				ft_printf(const char *restrict format, ...)
 	t_list			**list;
 	t_list			*elem;
 	int				max_num_attrs;
-	t_converter		**converter_array;
-	int				tmp1;
+	t_converter		**converter_list;
+	t_substring 	*substring;
+//	int				tmp1;
 //	char			*tmp2;
 
-	converter_array = create_converters();
+	converter_list = create_converters();
 	max_num_attrs = 190;
 	attrs = 0;
 	input_string = (char *)format;
-	list = split_input_string(input_string, converter_array);
+	list = split_input_string(input_string, converter_list);
 	elem = *list;
 	while (elem)
 	{
-		ft_putstr(((t_substring *)(elem->content))->input_string);
+		substring = (t_substring *)(elem->content);
+		add_converter(substring, converter_list);
+		ft_putstr(substring->input_string);
+		ft_putstr("  ");
+		if (substring->converter)
+			ft_putchar((substring->converter)->character);
+		else
+			ft_putstr("null");
 		ft_putchar('\n');
 		elem = elem->next;
 	}
 	va_start(ap, format);
-	tmp1 = (int)converter_array[0]->function_ptr(&ap);
-	ft_putchar(tmp1);
+//	tmp1 = (int)converter_list[0]->function_ptr(&ap);
+//	ft_putchar(tmp1);
 //	tmp2 = (char *)converter_array[1]->function_ptr(&ap);
 //	ft_putstr(tmp2);
 /*

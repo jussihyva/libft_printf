@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 12:14:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/07 13:52:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ typedef struct s_converter		t_converter;
 struct						s_substring
 {
 	char			*input_string;
-	t_converter		converter;
+	t_converter		*converter;
 	char			*output_string;
 };
 
 typedef struct s_substring		t_substring;
 
-t_list						**split_input_string(char *input_string,
-									t_converter **converter_array);
-t_converter					**create_converters();
+t_list			**split_input_string(char *input_string,
+							t_converter **converter_array);
+t_converter		**create_converters();
+void			add_converter(t_substring *substring,
+							t_converter **converter_list);
 
 #endif
