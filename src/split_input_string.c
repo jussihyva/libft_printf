@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_input_string.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 16:45:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 11:43:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,23 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	return ;
 }
 
-static char		*create_chars_string(t_converter **converter_list)
+static char		*create_chars_string(t_list **converter_list)
 {
 	char			*chars_string;
 	int				i;
+	t_list			*elem;
 
-	chars_string = (char *)ft_strnew(sizeof(*chars_string) *
-						NUM_OF_CONVERTERS);
 	i = 0;
-	while (i < NUM_OF_CONVERTERS)
+	elem = *converter_list;
+	while (elem && ++i)
+		elem = elem->next;
+	chars_string = (char *)ft_strnew(sizeof(*chars_string) * i);
+	i = 0;
+	elem = *converter_list;
+	while (elem)
 	{
-		chars_string[i] = converter_list[i]->character;
-		i++;
+		chars_string[i++] = ((t_converter *)(elem->content))->character;
+		elem = elem->next;
 	}
 	chars_string[i] = '\0';
 	return (chars_string);
@@ -62,8 +67,8 @@ static char		*string_for_converter(char *start_ptr,
 	return (end_ptr);
 }
 
-t_list			**split_input_string(char *input_string,
-		t_converter **converter_list)
+t_list			**split_string(char *input_string,
+		t_list **converter_list)
 {
 	char			*start_ptr;
 	char			*end_ptr;
