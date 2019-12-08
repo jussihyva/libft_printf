@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 17:21:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 09:06:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int				ft_printf(const char *restrict format, ...)
 	int				max_num_attrs;
 	t_converter		**converter_list;
 	t_substring 	*substring;
-//	int				tmp1;
-//	char			*tmp2;
 
 	converter_list = create_converters();
 	max_num_attrs = 190;
@@ -55,21 +53,6 @@ int				ft_printf(const char *restrict format, ...)
 		elem = elem->next;
 	}
 	ft_putchar('\n');
-//	tmp1 = (int)converter_list[0]->function_ptr(&ap);
-//	ft_putchar(tmp1);
-//	tmp2 = (char *)converter_array[1]->function_ptr(&ap);
-//	ft_putstr(tmp2);
-/*
-	while (*format && attrs <= max_num_attrs)
-	{
-		attrs++;
-		nbr = (int)va_arg(ap, int *);
-		ft_putnbr(chars);
-		ft_putchar(' ');
-		ft_putnbr(nbr);
-		ft_putchar('\n');
-	}
-*/
 	va_end(ap);
 	return (attrs);
 }

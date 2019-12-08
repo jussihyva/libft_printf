@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_converters.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 17:23:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 09:05:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,40 @@ void				add_converter(t_substring *substring,
 void				convert_substring(t_substring *substring, va_list *ap)
 {
 	(void)ap;
-	if (!substring->converter || substring->converter->character == '%')
+	if (!substring->converter || !substring->converter->function_ptr)
 		substring->output_string = substring->input_string;
 	else
-		substring->output_string = ft_strnew(0);
+		substring->output_string = substring->converter->function_ptr(ap, substring->input_string);
 	return ;
 }
 
-static void			no_conv(va_list *ap)
+static char			*no_conv(va_list *ap, char *input_string)
 {
 	(void)ap;
-	return ;
+	input_string[ft_strlen(input_string) - 1] = '\0';
+	return (input_string);
 }
 
-static int			conv_character(va_list *ap)
+static char			*conv_character(va_list *ap, char *input_string)
 {
-	return (va_arg(*ap, int));
+	char		*s;
+
+	(void)input_string;
+	s = ft_strnew(1);
+	s[0] = (char)va_arg(*ap, int);
+	return (s);
 }
 
-static char			*conv_string(va_list *ap)
+static char			*conv_string(va_list *ap, char *input_string)
 {
+	(void)input_string;
 	return (va_arg(*ap, char *));
+}
+
+static char			*conv_pointer(va_list *ap, char *input_string)
+{
+	(void)input_string;
+	return (ft_itoa(va_arg(*ap, long long)));
 }
 
 static t_converter	*create_converter(void *function, char character)
@@ -75,6 +88,6 @@ t_converter			**create_converters(void)
 	converter_list[0] = create_converter((void *)no_conv, '%');
 	converter_list[1] = create_converter((void *)conv_character, 'c');
 	converter_list[2] = create_converter((void *)conv_string, 's');
-	converter_list[3] = create_converter((void *)conv_string, 'p');
+	converter_list[3] = create_converter((void *)conv_pointer, 'p');
 	return (converter_list);
 }

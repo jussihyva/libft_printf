@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkauppi <jkauppi@hive.fi>                  +#+  +:+       +#+        */
+/*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/07 17:10:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 08:26:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 struct						s_converter
 {
 	char		character;
-	void		*(*function_ptr)(va_list *);
+	void		*(*function_ptr)(va_list *, char *input_string);
 };
 
 typedef struct s_converter		t_converter;
