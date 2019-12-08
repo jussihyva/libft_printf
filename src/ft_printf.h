@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/08 12:37:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 16:13:12 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,6 @@ void				add_converter(t_substring *substring,
 										t_list **converter_list);
 int					convert_substrings(t_list **list, va_list *ap,
 												t_list **converter_list);
+char				*ft_ultoa_base(long nbr, int base);
+
 #endif

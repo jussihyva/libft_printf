@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/08 12:36:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 16:05:37 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,14 @@ static char			*conv_string(va_list *ap, char *input_string, int *attrs)
 
 static char			*conv_pointer(va_list *ap, char *input_string, int *attrs)
 {
+	uintptr_t		ptr;
+	char			*s;
+
 	(void)input_string;
 	(*attrs)++;
-	return (ft_itoa(va_arg(*ap, long long)));
+	ptr = (uintptr_t)(va_arg(*ap, void *));
+	s = ft_ultoa_base(ptr, 16);
+	return (s);
 }
 
 static t_list		*create_converter(void *function, char character)
