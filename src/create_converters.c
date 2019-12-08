@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/08 11:45:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/08 12:36:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,43 +33,74 @@ void				add_converter(t_substring *substring,
 	}
 }
 
-void				convert_substring(t_substring *substring, va_list *ap)
+static void			convert_substring(t_substring *substring, va_list *ap, int *attrs)
 {
-	(void)ap;
 	if (!substring->converter || !substring->converter->function_ptr)
 		substring->output_string = substring->input_string;
 	else
 		substring->output_string =
-			substring->converter->function_ptr(ap, substring->input_string);
+			substring->converter->function_ptr(ap, substring->input_string, attrs);
 	return ;
 }
 
-static char			*no_conv(va_list *ap, char *input_string)
+int					convert_substrings(t_list **list, va_list *ap,
+											t_list **converter_list)
+{
+	t_list			*elem;
+	t_substring		*substring;
+	int				attrs;
+	int				max_num_attrs;
+
+	max_num_attrs = 190;
+	attrs = 0;
+	elem = *list;
+	while (elem)
+	{
+		substring = (t_substring *)(elem->content);
+		add_converter(substring, converter_list);
+		convert_substring(substring, ap, &attrs);
+		ft_putstr(substring->input_string);
+		ft_putstr("  ");
+		if (substring->converter)
+			ft_putchar((substring->converter)->character);
+		else
+			ft_putstr("null");
+		ft_putchar('\n');
+		elem = elem->next;
+	}
+	return (attrs);
+}
+
+static char			*no_conv(va_list *ap, char *input_string, int *attrs)
 {
 	(void)ap;
+	(void)*attrs;
 	input_string[ft_strlen(input_string) - 1] = '\0';
 	return (input_string);
 }
 
-static char			*conv_character(va_list *ap, char *input_string)
+static char			*conv_character(va_list *ap, char *input_string, int *attrs)
 {
 	char		*s;
 
 	(void)input_string;
+	(*attrs)++;
 	s = ft_strnew(1);
 	s[0] = (char)va_arg(*ap, int);
 	return (s);
 }
 
-static char			*conv_string(va_list *ap, char *input_string)
+static char			*conv_string(va_list *ap, char *input_string, int *attrs)
 {
 	(void)input_string;
+	(*attrs)++;
 	return (va_arg(*ap, char *));
 }
 
-static char			*conv_pointer(va_list *ap, char *input_string)
+static char			*conv_pointer(va_list *ap, char *input_string, int *attrs)
 {
 	(void)input_string;
+	(*attrs)++;
 	return (ft_itoa(va_arg(*ap, long long)));
 }
 
