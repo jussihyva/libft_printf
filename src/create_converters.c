@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 13:31:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 13:45:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,36 @@ static char			*conv_unsigned_int(va_list *ap, char *input_string,
 	return (s);
 }
 
+static char			*conv_unsigned_hex(va_list *ap, char *input_string,
+											int *attrs)
+{
+	unsigned int	nbr;
+	char			*s;
+
+	(void)input_string;
+	(*attrs)++;
+	nbr = (unsigned int)(va_arg(*ap, void *));
+	s = ft_ltoa_base(nbr, 16);
+	return (s);
+}
+
+static char			*conv_unsigned_hex_up(va_list *ap, char *input_string,
+											int *attrs)
+{
+	unsigned int	nbr;
+	char			*s;
+	int				i;
+
+	(void)input_string;
+	(*attrs)++;
+	nbr = (unsigned int)(va_arg(*ap, void *));
+	s = ft_ltoa_base(nbr, 16);
+	i = -1;
+	while (*(s + ++i))
+		*(s + i) = ft_toupper(*(s + i));
+	return (s);
+}
+
 static t_list		*new_conv(void *function, char character)
 {
 	t_converter		*converter;
@@ -177,7 +207,7 @@ t_list				**create_converters(void)
 	ft_lstadd_e(converter_list, new_conv((void *)conv_int, 'i'));
 	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_octal, 'o'));
 	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_int, 'u'));
-	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex, 'x'));
-	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex_up, 'X'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex, 'x'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex_up, 'X'));
 	return (converter_list);
 }
