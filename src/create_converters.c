@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 16:08:08 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 18:22:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void			convert_substring(t_substring *substring, va_list *ap,
 											int *attrs)
 {
 	if (!substring->converter || !substring->converter->function_ptr)
-		substring->output_string = substring->input_string;
+		substring->output_string = ft_strdup(substring->input_string);
 	else
 		substring->output_string = substring->converter->function_ptr(ap,
 									substring->input_string, attrs);
@@ -79,7 +79,7 @@ static char			*no_conv(va_list *ap, char *input_string, int *attrs)
 	(void)ap;
 	(void)*attrs;
 	input_string[ft_strlen(input_string) - 1] = '\0';
-	return (input_string);
+	return (ft_strdup(input_string));
 }
 
 static char			*conv_character(va_list *ap, char *input_string, int *attrs)
@@ -97,19 +97,22 @@ static char			*conv_string(va_list *ap, char *input_string, int *attrs)
 {
 	(void)input_string;
 	(*attrs)++;
-	return (va_arg(*ap, char *));
+	return (ft_strdup(va_arg(*ap, char *)));
 }
 
 static char			*conv_pointer(va_list *ap, char *input_string, int *attrs)
 {
 	uintptr_t		ptr;
+	char			*ptr_string;
 	char			*s;
 
 	(void)input_string;
 	(*attrs)++;
 	ptr = (uintptr_t)(va_arg(*ap, void *));
-	s = ft_ltoa_base(ptr, 16);
-	return (ft_strjoin("0x", s));
+	ptr_string = ft_ltoa_base(ptr, 16);
+	s = ft_strjoin("0x", ptr_string);
+	ft_strdel(&ptr_string);
+	return (s);
 }
 
 static char			*conv_int(va_list *ap, char *input_string, int *attrs)
