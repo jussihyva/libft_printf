@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/08 16:05:37 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 12:46:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ void				add_converter(t_substring *substring,
 	}
 }
 
-static void			convert_substring(t_substring *substring, va_list *ap, int *attrs)
+static void			convert_substring(t_substring *substring, va_list *ap,
+											int *attrs)
 {
 	if (!substring->converter || !substring->converter->function_ptr)
 		substring->output_string = substring->input_string;
 	else
-		substring->output_string =
-			substring->converter->function_ptr(ap, substring->input_string, attrs);
+		substring->output_string = substring->converter->function_ptr(ap,
+									substring->input_string, attrs);
 	return ;
 }
 
@@ -59,6 +60,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 		substring = (t_substring *)(elem->content);
 		add_converter(substring, converter_list);
 		convert_substring(substring, ap, &attrs);
+/*
 		ft_putstr(substring->input_string);
 		ft_putstr("  ");
 		if (substring->converter)
@@ -66,6 +68,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 		else
 			ft_putstr("null");
 		ft_putchar('\n');
+*/
 		elem = elem->next;
 	}
 	return (attrs);
@@ -105,7 +108,7 @@ static char			*conv_pointer(va_list *ap, char *input_string, int *attrs)
 	(void)input_string;
 	(*attrs)++;
 	ptr = (uintptr_t)(va_arg(*ap, void *));
-	s = ft_ultoa_base(ptr, 16);
+	s = ft_ltoa_base(ptr, 16);
 	return (s);
 }
 

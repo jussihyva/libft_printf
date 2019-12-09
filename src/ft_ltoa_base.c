@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultoa_base.c                                    :+:      :+:    :+:   */
+/*   ft_ltoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 15:59:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/08 16:35:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 12:48:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int				count_chars(unsigned long nbr, int base)
 {
 	int		c;
 
-	c = 0;
+	c = 1;
 	while (nbr /= base)
 		c++;
 	return (c);
@@ -30,19 +30,17 @@ static unsigned long	unsign(long nbr, int neg)
 		return (unsigned long)(nbr);
 }
 
-static char				*long_to_string(long nbr, int base, int neg, char *s)
+static char				*long_to_string(long nbr, int base, int index, char *s)
 {
 	static char		*letter = "0123456789abcdef";
 
-	if ((nbr / base) >= base)
-		long_to_string(nbr / base, base, neg, s);
-	if (neg && !ft_strlen(s))
-		s[0] = '-';
-	s[ft_strlen(s)] = letter[nbr % base];
+	if (nbr >= base)
+		long_to_string(nbr / base, base, index - 1, s);
+	s[index] = letter[nbr % base];
 	return (s);
 }
 
-char					*ft_ultoa_base(long nbr, int base)
+char					*ft_ltoa_base(long nbr, int base)
 {
 	char			*s;
 	int				neg;
@@ -55,6 +53,8 @@ char					*ft_ultoa_base(long nbr, int base)
 	un_nbr = unsign(nbr, neg);
 	num_of_chars = count_chars(un_nbr, base);
 	s = (char *)ft_strnew(sizeof(*s) * (num_of_chars + neg));
-	s = long_to_string(nbr, base, neg, s);
+	if (neg)
+		s[0] = '-';
+	s = long_to_string(un_nbr, base, num_of_chars + neg - 1, s);
 	return (ft_strjoin("0x", s));
 }
