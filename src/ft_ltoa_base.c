@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 15:59:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 12:48:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 13:16:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ char					*ft_ltoa_base(long nbr, int base)
 	if (neg)
 		s[0] = '-';
 	s = long_to_string(un_nbr, base, num_of_chars + neg - 1, s);
-	return (ft_strjoin("0x", s));
+	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 12:46:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/09 13:14:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,22 @@ static char			*conv_pointer(va_list *ap, char *input_string, int *attrs)
 	(*attrs)++;
 	ptr = (uintptr_t)(va_arg(*ap, void *));
 	s = ft_ltoa_base(ptr, 16);
+	return (ft_strjoin("0x", s));
+}
+
+static char			*conv_int(va_list *ap, char *input_string, int *attrs)
+{
+	int				nbr;
+	char			*s;
+
+	(void)input_string;
+	(*attrs)++;
+	nbr = (int)(va_arg(*ap, void *));
+	s = ft_ltoa_base(nbr, 10);
 	return (s);
 }
 
-static t_list		*create_converter(void *function, char character)
+static t_list		*new_conv(void *function, char character)
 {
 	t_converter		*converter;
 	t_list			*elem;
@@ -131,9 +143,15 @@ t_list				**create_converters(void)
 	t_list			**converter_list;
 
 	converter_list = (t_list **)ft_memalloc(sizeof(*converter_list));
-	ft_lstadd_e(converter_list, create_converter((void *)no_conv, '%'));
-	ft_lstadd_e(converter_list, create_converter((void *)conv_character, 'c'));
-	ft_lstadd_e(converter_list, create_converter((void *)conv_string, 's'));
-	ft_lstadd_e(converter_list, create_converter((void *)conv_pointer, 'p'));
+	ft_lstadd_e(converter_list, new_conv((void *)no_conv, '%'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_character, 'c'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_string, 's'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_pointer, 'p'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_int, 'd'));
+	ft_lstadd_e(converter_list, new_conv((void *)conv_int, 'i'));
+	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_octal, 'o'));
+	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_int, 'u'));
+	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex, 'x'));
+	// ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex_up, 'X'));
 	return (converter_list);
 }
