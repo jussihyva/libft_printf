@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 14:26:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 16:26:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ static char		get_flag(char c)
 	else
 		return (0);
 }
+
 /*
 static char		*format_plus(char *s)
 {
 	return (s);
 }
 */
+
 int				parse_flags(char *s, int valid_flags)
 {
 	int		i;
@@ -56,4 +58,12 @@ int				parse_flags(char *s, int valid_flags)
 		}
 	}
 	return (flags);
+}
+
+t_list			**create_formatters(void)
+{
+	t_list			**formatter_list;
+
+	formatter_list = (t_list **)ft_memalloc(sizeof(*formatter_list));
+	return (formatter_list);
 }

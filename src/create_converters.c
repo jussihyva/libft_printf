@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 14:23:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 16:28:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ void				add_converter(t_substring *substring,
 			substring->converter = (t_converter *)(elem->content);
 			substring->flags = parse_flags(input_string,
 										substring->converter->valid_flags);
-			ft_putnbr(substring->flags);
-			ft_putstr("\n");
+			if (substring->flags)
+			{
+				ft_putstr("Flags: ");
+				ft_putnbr(substring->flags);
+				ft_putstr("\n");
+			}
 			break ;
 		}
 		elem = elem->next;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/10 13:30:55 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 16:22:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ int				ft_printf(const char *restrict format, ...)
 	va_list			ap;
 	t_list			**list;
 	t_list			**converter_list;
+	t_list			**formatter_list;
 	int				attrs;
 
 	attrs = 0;
+	formatter_list = create_formatters();
 	converter_list = create_converters();
 	list = split_string((char *)format, converter_list);
 	va_start(ap, format);

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 11:43:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 16:23:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include "libft.h"
 # include <stdarg.h>
 # include <stdlib.h>
+
+struct				s_formatter
+{
+	char			character;
+	void			*(*function_ptr)(void);
+};
+
+typedef struct s_formatter	t_formatter;
 
 struct				s_converter
 {
@@ -38,6 +46,7 @@ typedef struct s_substring	t_substring;
 
 t_list				**split_string(char *input_string,
 										t_list **converter_array);
+t_list				**create_formatters();
 t_list				**create_converters();
 void				add_converter(t_substring *substring,
 										t_list **converter_list);
