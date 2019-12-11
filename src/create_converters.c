@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 18:22:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 14:23:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,19 @@ void				add_converter(t_substring *substring,
 	character = input_string[ft_strlen(input_string) - 1];
 	i = -1;
 	substring->converter = NULL;
+	substring->flags = 0;
 	elem = *converter_list;
 	while (elem)
 	{
 		if (character == ((t_converter *)(elem->content))->character)
+		{
 			substring->converter = (t_converter *)(elem->content);
+			substring->flags = parse_flags(input_string,
+										substring->converter->valid_flags);
+			ft_putnbr(substring->flags);
+			ft_putstr("\n");
+			break ;
+		}
 		elem = elem->next;
 	}
 }
@@ -60,15 +68,6 @@ int					convert_substrings(t_list **list, va_list *ap,
 		substring = (t_substring *)(elem->content);
 		add_converter(substring, converter_list);
 		convert_substring(substring, ap, &attrs);
-/*
-		ft_putstr(substring->input_string);
-		ft_putstr("  ");
-		if (substring->converter)
-			ft_putchar((substring->converter)->character);
-		else
-			ft_putstr("null");
-		ft_putchar('\n');
-*/
 		elem = elem->next;
 	}
 	return (attrs);
@@ -192,22 +191,22 @@ static char			*conv_float(va_list *ap, char *input_string,
 
 	(void)input_string;
 	(*attrs)++;
-//	tmp = (unsigned long)(va_arg(*ap, void *));
 	nbr = (double)(va_arg(*ap, double));
 	tmp = (unsigned long)nbr;
 	nbr *= 1000000;
-//	nbr = nbr - (int)(nbr * 1000000);
 	s = ft_ltoa_base(nbr, 10);
 	return (s);
 }
 
-static t_list		*new_conv(void *function, char character)
+static t_list		*new_conv(void *function, char character,
+									int valid_flags)
 {
 	t_converter		*converter;
 	t_list			*elem;
 
 	converter = (t_converter *)ft_memalloc(sizeof(*converter));
 	converter->character = character;
+	converter->valid_flags = valid_flags;
 	converter->function_ptr = function;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)converter;
@@ -217,19 +216,27 @@ static t_list		*new_conv(void *function, char character)
 
 t_list				**create_converters(void)
 {
-	t_list			**converter_list;
+	t_list			**conv_list;
+	int				valid_flags;
 
-	converter_list = (t_list **)ft_memalloc(sizeof(*converter_list));
-	ft_lstadd_e(converter_list, new_conv((void *)no_conv, '%'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_character, 'c'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_string, 's'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_pointer, 'p'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_int, 'd'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_int, 'i'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_octal, 'o'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_int, 'u'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex, 'x'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_unsigned_hex_up, 'X'));
-	ft_lstadd_e(converter_list, new_conv((void *)conv_float, 'f'));
-	return (converter_list);
+	conv_list = (t_list **)ft_memalloc(sizeof(*conv_list));
+	valid_flags = 0;
+	ft_lstadd_e(conv_list, new_conv((void *)no_conv, '%', valid_flags));
+	valid_flags = 0;
+	valid_flags |= plus;
+	ft_lstadd_e(conv_list, new_conv((void *)conv_character, 'c', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_string, 's', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_pointer, 'p', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'd', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'i', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_octal, 'o',
+															valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_int, 'u',
+															valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex, 'x',
+															valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex_up, 'X',
+															valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_float, 'f', valid_flags));
+	return (conv_list);
 }

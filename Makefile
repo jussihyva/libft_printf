@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2019/12/09 17:36:08 by jkauppi          ###   ########.fr        #
+#    Updated: 2019/12/11 11:49:17 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES		=	-I ${SRC_FOLDER} -I ${LIBFT_FOLDER}
 CFLAGS			=	-Wall -Werror -Wextra -g ${INCLUDES}
 
 SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
-					ft_ltoa_base.c
+					ft_ltoa_base.c flag.c
 HEADER_FILE		=	ft_printf.h
 SRC_PATHS		=	${addprefix ${SRC_FOLDER}/, ${SRC_FILES}}
 OBJ_PATHS		=	${addprefix ${OBJ_FOLDER}/, ${patsubst %.c,%.o,${SRC_FILES}}}
@@ -31,7 +31,8 @@ LIBFT_FILES		=	ft_putstr.o ft_putstr_fd.o ft_strlen.o ft_putchar.o \
 					ft_memalloc.o ft_strchr.o ft_strnew.o ft_bzero.o \
 					ft_memchr.o ft_memset.o ft_strdel.o ft_memdel.o ft_itoa.o \
 					ft_strjoin.o ft_strcpy.o ft_memmove.o ft_toupper.o \
-					ft_islower.o ft_lstdel.o ft_lstdelone.o ft_strdup.o
+					ft_islower.o ft_lstdel.o ft_lstdelone.o ft_strdup.o \
+					ft_putendl.o
 LIBFT_PATHS		=	${addprefix ${LIBFT_FOLDER}/, ${LIBFT_FILES}}
 
 all: ${NAME}
