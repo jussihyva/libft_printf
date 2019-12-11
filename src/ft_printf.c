@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 16:22:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 17:45:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_printf(const char *restrict format, ...)
 	converter_list = create_converters();
 	list = split_string((char *)format, converter_list);
 	va_start(ap, format);
-	attrs = convert_substrings(list, &ap, converter_list);
+	attrs = convert_substrings(list, &ap, converter_list, formatter_list);
 	va_end(ap);
 	print_formatted_string(list);
 	ft_lstdel(list, *del_substring);

@@ -6,14 +6,15 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 16:28:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/11 17:55:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void				add_converter(t_substring *substring,
-							t_list **converter_list)
+static void			add_converter(t_substring *substring,
+										t_list **converter_list,
+										t_list **formatter_list)
 {
 	char			character;
 	char			*input_string;
@@ -32,7 +33,8 @@ void				add_converter(t_substring *substring,
 		{
 			substring->converter = (t_converter *)(elem->content);
 			substring->flags = parse_flags(input_string,
-										substring->converter->valid_flags);
+										substring->converter->valid_flags,
+										formatter_list);
 			if (substring->flags)
 			{
 				ft_putstr("Flags: ");
@@ -57,7 +59,8 @@ static void			convert_substring(t_substring *substring, va_list *ap,
 }
 
 int					convert_substrings(t_list **list, va_list *ap,
-											t_list **converter_list)
+											t_list **converter_list,
+											t_list **formatter_list)
 {
 	t_list			*elem;
 	t_substring		*substring;
@@ -70,7 +73,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 	while (elem)
 	{
 		substring = (t_substring *)(elem->content);
-		add_converter(substring, converter_list);
+		add_converter(substring, converter_list, formatter_list);
 		convert_substring(substring, ap, &attrs);
 		elem = elem->next;
 	}
