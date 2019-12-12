@@ -6,11 +6,30 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 11:25:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/12 13:06:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void			format_string(t_substring *substring)
+{
+	int				flags;
+	t_list			*elem;
+	t_formatter		*formatter;
+
+	flags = substring->flags;
+	elem = *(substring->formatter_list);
+	while (elem)
+	{
+		formatter = (t_formatter *)(elem->content);
+		if (flags & formatter->flag)
+			substring->output_string =
+						formatter->function_ptr(substring->output_string);
+		elem = elem->next;
+	}
+	return ;
+}
 
 static char		*format_minus(char *s)
 {
@@ -19,8 +38,17 @@ static char		*format_minus(char *s)
 
 static char		*format_plus(char *s)
 {
-	ft_putendl("MOI");
-	return (s);
+	char		*new_string;
+
+	if (s[0] != '-')
+	{
+		new_string = ft_strjoin("+", s);
+		ft_strdel(&s);
+	}
+	else
+		new_string = s;
+	
+	return (new_string);
 }
 
 static char		*format_space(char *s)
@@ -35,7 +63,17 @@ static char		*format_zero(char *s)
 
 static char		*format_hash(char *s)
 {
-	return (s);
+	char		*new_string;
+
+	if (s[0] != '#')
+	{
+		new_string = ft_strjoin("0x", s);
+		ft_strdel(&s);
+	}
+	else
+		new_string = s;
+	
+	return (new_string);
 }
 
 int				parse_flags(char *s, int valid_flags, t_list **formatter_list)
