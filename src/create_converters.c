@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 17:55:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/12 11:21:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,28 @@ static void			add_converter(t_substring *substring,
 }
 
 static void			convert_substring(t_substring *substring, va_list *ap,
-											int *attrs)
+											t_list **formatter_list, int *attrs)
 {
+	t_list			*elem;
+	int				flags;
+	t_formatter		*formatter;
+
 	if (!substring->converter || !substring->converter->function_ptr)
 		substring->output_string = ft_strdup(substring->input_string);
 	else
+	{
 		substring->output_string = substring->converter->function_ptr(ap,
 									substring->input_string, attrs);
+		flags = substring->flags;
+		elem = *formatter_list;
+		while (elem)
+		{
+			formatter = (t_formatter *)(elem->content);
+			if (flags & formatter->flag)
+				formatter->function_ptr(substring->output_string);
+			elem = elem->next;
+		}
+	}
 	return ;
 }
 
@@ -74,7 +89,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 	{
 		substring = (t_substring *)(elem->content);
 		add_converter(substring, converter_list, formatter_list);
-		convert_substring(substring, ap, &attrs);
+		convert_substring(substring, ap, formatter_list, &attrs);
 		elem = elem->next;
 	}
 	return (attrs);

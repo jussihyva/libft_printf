@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 18:05:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/12 11:25:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static char		*format_minus(char *s)
 
 static char		*format_plus(char *s)
 {
+	ft_putendl("MOI");
 	return (s);
 }
 
