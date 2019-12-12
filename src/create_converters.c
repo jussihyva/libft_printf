@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 14:59:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/12 18:04:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ static void			add_converter(t_substring *substring,
 			substring->flags = parse_flags(input_string,
 										substring->converter->valid_flags,
 										formatter_list);
+			substring->formatter_list = get_formatters(input_string,
+										substring->converter->valid_flags,
+										formatter_list);
 			if (substring->flags)
 			{
 				ft_putstr("Flags: ");
@@ -44,7 +47,6 @@ static void			add_converter(t_substring *substring,
 }
 
 static void			convert_substring(t_substring *substring, va_list *ap,
-											t_list **formatter_list,
 											int *attrs)
 {
 	if (!substring->converter || !substring->converter->function_ptr)
@@ -53,7 +55,7 @@ static void			convert_substring(t_substring *substring, va_list *ap,
 	{
 		substring->output_string = substring->converter->function_ptr(ap,
 									substring->input_string, substring->flags,
-									formatter_list, attrs);
+									substring->formatter_list, attrs);
 	}
 	return ;
 }
@@ -76,7 +78,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 		substring->converter = NULL;
 		substring->flags = 0;
 		add_converter(substring, converter_list, formatter_list);
-		convert_substring(substring, ap, formatter_list, &attrs);
+		convert_substring(substring, ap, &attrs);
 		elem = elem->next;
 	}
 	return (attrs);
@@ -143,7 +145,7 @@ static char			*conv_int(va_list *ap, char *input_string, int flags, t_list **for
 	(*attrs)++;
 	nbr = (int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 10);
-	output_string = format_string(s, flags, formatter_list);
+	output_string = format_string(s, formatter_list);
 	return (output_string);
 }
 
@@ -190,7 +192,7 @@ static char			*conv_unsigned_hex(va_list *ap, char *input_string, int flags, t_l
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 16);
-	output_string = format_string(s, flags, formatter_list);
+	output_string = format_string(s, formatter_list);
 	return (output_string);
 }
 
@@ -208,7 +210,7 @@ static char			*conv_unsigned_hex_up(va_list *ap, char *input_string, int flags, 
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 16);
-	output_string = format_string(s, flags, formatter_list);
+	output_string = format_string(s, formatter_list);
 	i = -1;
 	while (*(output_string + ++i))
 		*(output_string + i) = ft_toupper(*(output_string + i));

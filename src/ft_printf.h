@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 15:03:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/12 18:02:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct				s_substring
 	char			*input_string;
 	t_converter		*converter;
 	int				flags;
+	t_list			**formatter_list;
 	char			*output_string;
 };
 
@@ -67,7 +68,9 @@ int					convert_substrings(t_list **list, va_list *ap,
 char				*ft_ltoa_base(long nbr, int base);
 int					parse_flags(char *input_string, int valid_flags,
 												t_list **formatter_list);
-char				*format_string(char *output_string, int flags,
+t_list				**get_formatters(char *input_string, int valid_flags,
+												t_list **formatter_list);
+char				*format_string(char *output_string,
 										t_list **formatter_list);
 
 #endif
