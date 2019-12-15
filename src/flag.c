@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 18:51:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 13:36:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char			*format_string(char *s, t_list **formatter_list)
 		formatter = (t_formatter *)(elem->content);
 		tmp = output_string;
 		output_string = formatter->function_ptr(tmp);
+//		ft_strdel(&tmp);
 		elem = elem->next;
 	}
 	return (output_string);
@@ -99,38 +100,29 @@ int				parse_flags(char *s, int valid_flags, t_list **formatter_list)
 	return (flags);
 }
 
-t_list				**get_formatters(char *s, int valid_flags,
+t_list			**get_formatters(char *s, int valid_flags,
 												t_list **formatter_list)
 {
-	int		i;
-	int		s_len;
-	int		flags;
-	t_list	**valid_formatters_list;
-	t_list	*elem;
-	t_list	*new_elem;
+	int				i;
+	int				s_len;
+	t_list			**valid_formatters_list;
+	t_list			*elem;
 
-	valid_formatters_list = (t_list **)ft_memalloc(sizeof(*valid_formatters_list));
+	valid_formatters_list =
+					(t_list **)ft_memalloc(sizeof(*valid_formatters_list));
 	(void)valid_flags;
 	s_len = ft_strlen(s);
-	if (s[0] != '%' || s[s_len - 1] == '%')
-		flags = 0;
-	else
+	*valid_formatters_list = NULL;
+	i = 0;
+	while (++i < (s_len - 1))
 	{
-		flags = 0;
-		i = 0;
-		while (++i < (s_len - 1))
+		elem = *formatter_list;
+		while (elem)
 		{
-			elem = *formatter_list;
-			while (elem)
-			{
-				if (s[i] == ((t_formatter *)(elem->content))->character)
-				{
-					flags |= ((t_formatter *)(elem->content))->flag;
-					new_elem = ft_lstnew(elem->content, elem->content_size);
-					ft_lstadd_e(valid_formatters_list, new_elem);
-				}
-				elem = elem->next;
-			}
+			if (s[i] == ((t_formatter *)(elem->content))->character)
+				ft_lstadd_e(valid_formatters_list,
+						ft_lstnew(elem->content, elem->content_size));
+			elem = elem->next;
 		}
 	}
 	return (valid_formatters_list);
@@ -139,14 +131,17 @@ t_list				**get_formatters(char *s, int valid_flags,
 static t_list	*new_formatter(void *function, char character, t_flag flag)
 {
 	t_formatter		*formatter;
+	size_t			formatter_size;
 	t_list			*elem;
 
-	formatter = (t_formatter *)ft_memalloc(sizeof(*formatter));
+	formatter_size = sizeof(*formatter);
+	formatter = (t_formatter *)ft_memalloc(formatter_size);
 	formatter->character = character;
 	formatter->flag = flag;
 	formatter->function_ptr = function;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)formatter;
+	elem->content_size = formatter_size;
 	elem->next = NULL;
 	return (elem);
 }

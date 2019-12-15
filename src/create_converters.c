@@ -6,11 +6,18 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 18:04:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 13:29:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void			print_flags(int flags)
+{
+	ft_putstr("Flags: ");
+	ft_putnbr(flags);
+	ft_putstr("\n");
+}
 
 static void			add_converter(t_substring *substring,
 										t_list **converter_list,
@@ -31,15 +38,12 @@ static void			add_converter(t_substring *substring,
 			substring->flags = parse_flags(input_string,
 										substring->converter->valid_flags,
 										formatter_list);
-			substring->formatter_list = get_formatters(input_string,
+			if (input_string[0] == '%' && input_string[ft_strlen(input_string) - 1] != '%')
+				substring->formatter_list = get_formatters(input_string,
 										substring->converter->valid_flags,
 										formatter_list);
 			if (substring->flags)
-			{
-				ft_putstr("Flags: ");
-				ft_putnbr(substring->flags);
-				ft_putstr("\n");
-			}
+				print_flags(substring->flags);
 			break ;
 		}
 		elem = elem->next;
@@ -239,14 +243,17 @@ static t_list		*new_conv(void *function, char character,
 									int valid_flags)
 {
 	t_converter		*converter;
+	size_t			converter_size;
 	t_list			*elem;
 
-	converter = (t_converter *)ft_memalloc(sizeof(*converter));
+	converter_size = sizeof(*converter);
+	converter = (t_converter *)ft_memalloc(converter_size);
 	converter->character = character;
 	converter->valid_flags = valid_flags;
 	converter->function_ptr = function;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)converter;
+	elem->content_size = converter_size;
 	elem->next = NULL;
 	return (elem);
 }
