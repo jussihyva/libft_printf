@@ -6,11 +6,19 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/11 17:45:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 16:37:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void		del_formatter(void *formatter, size_t size)
+{
+	(void)size;
+	free(formatter);
+	formatter = NULL;
+	return ;
+}
 
 static void		del_substring(void *substring_elem, size_t size)
 {
@@ -20,6 +28,12 @@ static void		del_substring(void *substring_elem, size_t size)
 	elem = (t_substring *)substring_elem;
 	ft_strdel(&elem->input_string);
 	ft_strdel(&elem->output_string);
+	if (elem->formatter_list)
+	{
+		ft_lstdel(elem->formatter_list, *del_formatter);
+		free(elem->formatter_list);
+		elem->formatter_list = NULL;
+	}
 	free(substring_elem);
 	substring_elem = NULL;
 	return ;
@@ -67,9 +81,12 @@ int				ft_printf(const char *restrict format, ...)
 	print_formatted_string(list);
 	ft_lstdel(list, *del_substring);
 	ft_lstdel(converter_list, *del_converter);
-	free(converter_list);
-	converter_list = NULL;
+	ft_lstdel(formatter_list, *del_formatter);
 	free(list);
 	list = NULL;
+	free(converter_list);
+	converter_list = NULL;
+	free(formatter_list);
+	formatter_list = NULL;
 	return (attrs);
 }

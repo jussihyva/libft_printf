@@ -6,41 +6,45 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 15:20:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 16:19:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char			*format_string(char *s, t_list **formatter_list)
+char			*format_string(char *s, t_substring *substring)
 {
 	t_list			*elem;
 	t_formatter		*formatter;
 	char			*output_string;
 	char			*tmp;
+	char			character;
 
 	output_string = s;
-	elem = *formatter_list;
+	elem = *substring->formatter_list;
 	while (elem)
 	{
 		formatter = (t_formatter *)(elem->content);
 		tmp = output_string;
-		output_string = formatter->function_ptr(tmp);
+		character = substring->converter->character;
+		output_string = formatter->function_ptr(tmp, character);
 //		ft_strdel(&tmp);
 		elem = elem->next;
 	}
 	return (output_string);
 }
 
-static char		*format_minus(char *s)
+static char		*format_minus(char *s, char character)
 {
+	(void)character;
 	return (s);
 }
 
-static char		*format_plus(char *s)
+static char		*format_plus(char *s, char character)
 {
 	char		*new_string;
 
+	(void)character;
 	if (s[0] != '-')
 		new_string = ft_strjoin("+", s);
 	else
@@ -49,22 +53,32 @@ static char		*format_plus(char *s)
 	return (new_string);
 }
 
-static char		*format_space(char *s)
-{
-	return (s);
-}
-
-static char		*format_zero(char *s)
-{
-	return (s);
-}
-
-static char		*format_hash(char *s)
+static char		*format_space(char *s, char character)
 {
 	char		*new_string;
 
-	if (s[0] != '#')
+	(void)character;
+	new_string = ft_strjoin(" ", s);
+	ft_strdel(&s);
+	return (new_string);
+}
+
+static char		*format_zero(char *s, char character)
+{
+	(void)character;
+	return (s);
+}
+
+static char		*format_hash(char *s, char character)
+{
+	char		*new_string;
+
+	if (character == 'x')
 		new_string = ft_strjoin("0x", s);
+	else if (character == 'X')
+		new_string = ft_strjoin("0X", s);
+	else if (character == 'o')
+		new_string = ft_strjoin("0", s);
 	else
 		new_string = ft_strdup(s);
 	ft_strdel(&s);

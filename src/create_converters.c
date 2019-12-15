@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 15:58:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 16:08:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ static char			*conv_int(va_list *ap, t_substring *substring,
 	(*attrs)++;
 	nbr = (int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 10);
-	output_string = format_string(s, substring->formatter_list);
+	output_string = format_string(s, substring);
 	return (output_string);
 }
 
@@ -161,7 +161,7 @@ static char			*conv_unsigned_octal(va_list *ap, t_substring *substring,
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 8);
-	output_string = format_string(s, substring->formatter_list);
+	output_string = format_string(s, substring);
 	return (output_string);
 }
 
@@ -193,7 +193,7 @@ static char			*conv_unsigned_hex(va_list *ap, t_substring *substring,
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 16);
-	output_string = format_string(s, substring->formatter_list);
+	output_string = format_string(s, substring);
 	return (output_string);
 }
 
@@ -211,7 +211,7 @@ static char			*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 16);
-	output_string = format_string(s, substring->formatter_list);
+	output_string = format_string(s, substring);
 	i = -1;
 	while (*(output_string + ++i))
 		*(output_string + i) = ft_toupper(*(output_string + i));

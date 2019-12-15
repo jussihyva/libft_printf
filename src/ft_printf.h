@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 15:58:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 16:10:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct				s_formatter
 {
 	char			character;
 	t_flag			flag;
-	void			*(*function_ptr)(char *s);
+	void			*(*function_ptr)(char *s, char character);
 };
 
 typedef struct s_formatter	t_formatter;
@@ -68,6 +68,6 @@ char				*ft_ltoa_base(long nbr, int base);
 t_list				**get_formatters(char *input_string, int valid_flags,
 												t_list **formatter_list);
 char				*format_string(char *output_string,
-										t_list **formatter_list);
+												t_substring *substring);
 
 #endif
