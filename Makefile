@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2019/12/12 18:52:16 by jkauppi          ###   ########.fr        #
+#    Updated: 2019/12/15 18:14:52 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES		=	-I ${SRC_FOLDER} -I ${LIBFT_FOLDER}
 CFLAGS			=	-Wall -Werror -Wextra -g ${INCLUDES}
 
 SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
-					ft_ltoa_base.c flag.c
+					ft_ltoa_base.c flag.c param_type.c
 HEADER_FILE		=	ft_printf.h
 SRC_PATHS		=	${addprefix ${SRC_FOLDER}/, ${SRC_FILES}}
 OBJ_PATHS		=	${addprefix ${OBJ_FOLDER}/, ${patsubst %.c,%.o,${SRC_FILES}}}

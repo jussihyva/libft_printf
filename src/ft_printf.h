@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 16:10:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 18:56:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ enum				e_flag
 };
 
 typedef enum e_flag			t_flag;
+
+enum				e_type
+{
+	hh,
+	h,
+	l,
+	ll,
+	j,
+	z,
+	t,
+	L
+};
+
+typedef enum e_type			t_type;
 
 struct				s_formatter
 {
@@ -59,8 +73,10 @@ typedef struct s_substring	t_substring;
 
 t_list				**split_string(char *input_string,
 										t_list **converter_array);
-t_list				**create_formatters();
-t_list				**create_converters();
+t_list				**create_formatters(void);
+t_list				**create_converters(void);
+t_list				**create_param_type_list(void);
+void				add_param_type(t_list **list, t_list **type_list);
 int					convert_substrings(t_list **list, va_list *ap,
 												t_list **converter_list,
 												t_list **formatter_list);

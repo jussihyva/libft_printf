@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 12:58:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 18:54:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ static char		*string_for_converter(char *start_ptr,
 	return (end_ptr);
 }
 
-t_list			**split_string(char *input_string,
-		t_list **converter_list)
+t_list			**split_string(char *input_string, t_list **converter_list)
 {
 	char			*start_ptr;
 	char			*end_ptr;

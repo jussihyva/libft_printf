@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 16:37:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 18:55:31 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,41 @@ static void		print_formatted_string(t_list **list)
 	ft_putchar('\n');
 }
 
-int				ft_printf(const char *restrict format, ...)
+static int		create_output_string(va_list *ap, const char *format)
 {
-	va_list			ap;
+	int				attrs;
 	t_list			**list;
 	t_list			**converter_list;
 	t_list			**formatter_list;
-	int				attrs;
+	t_list			**type_list;
 
 	attrs = 0;
 	formatter_list = create_formatters();
 	converter_list = create_converters();
+	type_list = create_param_type_list();
 	list = split_string((char *)format, converter_list);
-	va_start(ap, format);
-	attrs = convert_substrings(list, &ap, converter_list, formatter_list);
-	va_end(ap);
+	add_param_type(list, type_list);
+	attrs = convert_substrings(list, ap, converter_list, formatter_list);
 	print_formatted_string(list);
 	ft_lstdel(list, *del_substring);
-	ft_lstdel(converter_list, *del_converter);
-	ft_lstdel(formatter_list, *del_formatter);
 	free(list);
 	list = NULL;
+	ft_lstdel(converter_list, *del_converter);
 	free(converter_list);
 	converter_list = NULL;
+	ft_lstdel(formatter_list, *del_formatter);
 	free(formatter_list);
 	formatter_list = NULL;
+	return (attrs);
+}
+
+int				ft_printf(const char *restrict format, ...)
+{
+	va_list			ap;
+	int				attrs;
+
+	va_start(ap, format);
+	attrs = create_output_string(&ap, format);
+	va_end(ap);
 	return (attrs);
 }

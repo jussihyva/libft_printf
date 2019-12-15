@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 16:08:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 18:42:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char			*conv_character(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	char		*s;
-	char			*input_string;
+	char		*input_string;
 
 	input_string = substring->input_string;
 	(void)input_string;
