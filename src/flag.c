@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 13:36:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 15:20:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,35 +69,6 @@ static char		*format_hash(char *s)
 		new_string = ft_strdup(s);
 	ft_strdel(&s);
 	return (new_string);
-}
-
-int				parse_flags(char *s, int valid_flags, t_list **formatter_list)
-{
-	int		i;
-	int		s_len;
-	int		flags;
-	t_list	*elem;
-
-	(void)valid_flags;
-	s_len = ft_strlen(s);
-	if (s[0] != '%' || s[s_len - 1] == '%')
-		flags = 0;
-	else
-	{
-		flags = 0;
-		i = 0;
-		while (++i < (s_len - 1))
-		{
-			elem = *formatter_list;
-			while (elem)
-			{
-				if (s[i] == ((t_formatter *)(elem->content))->character)
-					flags |= ((t_formatter *)(elem->content))->flag;
-				elem = elem->next;
-			}
-		}
-	}
-	return (flags);
 }
 
 t_list			**get_formatters(char *s, int valid_flags,

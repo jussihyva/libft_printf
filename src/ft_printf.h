@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/12 18:02:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/15 15:58:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ struct				s_converter
 {
 	char			character;
 	int				valid_flags;
-	void			*(*function_ptr)(va_list *, char *input_string, int flags,
-										t_list **formatter_list, int *attrs);
+	void			*(*function_ptr)(va_list *, void *substring, int *attrs);
 };
 
 typedef struct s_converter	t_converter;
@@ -66,8 +65,6 @@ int					convert_substrings(t_list **list, va_list *ap,
 												t_list **converter_list,
 												t_list **formatter_list);
 char				*ft_ltoa_base(long nbr, int base);
-int					parse_flags(char *input_string, int valid_flags,
-												t_list **formatter_list);
 t_list				**get_formatters(char *input_string, int valid_flags,
 												t_list **formatter_list);
 char				*format_string(char *output_string,
