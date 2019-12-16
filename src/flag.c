@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 10:55:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 16:09:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,22 @@ static char		*format_hash(char *s, char character)
 	return (new_string);
 }
 
-t_list			**get_formatters(char *s, int valid_flags,
+t_list			**get_formatters(t_substring *substring,
 												t_list **formatter_list)
 {
 	int				i;
 	int				s_len;
 	t_list			**valid_formatters_list;
 	t_list			*elem;
+	char			*s;
 
+	s = substring->input_string;
 	valid_formatters_list =
 					(t_list **)ft_memalloc(sizeof(*valid_formatters_list));
-	(void)valid_flags;
-	s_len = ft_strlen(s);
+	s_len = substring->end_ptr - substring->input_string + 1;
 	*valid_formatters_list = NULL;
 	i = 0;
-	while (++i < (s_len - 1))
+	while (++i < s_len)
 	{
 		elem = *formatter_list;
 		while (elem)

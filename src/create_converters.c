@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 13:08:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 16:02:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ static void				add_converter(t_substring *substring,
 			substring->converter = (t_converter *)(elem->content);
 			if (input_string[0] == '%' &&
 							input_string[ft_strlen(input_string) - 1] != '%')
-				substring->formatter_list = get_formatters(input_string,
-										substring->converter->valid_flags,
-										formatter_list);
+				substring->formatter_list = get_formatters(substring,
+															formatter_list);
 			break ;
 		}
 		elem = elem->next;

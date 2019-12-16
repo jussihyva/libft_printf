@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 15:26:05 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 16:03:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 												t_list **converter_list,
 												t_list **formatter_list);
 char				*ft_ltoa_base(long nbr, int base);
-t_list				**get_formatters(char *input_string, int valid_flags,
+t_list				**get_formatters(t_substring *substring,
 												t_list **formatter_list);
 char				*format_string(char *output_string,
 												t_substring *substring);
