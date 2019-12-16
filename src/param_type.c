@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:43:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 11:15:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 12:56:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_param_type		*check_type(t_list **type_list, char *end_ptr)
+static void				check_type(t_list **type_list, t_substring *substring)
 {
 	t_list			*type_elem;
 	char			*type_string;
@@ -22,27 +22,28 @@ static t_param_type		*check_type(t_list **type_list, char *end_ptr)
 	while (type_elem)
 	{
 		type_string = ((t_param_type *)type_elem->content)->type_string;
-		start_ptr = end_ptr - ft_strlen(type_string);
+		start_ptr = substring->end_ptr - ft_strlen(type_string);
 		if (!(ft_strncmp(start_ptr, type_string, ft_strlen(type_string))))
-			return ((t_param_type *)type_elem->content);
+		{
+			substring->param_type = (t_param_type *)type_elem->content;
+			substring->end_ptr = start_ptr - 1;
+			break ;
+		}
 		type_elem = type_elem->next;
 	}
-	return (NULL);
+	return ;
 }
 
 void					add_param_type(t_list **list, t_list **type_list)
 {
 	t_list			*elem;
-	char			*end_ptr;
 	t_substring		*substring;
 
 	elem = *list;
 	while (elem)
 	{
 		substring = (t_substring *)elem->content;
-		end_ptr = substring->input_string +
-								ft_strlen(substring->input_string) - 1;
-		substring->param_type = check_type(type_list, end_ptr);
+		check_type(type_list, substring);
 		elem = elem->next;
 	}
 }
