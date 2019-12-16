@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:43:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 12:56:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:17:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void				check_type(t_list **type_list, t_substring *substring)
 	while (type_elem)
 	{
 		type_string = ((t_param_type *)type_elem->content)->type_string;
-		start_ptr = substring->end_ptr - ft_strlen(type_string);
+		start_ptr = substring->end_ptr - ft_strlen(type_string) + 1;
 		if (!(ft_strncmp(start_ptr, type_string, ft_strlen(type_string))))
 		{
 			substring->param_type = (t_param_type *)type_elem->content;

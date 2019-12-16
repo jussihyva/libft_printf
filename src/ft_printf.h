@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 13:15:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:26:05 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ struct				s_substring
 	char			*output_string;
 	t_param_type	*param_type;
 	char			*end_ptr;
+	int				precision;
+	int				width;
 };
 
 typedef struct s_substring	t_substring;
