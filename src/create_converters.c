@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 16:02:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 17:39:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int						convert_substrings(t_list **list, va_list *ap,
 		substring->flags = 0;
 		add_converter(substring, converter_list, formatter_list);
 		convert_substring(substring, ap, &attrs);
+		width_adjust(substring);
 		elem = elem->next;
 	}
 	return (attrs);

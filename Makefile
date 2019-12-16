@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2019/12/16 15:41:39 by jkauppi          ###   ########.fr        #
+#    Updated: 2019/12/16 17:37:38 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ LIBFT_FILES		=	ft_putstr.o ft_putstr_fd.o ft_strlen.o ft_putchar.o \
 					ft_strjoin.o ft_strcpy.o ft_memmove.o ft_toupper.o \
 					ft_islower.o ft_lstdel.o ft_lstdelone.o ft_strdup.o \
 					ft_putendl.o ft_lstnew.o ft_memcpy.o ft_strncmp.o \
-					ft_atoi.o ft_isdigit.o ft_isspace.o
+					ft_atoi.o ft_isdigit.o ft_isspace.o ft_strcat.o
 LIBFT_PATHS		=	${addprefix ${LIBFT_FOLDER}/, ${LIBFT_FILES}}
 
 all: ${NAME}

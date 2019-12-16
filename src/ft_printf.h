@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 16:03:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 17:40:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ struct				s_substring
 	t_param_type	*param_type;
 	char			*end_ptr;
 	int				precision;
-	int				width;
+	size_t			width;
 };
 
 typedef struct s_substring	t_substring;
@@ -94,6 +94,7 @@ void				add_width_and_prediction(t_list **substring_list);
 int					convert_substrings(t_list **list, va_list *ap,
 												t_list **converter_list,
 												t_list **formatter_list);
+void				width_adjust(t_substring *substring);
 char				*ft_ltoa_base(long nbr, int base);
 t_list				**get_formatters(t_substring *substring,
 												t_list **formatter_list);
