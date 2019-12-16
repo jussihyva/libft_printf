@@ -6,24 +6,55 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:43:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 18:56:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 11:15:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static t_param_type		*check_type(t_list **type_list, char *end_ptr)
+{
+	t_list			*type_elem;
+	char			*type_string;
+	char			*start_ptr;
+
+	type_elem = *type_list;
+	while (type_elem)
+	{
+		type_string = ((t_param_type *)type_elem->content)->type_string;
+		start_ptr = end_ptr - ft_strlen(type_string);
+		if (!(ft_strncmp(start_ptr, type_string, ft_strlen(type_string))))
+			return ((t_param_type *)type_elem->content);
+		type_elem = type_elem->next;
+	}
+	return (NULL);
+}
+
 void					add_param_type(t_list **list, t_list **type_list)
 {
-	(void)list;
-	(void)type_list;
+	t_list			*elem;
+	char			*end_ptr;
+	t_substring		*substring;
+
+	elem = *list;
+	while (elem)
+	{
+		substring = (t_substring *)elem->content;
+		end_ptr = substring->input_string +
+								ft_strlen(substring->input_string) - 1;
+		substring->param_type = check_type(type_list, end_ptr);
+		elem = elem->next;
+	}
 }
 
 static t_list			*new_type(t_type type, char *s)
 {
 	t_list			*type_elem;
+	t_param_type	param_type;
 
-	(void)type;
-	type_elem = ft_lstnew(s, sizeof(s));
+	param_type.type = type;
+	param_type.type_string = s;
+	type_elem = ft_lstnew(&param_type, sizeof(param_type));
 	return (type_elem);
 }
 
@@ -34,8 +65,8 @@ t_list					**create_param_type_list(void)
 	type_list = (t_list **)ft_memalloc(sizeof(*type_list));
 	ft_lstadd_e(type_list, new_type(hh, "hh"));
 	ft_lstadd_e(type_list, new_type(h, "h"));
-	ft_lstadd_e(type_list, new_type(l, "l"));
 	ft_lstadd_e(type_list, new_type(ll, "ll"));
+	ft_lstadd_e(type_list, new_type(l, "l"));
 	ft_lstadd_e(type_list, new_type(j, "j"));
 	ft_lstadd_e(type_list, new_type(z, "z"));
 	ft_lstadd_e(type_list, new_type(t, "t"));

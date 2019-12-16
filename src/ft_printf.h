@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 18:56:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 10:42:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include <stdarg.h>
 # include <stdlib.h>
+# include <stddef.h>
 
 enum				e_flag
 {
@@ -60,6 +61,14 @@ struct				s_converter
 
 typedef struct s_converter	t_converter;
 
+struct				s_param_type
+{
+	t_type			type;
+	char			*type_string;
+};
+
+typedef struct s_param_type	t_param_type;
+
 struct				s_substring
 {
 	char			*input_string;
@@ -67,6 +76,7 @@ struct				s_substring
 	int				flags;
 	t_list			**formatter_list;
 	char			*output_string;
+	t_param_type	*param_type;
 };
 
 typedef struct s_substring	t_substring;

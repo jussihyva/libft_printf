@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 16:19:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 10:55:21 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char			*format_string(char *s, t_substring *substring)
 		tmp = output_string;
 		character = substring->converter->character;
 		output_string = formatter->function_ptr(tmp, character);
-//		ft_strdel(&tmp);
 		elem = elem->next;
 	}
 	return (output_string);

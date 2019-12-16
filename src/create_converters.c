@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/15 18:42:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/16 11:04:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void			add_converter(t_substring *substring,
+static void				add_converter(t_substring *substring,
 										t_list **converter_list,
 										t_list **formatter_list)
 {
@@ -39,7 +39,7 @@ static void			add_converter(t_substring *substring,
 	}
 }
 
-static void			convert_substring(t_substring *substring, va_list *ap,
+static void				convert_substring(t_substring *substring, va_list *ap,
 											int *attrs)
 {
 	if (!substring->converter || !substring->converter->function_ptr)
@@ -52,7 +52,7 @@ static void			convert_substring(t_substring *substring, va_list *ap,
 	return ;
 }
 
-int					convert_substrings(t_list **list, va_list *ap,
+int						convert_substrings(t_list **list, va_list *ap,
 											t_list **converter_list,
 											t_list **formatter_list)
 {
@@ -76,7 +76,7 @@ int					convert_substrings(t_list **list, va_list *ap,
 	return (attrs);
 }
 
-static char			*no_conv(va_list *ap, t_substring *substring,
+static char				*no_conv(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	char			*input_string;
@@ -88,7 +88,7 @@ static char			*no_conv(va_list *ap, t_substring *substring,
 	return (ft_strdup(input_string));
 }
 
-static char			*conv_character(va_list *ap, t_substring *substring,
+static char				*conv_character(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	char		*s;
@@ -102,7 +102,7 @@ static char			*conv_character(va_list *ap, t_substring *substring,
 	return (s);
 }
 
-static char			*conv_string(va_list *ap, t_substring *substring,
+static char				*conv_string(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	char			*input_string;
@@ -113,7 +113,7 @@ static char			*conv_string(va_list *ap, t_substring *substring,
 	return (ft_strdup(va_arg(*ap, char *)));
 }
 
-static char			*conv_pointer(va_list *ap, t_substring *substring,
+static char				*conv_pointer(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	uintptr_t		ptr;
@@ -131,25 +131,50 @@ static char			*conv_pointer(va_list *ap, t_substring *substring,
 	return (s);
 }
 
-static char			*conv_int(va_list *ap, t_substring *substring,
+static unsigned long	read_int_param(t_type type, va_list *ap)
+{
+	unsigned long	nbr;
+
+	if (type == hh)
+		nbr = (char)(va_arg(*ap, void *));
+	else if (type == h)
+		nbr = (short int)(va_arg(*ap, void *));
+	else if (type == l)
+		nbr = (long int)(va_arg(*ap, void *));
+	else if (type == ll)
+		nbr = (long long int)(va_arg(*ap, void *));
+	else if (type == j)
+		nbr = (intmax_t)(va_arg(*ap, void *));
+	else if (type == z)
+		nbr = (size_t)(va_arg(*ap, void *));
+	else if (type == t)
+		nbr = (ptrdiff_t)(va_arg(*ap, void *));
+	else if (type == L)
+		nbr = (int)(va_arg(*ap, void *));
+	else
+		nbr = (int)(va_arg(*ap, void *));
+	return (nbr);
+}
+
+static char				*conv_int(va_list *ap, t_substring *substring,
 															int *attrs)
 {
-	int				nbr;
+	unsigned long	nbr;
 	char			*s;
 	char			*output_string;
-	char			*input_string;
 
-	input_string = substring->input_string;
-	(void)input_string;
 	(*attrs)++;
-	nbr = (int)(va_arg(*ap, void *));
+	if (!substring->param_type)
+		nbr = (int)(va_arg(*ap, void *));
+	else
+		nbr = read_int_param(substring->param_type->type, ap);
 	s = ft_ltoa_base(nbr, 10);
 	output_string = format_string(s, substring);
 	return (output_string);
 }
 
-static char			*conv_unsigned_octal(va_list *ap, t_substring *substring,
-															int *attrs)
+static char				*conv_unsigned_octal(va_list *ap,
+										t_substring *substring, int *attrs)
 {
 	unsigned int	nbr;
 	char			*s;
@@ -165,7 +190,7 @@ static char			*conv_unsigned_octal(va_list *ap, t_substring *substring,
 	return (output_string);
 }
 
-static char			*conv_unsigned_int(va_list *ap, t_substring *substring,
+static char				*conv_unsigned_int(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	unsigned int	nbr;
@@ -180,7 +205,7 @@ static char			*conv_unsigned_int(va_list *ap, t_substring *substring,
 	return (s);
 }
 
-static char			*conv_unsigned_hex(va_list *ap, t_substring *substring,
+static char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	unsigned int	nbr;
@@ -197,8 +222,8 @@ static char			*conv_unsigned_hex(va_list *ap, t_substring *substring,
 	return (output_string);
 }
 
-static char			*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
-															int *attrs)
+static char				*conv_unsigned_hex_up(va_list *ap,
+										t_substring *substring, int *attrs)
 {
 	unsigned int	nbr;
 	char			*s;
@@ -218,7 +243,7 @@ static char			*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
 	return (output_string);
 }
 
-static char			*conv_float(va_list *ap, t_substring *substring,
+static char				*conv_float(va_list *ap, t_substring *substring,
 															int *attrs)
 {
 	unsigned long	tmp;
@@ -236,7 +261,7 @@ static char			*conv_float(va_list *ap, t_substring *substring,
 	return (s);
 }
 
-static t_list		*new_conv(void *function, char character,
+static t_list			*new_conv(void *function, char character,
 									int valid_flags)
 {
 	t_converter		*converter;
@@ -255,7 +280,7 @@ static t_list		*new_conv(void *function, char character,
 	return (elem);
 }
 
-t_list				**create_converters(void)
+t_list					**create_converters(void)
 {
 	t_list			**conv_list;
 	int				valid_flags;
