@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 15:57:22 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 17:34:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,13 @@ static char				*conv_character(va_list *ap, t_substring *substring,
 static char				*conv_string(va_list *ap, t_substring *substring,
 															int *attrs)
 {
-	char			*input_string;
+	char			*s;
+	char			*output_string;
 
-	input_string = substring->input_string;
-	(void)input_string;
 	(*attrs)++;
-	return (ft_strdup(va_arg(*ap, char *)));
+	s = ft_strdup(va_arg(*ap, char *));
+	output_string = format_string(s, substring);
+	return (output_string);
 }
 
 static char				*conv_pointer(va_list *ap, t_substring *substring,

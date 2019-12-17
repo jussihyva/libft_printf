@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 16:16:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 17:51:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ struct				s_substring
 	t_param_type	*param_type;
 	char			*end_ptr;
 	int				precision;
-	size_t			width;
+	int				width;
 	char			filler;
 	int				left_adjust;
 };

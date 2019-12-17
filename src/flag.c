@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 16:39:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 18:17:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char		*format_plus(t_substring *substring, char *s, char character)
 	(void)substring;
 	if (character == 'c')
 		new_string = ft_strdup(s);
+	else if (character == 's')
+		new_string = ft_strdup(s);
 	else if (s[0] != '-')
 		new_string = ft_strjoin("+", s);
 	else
@@ -61,6 +63,8 @@ static char		*format_space(t_substring *substring, char *s, char character)
 
 	(void)substring;
 	if (character == 'c')
+		new_string = ft_strdup(s);
+	else if (character == 's')
 		new_string = ft_strdup(s);
 	else
 		new_string = ft_strjoin(" ", s);
