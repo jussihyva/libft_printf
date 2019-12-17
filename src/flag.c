@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/16 16:09:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 16:39:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,27 @@ char			*format_string(char *s, t_substring *substring)
 		formatter = (t_formatter *)(elem->content);
 		tmp = output_string;
 		character = substring->converter->character;
-		output_string = formatter->function_ptr(tmp, character);
+		output_string = formatter->function_ptr(substring, tmp, character);
 		elem = elem->next;
 	}
 	return (output_string);
 }
 
-static char		*format_minus(char *s, char character)
+static char		*format_minus(t_substring *substring, char *s, char character)
 {
 	(void)character;
+	substring->left_adjust = 1;
 	return (s);
 }
 
-static char		*format_plus(char *s, char character)
+static char		*format_plus(t_substring *substring, char *s, char character)
 {
 	char		*new_string;
 
-	(void)character;
-	if (s[0] != '-')
+	(void)substring;
+	if (character == 'c')
+		new_string = ft_strdup(s);
+	else if (s[0] != '-')
 		new_string = ft_strjoin("+", s);
 	else
 		new_string = ft_strdup(s);
@@ -52,32 +55,39 @@ static char		*format_plus(char *s, char character)
 	return (new_string);
 }
 
-static char		*format_space(char *s, char character)
+static char		*format_space(t_substring *substring, char *s, char character)
 {
 	char		*new_string;
 
-	(void)character;
-	new_string = ft_strjoin(" ", s);
+	(void)substring;
+	if (character == 'c')
+		new_string = ft_strdup(s);
+	else
+		new_string = ft_strjoin(" ", s);
 	ft_strdel(&s);
 	return (new_string);
 }
 
-static char		*format_zero(char *s, char character)
+static char		*format_zero(t_substring *substring, char *s, char character)
 {
 	(void)character;
+	substring->filler = '0';
 	return (s);
 }
 
-static char		*format_hash(char *s, char character)
+static char		*format_hash(t_substring *substring, char *s, char character)
 {
 	char		*new_string;
 
+	(void)substring;
 	if (character == 'x')
 		new_string = ft_strjoin("0x", s);
 	else if (character == 'X')
 		new_string = ft_strjoin("0X", s);
 	else if (character == 'o')
 		new_string = ft_strjoin("0", s);
+	else if (character == 'c')
+		new_string = ft_strdup(s);
 	else
 		new_string = ft_strdup(s);
 	ft_strdel(&s);
