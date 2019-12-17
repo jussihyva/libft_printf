@@ -6,11 +6,21 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 18:02:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 20:46:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void		set_default_values(t_substring *substring_elem)
+{
+	substring_elem->converter = NULL;
+	substring_elem->output_string = NULL;
+	substring_elem->filler = ' ';
+	substring_elem->left_adjust = 0;
+	substring_elem->precision = -1;
+	substring_elem->width = -1;
+}
 
 static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 {
@@ -27,12 +37,7 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	substring = strncpy(substring, start_ptr, end_ptr - start_ptr);
 	substring_elem = (t_substring *)ft_memalloc(sizeof(*substring_elem));
 	substring_elem->input_string = substring;
-	substring_elem->converter = NULL;
-	substring_elem->output_string = NULL;
-	substring_elem->filler = ' ';
-	substring_elem->left_adjust = 0;
-	substring_elem->precision = -1;
-	substring_elem->width = -1;
+	set_default_values(substring_elem);
 	substring_elem->end_ptr = substring + ft_strlen(substring) - 2;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)substring_elem;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 17:51:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 20:29:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ struct				s_converter
 	char			character;
 	int				valid_flags;
 	void			*(*function_ptr)(va_list *, void *substring, int *attrs);
+	void			*(*adjust_width_prediction_ptr)(void *substring);
 };
 
 typedef struct s_converter	t_converter;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 17:34:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/17 20:43:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,15 @@ static char				*conv_pointer(va_list *ap, t_substring *substring,
 	uintptr_t		ptr;
 	char			*ptr_string;
 	char			*s;
-	char			*input_string;
+	char			*output_string;
 
-	input_string = substring->input_string;
-	(void)input_string;
 	(*attrs)++;
 	ptr = (uintptr_t)(va_arg(*ap, void *));
 	ptr_string = ft_ltoa_base(ptr, 16);
 	s = ft_strjoin("0x", ptr_string);
 	ft_strdel(&ptr_string);
-	return (s);
+	output_string = format_string(s, substring);
+	return (output_string);
 }
 
 static unsigned long	read_int_param(t_type type, va_list *ap)
@@ -261,18 +260,71 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 	return (s);
 }
 
+static char				*no_adjust(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_character(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_string(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_pointer(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_int(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_unsigned_octal(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_unsigned_int(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_unsigned_hex(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_unsigned_hex_up(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
+static char				*adjust_float(t_substring *substring)
+{
+	return (substring->output_string);
+}
+
 static t_list			*new_conv(void *function, char character,
-									int valid_flags)
+									void *adjust_width_prediction_ptr)
 {
 	t_converter		*converter;
 	size_t			converter_size;
 	t_list			*elem;
+	int				valid_flags;
 
+	valid_flags = 0;
 	converter_size = sizeof(*converter);
 	converter = (t_converter *)ft_memalloc(converter_size);
 	converter->character = character;
 	converter->valid_flags = valid_flags;
 	converter->function_ptr = function;
+	converter->adjust_width_prediction_ptr = adjust_width_prediction_ptr;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)converter;
 	elem->content_size = converter_size;
@@ -283,26 +335,23 @@ static t_list			*new_conv(void *function, char character,
 t_list					**create_converters(void)
 {
 	t_list			**conv_list;
-	int				valid_flags;
 
 	conv_list = (t_list **)ft_memalloc(sizeof(*conv_list));
-	valid_flags = 0;
-	ft_lstadd_e(conv_list, new_conv((void *)no_conv, '%', valid_flags));
-	valid_flags = 0;
-	valid_flags |= plus;
-	ft_lstadd_e(conv_list, new_conv((void *)conv_character, 'c', valid_flags));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_string, 's', valid_flags));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_pointer, 'p', valid_flags));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'd', valid_flags));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'i', valid_flags));
+	ft_lstadd_e(conv_list, new_conv((void *)no_conv, '%', no_adjust));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_character, 'c',
+													adjust_character));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_string, 's', adjust_string));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_pointer, 'p', adjust_pointer));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'd', adjust_int));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_int, 'i', adjust_int));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_octal, 'o',
-															valid_flags));
+													adjust_unsigned_octal));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_int, 'u',
-															valid_flags));
+													adjust_unsigned_int));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex, 'x',
-															valid_flags));
+													adjust_unsigned_hex));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex_up, 'X',
-															valid_flags));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_float, 'f', valid_flags));
+													adjust_unsigned_hex_up));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_float, 'f', adjust_float));
 	return (conv_list);
 }
