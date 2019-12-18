@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modify_integer.c                                   :+:      :+:    :+:   */
+/*   modify_octal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 17:37:35 by jkauppi          ###   ########.fr       */
+/*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
+/*   Updated: 2019/12/18 18:04:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void				add_min_mum_of_chars(t_substring *substring, char c)
 	substring->output_string = new_string;
 }
 
-void					adjust_int(t_substring *substring)
+void					adjust_unsigned_octal(t_substring *substring)
 {
 	if (substring->output_string[0] == '+' ||
 		substring->output_string[0] == '-' ||
@@ -101,44 +101,21 @@ void					adjust_int(t_substring *substring)
 	return ;
 }
 
-static unsigned long	read_int_param(t_type type, va_list *ap)
+char				*conv_unsigned_octal(va_list *ap,
+										t_substring *substring, int *attrs)
 {
-	unsigned long	nbr;
-
-	if (type == hh)
-		nbr = (char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (short int)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (long int)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (long long int)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (intmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = (int)(va_arg(*ap, void *));
-	return (nbr);
-}
-
-char					*conv_int(va_list *ap, t_substring *substring,
-											int *attrs)
-{
-	unsigned long	nbr;
+	unsigned int	nbr;
 	char			*s;
 	char			*output_string;
+	char			*input_string;
 
+	input_string = substring->input_string;
+	(void)input_string;
 	(*attrs)++;
-	if (!substring->param_type)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = read_int_param(substring->param_type->type, ap);
-	s = ft_ltoa_base(nbr, 10);
+	nbr = (unsigned int)(va_arg(*ap, void *));
+	s = ft_ltoa_base(nbr, 8);
+	if (!nbr)
+		*s = '\0';
 	output_string = format_string(s, substring);
 	return (output_string);
 }

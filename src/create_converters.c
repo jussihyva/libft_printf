@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 15:28:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:32:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,6 @@ static char				*no_conv(va_list *ap, t_substring *substring,
 	return (ft_strdup(input_string));
 }
 
-static char				*conv_unsigned_octal(va_list *ap,
-										t_substring *substring, int *attrs)
-{
-	unsigned int	nbr;
-	char			*s;
-	char			*output_string;
-	char			*input_string;
-
-	input_string = substring->input_string;
-	(void)input_string;
-	(*attrs)++;
-	nbr = (unsigned int)(va_arg(*ap, void *));
-	s = ft_ltoa_base(nbr, 8);
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
 static char				*conv_unsigned_int(va_list *ap, t_substring *substring,
 															int *attrs)
 {
@@ -182,7 +165,7 @@ static void				no_adjust(t_substring *substring)
 	return ;
 }
 
-void				adjust_unsigned_octal(t_substring *substring)
+void					adjust_unsigned_int(t_substring *substring)
 {
 	char		*new_string;
 
@@ -195,7 +178,7 @@ void				adjust_unsigned_octal(t_substring *substring)
 	return ;
 }
 
-void				adjust_unsigned_int(t_substring *substring)
+void					adjust_unsigned_hex(t_substring *substring)
 {
 	char		*new_string;
 
@@ -208,7 +191,7 @@ void				adjust_unsigned_int(t_substring *substring)
 	return ;
 }
 
-void				adjust_unsigned_hex(t_substring *substring)
+void					adjust_unsigned_hex_up(t_substring *substring)
 {
 	char		*new_string;
 
@@ -221,20 +204,7 @@ void				adjust_unsigned_hex(t_substring *substring)
 	return ;
 }
 
-void				adjust_unsigned_hex_up(t_substring *substring)
-{
-	char		*new_string;
-
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
-	return ;
-}
-
-void				adjust_float(t_substring *substring)
+void					adjust_float(t_substring *substring)
 {
 	char		*new_string;
 

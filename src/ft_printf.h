@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 15:29:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:30:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,8 @@ void		adjust_pointer(t_substring *substring);
 char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_int(t_substring *substring);
 char		*conv_int(va_list *ap, t_substring *substring, int *attrs);
+void		adjust_unsigned_octal(t_substring *substring);
+char		*conv_unsigned_octal(va_list *ap, t_substring *substring,
+																int *attrs);
 
 #endif

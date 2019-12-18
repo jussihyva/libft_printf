@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 14:13:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:33:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	add_min_mum_of_chars(t_substring *substring)
 									ft_strlen(substring->output_string));
 		ft_strcat(new_string, substring->output_string + 2);
 	}
-	
 	ft_strdel(&substring->output_string);
 	substring->output_string = new_string;
 	return ;
