@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 12:59:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:28:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,48 +86,6 @@ static char				*no_conv(va_list *ap, t_substring *substring,
 	(void)*attrs;
 	input_string[ft_strlen(input_string) - 1] = '\0';
 	return (ft_strdup(input_string));
-}
-
-static unsigned long	read_int_param(t_type type, va_list *ap)
-{
-	unsigned long	nbr;
-
-	if (type == hh)
-		nbr = (char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (short int)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (long int)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (long long int)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (intmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = (int)(va_arg(*ap, void *));
-	return (nbr);
-}
-
-static char				*conv_int(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	unsigned long	nbr;
-	char			*s;
-	char			*output_string;
-
-	(*attrs)++;
-	if (!substring->param_type)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = read_int_param(substring->param_type->type, ap);
-	s = ft_ltoa_base(nbr, 10);
-	output_string = format_string(s, substring);
-	return (output_string);
 }
 
 static char				*conv_unsigned_octal(va_list *ap,
@@ -221,19 +179,6 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 static void				no_adjust(t_substring *substring)
 {
 	(void)substring;
-	return ;
-}
-
-void				adjust_int(t_substring *substring)
-{
-	char		*new_string;
-
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
 	return ;
 }
 
