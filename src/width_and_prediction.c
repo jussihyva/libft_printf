@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 11:29:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 12:51:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char			*modify_substring(t_substring *substring)
 	return (new_string);
 }
 
-void				width_adjust(t_substring *substring)
+void			width_adjust(t_substring *substring)
 {
 	if (substring->converter)
 		substring->converter->adjust_width_prediction_ptr(substring);
 	return ;
 }
 
-static void			save_width_and_prediction(char **ptr,
+static void		save_width_and_prediction(char **ptr,
 												t_list *substring_elem)
 {
 	if (**ptr == '.')
@@ -64,7 +64,7 @@ static void			save_width_and_prediction(char **ptr,
 	return ;
 }
 
-void				add_width_and_prediction(t_list **substring_list)
+void			add_width_and_prediction(t_list **substring_list)
 {
 	t_list			*substring_elem;
 	char			*ptr;

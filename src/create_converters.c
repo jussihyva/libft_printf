@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 12:25:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 12:59:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,50 +86,6 @@ static char				*no_conv(va_list *ap, t_substring *substring,
 	(void)*attrs;
 	input_string[ft_strlen(input_string) - 1] = '\0';
 	return (ft_strdup(input_string));
-}
-
-static char				*conv_character(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	char			*s;
-	char			*output_string;
-
-	(*attrs)++;
-	s = ft_strnew(1);
-	s[0] = (char)va_arg(*ap, void *);
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
-static char				*conv_string(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	char			*s;
-	char			*output_string;
-
-	(*attrs)++;
-	s = ft_strdup((char *)va_arg(*ap, void *));
-	if (!s)
-		s = ft_strdup("(null)");
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
-static char				*conv_pointer(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	uintptr_t		ptr;
-	char			*ptr_string;
-	char			*s;
-	char			*output_string;
-
-	(*attrs)++;
-	ptr = (uintptr_t)(va_arg(*ap, void *));
-	ptr_string = ft_ltoa_base(ptr, 16);
-	s = ft_strjoin("0x", ptr_string);
-	ft_strdel(&ptr_string);
-	output_string = format_string(s, substring);
-	return (output_string);
 }
 
 static unsigned long	read_int_param(t_type type, va_list *ap)
@@ -262,12 +218,13 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 	return (s);
 }
 
-static char				*no_adjust(t_substring *substring)
+static void				no_adjust(t_substring *substring)
 {
-	return (substring->output_string);
+	(void)substring;
+	return ;
 }
 
-static char				*adjust_character(t_substring *substring)
+void				adjust_int(t_substring *substring)
 {
 	char		*new_string;
 
@@ -277,43 +234,10 @@ static char				*adjust_character(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
+	return ;
 }
 
-static char				*adjust_string(t_substring *substring)
-{
-	char		*new_string;
-
-	if (substring->precision >= 0)
-	{
-		if ((int)ft_strlen(substring->output_string) > substring->precision)
-			substring->output_string[substring->precision] = '\0';
-	}
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
-	return (substring->output_string);
-}
-
-static char				*adjust_pointer(t_substring *substring)
-{
-	char		*new_string;
-
-	if (substring->precision == 0)
-		substring->output_string[2] = '\0';
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
-	return (substring->output_string);
-}
-
-static char				*adjust_int(t_substring *substring)
+void				adjust_unsigned_octal(t_substring *substring)
 {
 	char		*new_string;
 
@@ -323,10 +247,10 @@ static char				*adjust_int(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
+	return ;
 }
 
-static char				*adjust_unsigned_octal(t_substring *substring)
+void				adjust_unsigned_int(t_substring *substring)
 {
 	char		*new_string;
 
@@ -336,10 +260,10 @@ static char				*adjust_unsigned_octal(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
+	return ;
 }
 
-static char				*adjust_unsigned_int(t_substring *substring)
+void				adjust_unsigned_hex(t_substring *substring)
 {
 	char		*new_string;
 
@@ -349,10 +273,10 @@ static char				*adjust_unsigned_int(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
+	return ;
 }
 
-static char				*adjust_unsigned_hex(t_substring *substring)
+void				adjust_unsigned_hex_up(t_substring *substring)
 {
 	char		*new_string;
 
@@ -362,10 +286,10 @@ static char				*adjust_unsigned_hex(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
+	return ;
 }
 
-static char				*adjust_unsigned_hex_up(t_substring *substring)
+void				adjust_float(t_substring *substring)
 {
 	char		*new_string;
 
@@ -375,20 +299,7 @@ static char				*adjust_unsigned_hex_up(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
-	return (substring->output_string);
-}
-
-static char				*adjust_float(t_substring *substring)
-{
-	char		*new_string;
-
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
-	return (substring->output_string);
+	return ;
 }
 
 static t_list			*new_conv(void *function, char character,
