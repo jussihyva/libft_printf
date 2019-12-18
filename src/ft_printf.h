@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 20:29:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 11:19:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ t_list				**get_formatters(t_substring *substring,
 												t_list **formatter_list);
 char				*format_string(char *output_string,
 												t_substring *substring);
+char				*modify_substring(t_substring *substring);
 
 #endif

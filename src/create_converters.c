@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 20:43:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 12:25:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static char				*conv_character(va_list *ap, t_substring *substring,
 
 	(*attrs)++;
 	s = ft_strnew(1);
-	s[0] = (char)va_arg(*ap, int);
+	s[0] = (char)va_arg(*ap, void *);
 	output_string = format_string(s, substring);
 	return (output_string);
 }
@@ -108,7 +108,9 @@ static char				*conv_string(va_list *ap, t_substring *substring,
 	char			*output_string;
 
 	(*attrs)++;
-	s = ft_strdup(va_arg(*ap, char *));
+	s = ft_strdup((char *)va_arg(*ap, void *));
+	if (!s)
+		s = ft_strdup("(null)");
 	output_string = format_string(s, substring);
 	return (output_string);
 }
@@ -233,7 +235,7 @@ static char				*conv_unsigned_hex_up(va_list *ap,
 	input_string = substring->input_string;
 	(void)input_string;
 	(*attrs)++;
-	nbr = (unsigned int)(va_arg(*ap, void *));
+	nbr = (unsigned int)va_arg(*ap, void *);
 	s = ft_ltoa_base(nbr, 16);
 	output_string = format_string(s, substring);
 	i = -1;
@@ -253,8 +255,8 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 	input_string = substring->input_string;
 	(void)input_string;
 	(*attrs)++;
-	nbr = (double)(va_arg(*ap, double));
-	tmp = (unsigned long)nbr;
+	tmp = (unsigned long)va_arg(*ap, void *);
+	nbr = (double)tmp;
 	nbr *= 1000000;
 	s = ft_ltoa_base(nbr, 10);
 	return (s);
@@ -267,46 +269,125 @@ static char				*no_adjust(t_substring *substring)
 
 static char				*adjust_character(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_string(t_substring *substring)
 {
+	char		*new_string;
+
+	if (substring->precision >= 0)
+	{
+		if ((int)ft_strlen(substring->output_string) > substring->precision)
+			substring->output_string[substring->precision] = '\0';
+	}
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_pointer(t_substring *substring)
 {
+	char		*new_string;
+
+	if (substring->precision == 0)
+		substring->output_string[2] = '\0';
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_int(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_unsigned_octal(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_unsigned_int(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_unsigned_hex(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_unsigned_hex_up(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 
 static char				*adjust_float(t_substring *substring)
 {
+	char		*new_string;
+
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
 	return (substring->output_string);
 }
 

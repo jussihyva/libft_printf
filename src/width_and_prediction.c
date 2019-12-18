@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 20:52:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 11:29:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char			*modify_substring(t_substring *substring)
+char			*modify_substring(t_substring *substring)
 {
 	char		*new_string;
 
@@ -35,20 +35,8 @@ static char			*modify_substring(t_substring *substring)
 
 void				width_adjust(t_substring *substring)
 {
-	char		*new_string;
-
-	if (substring->converter && substring->precision >= 0 &&
-				substring->converter->character == 's')
-	{
-		if ((int)ft_strlen(substring->output_string) > substring->precision)
-			substring->output_string[substring->precision] = '\0';
-	}
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
+	if (substring->converter)
+		substring->converter->adjust_width_prediction_ptr(substring);
 	return ;
 }
 
