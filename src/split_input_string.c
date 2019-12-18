@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/17 20:46:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:50:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	end_ptr++;
 	substring_elem_size = sizeof(*substring) * (end_ptr - start_ptr);
 	substring = (char *)ft_strnew(substring_elem_size);
-	substring = strncpy(substring, start_ptr, end_ptr - start_ptr);
+	substring = ft_strncpy(substring, start_ptr, end_ptr - start_ptr);
 	substring_elem = (t_substring *)ft_memalloc(sizeof(*substring_elem));
 	substring_elem->input_string = substring;
+	substring_elem->output_string = NULL;
 	set_default_values(substring_elem);
 	substring_elem->end_ptr = substring + ft_strlen(substring) - 2;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
