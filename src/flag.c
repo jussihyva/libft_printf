@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 10:54:07 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 17:39:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ static char		*format_space(t_substring *substring, char *s, char character)
 		new_string = ft_strdup(s);
 	else if (character == 's')
 		new_string = ft_strdup(s);
+	else if (character == 'd' || character == 'i')
+	{
+		if (*s == '-')
+			new_string = ft_strdup(s);
+		else
+			new_string = ft_strjoin(" ", s);
+	}
 	else
 		new_string = ft_strjoin(" ", s);
 	ft_strdel(&s);
@@ -101,28 +108,36 @@ static char		*format_hash(t_substring *substring, char *s, char character)
 t_list			**get_formatters(t_substring *substring,
 												t_list **formatter_list)
 {
-	int				i;
 	int				s_len;
 	t_list			**valid_formatters_list;
 	t_list			*elem;
 	char			*s;
+	int				plus_added;
 
+	plus_added = 0;
 	s = substring->input_string;
 	valid_formatters_list =
 					(t_list **)ft_memalloc(sizeof(*valid_formatters_list));
-	s_len = substring->end_ptr - substring->input_string + 1;
 	*valid_formatters_list = NULL;
-	i = 0;
-	while (++i < s_len)
+	elem = *formatter_list;
+	while (elem)
 	{
-		elem = *formatter_list;
-		while (elem)
+		s_len = substring->end_ptr - substring->input_string + 1;
+		while (s_len--)
 		{
-			if (s[i] == ((t_formatter *)(elem->content))->character)
-				ft_lstadd_e(valid_formatters_list,
+			if (s[s_len] == ((t_formatter *)(elem->content))->character)
+			{
+				if (((t_formatter *)(elem->content))->character == '+')
+					plus_added = 1;
+				if (!plus_added || ((t_formatter *)(elem->content))->character != ' ')
+				{
+					ft_lstadd_e(valid_formatters_list,
 						ft_lstnew(elem->content, elem->content_size));
-			elem = elem->next;
+					break ;
+				}
+			}
 		}
+		elem = elem->next;
 	}
 	return (valid_formatters_list);
 }

@@ -6,13 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 16:35:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:22:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				add_min_mum_of_digits(t_substring *substring, char c)
+static void					add_min_mum_of_digits(t_substring *substring,
+																	char c)
 {
 	char		*new_string;
 
@@ -30,7 +31,8 @@ static void				add_min_mum_of_digits(t_substring *substring, char c)
 	return ;
 }
 
-static void				add_min_mum_of_chars(t_substring *substring, char c)
+static void					add_min_mum_of_chars(t_substring *substring,
+																	char c)
 {
 	char		*new_string;
 
@@ -59,7 +61,7 @@ static void				add_min_mum_of_chars(t_substring *substring, char c)
 	}
 }
 
-void					adjust_int(t_substring *substring)
+void						adjust_int(t_substring *substring)
 {
 	if (substring->output_string[0] == '+' ||
 		substring->output_string[0] == '-' ||
@@ -82,7 +84,7 @@ void					adjust_int(t_substring *substring)
 	return ;
 }
 
-void					adjust_unsigned_int(t_substring *substring)
+void						adjust_unsigned_int(t_substring *substring)
 {
 	if (substring->output_string[0] ==  ' ')
 	{
@@ -101,18 +103,18 @@ void					adjust_unsigned_int(t_substring *substring)
 	return ;
 }
 
-static unsigned long	read_int_param(t_type type, va_list *ap)
+static long long			read_int_param(t_type type, va_list *ap)
 {
-	unsigned long	nbr;
+	long long	nbr;
 
 	if (type == hh)
 		nbr = (char)(va_arg(*ap, void *));
 	else if (type == h)
-		nbr = (short int)(va_arg(*ap, void *));
+		nbr = (short)(va_arg(*ap, void *));
 	else if (type == l)
-		nbr = (long int)(va_arg(*ap, void *));
+		nbr = (long)(va_arg(*ap, void *));
 	else if (type == ll)
-		nbr = (long long int)(va_arg(*ap, void *));
+		nbr = (long long)(va_arg(*ap, void *));
 	else if (type == j)
 		nbr = (intmax_t)(va_arg(*ap, void *));
 	else if (type == z)
@@ -126,10 +128,10 @@ static unsigned long	read_int_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-char					*conv_int(va_list *ap, t_substring *substring,
+char						*conv_int(va_list *ap, t_substring *substring,
 											int *attrs)
 {
-	unsigned long	nbr;
+	long long		nbr;
 	char			*s;
 	char			*output_string;
 
@@ -143,8 +145,8 @@ char					*conv_int(va_list *ap, t_substring *substring,
 	return (output_string);
 }
 
-char					*conv_unsigned_int(va_list *ap, t_substring *substring,
-															int *attrs)
+char						*conv_unsigned_int(va_list *ap,
+										t_substring *substring, int *attrs)
 {
 	unsigned int	nbr;
 	char			*s;

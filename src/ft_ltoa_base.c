@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 15:59:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/09 13:16:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 18:34:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int				count_chars(unsigned long nbr, int base)
+static int					count_chars(unsigned long long nbr, int base)
 {
 	int		c;
 
@@ -22,15 +22,16 @@ static int				count_chars(unsigned long nbr, int base)
 	return (c);
 }
 
-static unsigned long	unsign(long nbr, int neg)
+static unsigned long long	unsign(long long nbr, int neg)
 {
 	if (neg)
-		return (unsigned long)(nbr * -1);
+		return (unsigned long long)(nbr * -1);
 	else
-		return (unsigned long)(nbr);
+		return (unsigned long long)(nbr);
 }
 
-static char				*long_to_string(long nbr, int base, int index, char *s)
+static char					*long_to_string(unsigned long long nbr,
+										unsigned int base, int index, char *s)
 {
 	static char		*letter = "0123456789abcdef";
 
@@ -40,12 +41,12 @@ static char				*long_to_string(long nbr, int base, int index, char *s)
 	return (s);
 }
 
-char					*ft_ltoa_base(long nbr, int base)
+char						*ft_ltoa_base(long long nbr, int base)
 {
-	char			*s;
-	int				neg;
-	int				num_of_chars;
-	unsigned long	un_nbr;
+	char				*s;
+	int					neg;
+	int					num_of_chars;
+	unsigned long long	un_nbr;
 
 	neg = 0;
 	if (nbr < 0 && base == 10)
