@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 19:08:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 12:22:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ static size_t	print_formatted_string(t_list **substring_list)
 	{
 		substring = (t_substring *)(substring_elem->content);
 		if (substring->output_string)
+		{
 			ft_putstr(substring->output_string);
 			words += ft_strlen(substring->output_string);
+		}
 		substring_elem = substring_elem->next;
 	}
 	return (words);

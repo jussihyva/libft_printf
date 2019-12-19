@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2019/12/18 18:26:28 by jkauppi          ###   ########.fr        #
+#    Updated: 2019/12/19 09:56:09 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
 					ft_ltoa_base.c flag.c param_type.c \
 					width_and_prediction.c modify_character.c \
 					modify_string.c modify_pointer.c modify_integer.c \
-					modify_octal.c
+					modify_octal.c modify_common.c
 HEADER_FILE		=	ft_printf.h
 SRC_PATHS		=	${addprefix ${SRC_FOLDER}/, ${SRC_FILES}}
 OBJ_PATHS		=	${addprefix ${OBJ_FOLDER}/, ${patsubst %.c,%.o,${SRC_FILES}}}
@@ -51,9 +51,11 @@ ${OBJ_PATHS}:${OBJ_FOLDER}/%.o: ${SRC_FOLDER}/%.c ${SRC_FOLDER}/${HEADER_FILE}
 
 clean:
 	\rm -f ${OBJ_PATHS}
+	make -C ${LIBFT_FOLDER} clean
 
 fclean: clean
 	\rm -f ${NAME}
+	make -C ${LIBFT_FOLDER} fclean
 
 re: fclean all
 
