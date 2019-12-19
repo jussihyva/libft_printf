@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 12:48:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:35:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void				add_min_mum_of_digits(t_substring *substring, char c)
 							substring->output_string, substring->precision, "");
 	else
 	{
-		new_string = ft_strnew(sizeof(*new_string) * (substring->precision));
+		new_string = ft_strnew(1);
 		*new_string = c;
 		substring->output_string = right_adjust('0',
 				substring->output_string, substring->precision, new_string);
@@ -64,6 +64,27 @@ void					adjust_int(t_substring *substring)
 	if (substring->output_string[0] == '+' ||
 		substring->output_string[0] == '-' ||
 		substring->output_string[0] == ' ')
+	{
+		if (substring->precision != -1)
+			substring->precision++;
+		if ((int)ft_strlen(substring->output_string) < substring->precision)
+			add_min_mum_of_digits(substring, substring->output_string[0]);
+		if ((int)ft_strlen(substring->output_string) < substring->width)
+			add_min_mum_of_chars(substring, substring->output_string[0]);
+	}
+	else
+	{
+		if ((int)ft_strlen(substring->output_string) < substring->precision)
+			add_min_mum_of_digits(substring, '@');
+		if ((int)ft_strlen(substring->output_string) < substring->width)
+			add_min_mum_of_chars(substring, '@');
+	}
+	return ;
+}
+
+void					adjust_unsigned_int(t_substring *substring)
+{
+	if (substring->output_string[0] ==  ' ')
 	{
 		if ((int)ft_strlen(substring->output_string) < substring->precision + 1)
 			add_min_mum_of_digits(substring, substring->output_string[0]);
@@ -117,6 +138,20 @@ char					*conv_int(va_list *ap, t_substring *substring,
 		nbr = (int)(va_arg(*ap, void *));
 	else
 		nbr = read_int_param(substring->param_type->type, ap);
+	s = ft_ltoa_base(nbr, 10);
+	output_string = format_string(s, substring);
+	return (output_string);
+}
+
+char					*conv_unsigned_int(va_list *ap, t_substring *substring,
+															int *attrs)
+{
+	unsigned int	nbr;
+	char			*s;
+	char			*output_string;
+
+	(*attrs)++;
+	nbr = (unsigned int)(va_arg(*ap, void *));
 	s = ft_ltoa_base(nbr, 10);
 	output_string = format_string(s, substring);
 	return (output_string);

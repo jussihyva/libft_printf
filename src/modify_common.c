@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 09:30:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 12:18:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:19:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char			*right_adjust(char filler, char *string, size_t width,
 	if ((new_string = ft_strnew(sizeof(*new_string) * width)))
 	{
 		offset = ft_strlen(pre_string);
-		string_len = ft_strlen(string);
+		string_len = ft_strlen(string + offset);
 		ft_strcat(new_string, pre_string);
-		ft_memset(new_string + offset, filler, width - string_len);
-		ft_strcat(new_string + width - string_len, string + offset);
+		ft_memset(new_string + offset, filler, width - string_len - offset);
+		ft_strcat(new_string + width - string_len - offset, string + offset);
 		ft_strdel(&string);
 	}
 	return (new_string);

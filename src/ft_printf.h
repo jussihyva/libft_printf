@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 12:17:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/19 13:18:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,7 @@ char		*conv_unsigned_octal(va_list *ap, t_substring *substring,
 char		*left_adjust(char *string, size_t width);
 char		*right_adjust(char filler, char *string, size_t width,
 														char *pre_string);
+void		adjust_unsigned_int(t_substring *substring);
+char		*conv_unsigned_int(va_list *ap, t_substring *substring, int *attrs);
 
 #endif
