@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 09:30:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 16:19:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:51:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,34 @@ char			*right_adjust(char filler, char *string, size_t width,
 		ft_strdel(&string);
 	}
 	return (new_string);
+}
+
+void			add_min_mum_of_digits(t_substring *substring, char *pre_string)
+{
+	substring->output_string = right_adjust('0',
+				substring->output_string, substring->precision, pre_string);
+	return ;
+}
+
+void			add_min_mum_of_chars(t_substring *substring, char *pre_string)
+{
+	if (substring->left_adjust)
+		substring->output_string = left_adjust(substring->output_string,
+												substring->width);
+	else
+	{
+		if (substring->filler == ' ' || substring->precision != -1)
+			substring->output_string = right_adjust(' ',
+						substring->output_string, substring->width, "");
+		else
+		{
+			if (pre_string)
+				substring->output_string = right_adjust('0',
+						substring->output_string, substring->width, pre_string);
+			else
+				substring->output_string = right_adjust(substring->filler,
+						substring->output_string, substring->width, "");
+		}
+	}
+	return ;
 }

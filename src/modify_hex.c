@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modify_integer.c                                   :+:      :+:    :+:   */
+/*   modify_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 20:28:51 by jkauppi          ###   ########.fr       */
+/*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
+/*   Updated: 2019/12/22 22:09:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void						adjust_int(t_substring *substring)
+void				adjust_unsigned_hex(t_substring *substring)
 {
 	char	*pre_string;
 
-	if (substring->output_string[0] == '+' ||
-		substring->output_string[0] == '-' ||
-		substring->output_string[0] == ' ')
+	if (substring->output_string[1] == 'x' ||
+		substring->output_string[1] == 'X')
 	{
 		if (substring->precision != -1)
-			substring->precision++;
-		pre_string = ft_strnew(1);
+			substring->precision += 2;
+		if (substring->output_string[2] == '0')
+			substring->output_string[0] = '\0';
+		pre_string = ft_strnew(2);
 		*pre_string = substring->output_string[0];
+		*(pre_string + 1) = substring->output_string[1];
 	}
 	else
 		pre_string = ft_strnew(0);
@@ -35,45 +37,7 @@ void						adjust_int(t_substring *substring)
 	return ;
 }
 
-void						adjust_unsigned_int(t_substring *substring)
-{
-	char	*pre_string;
-
-	pre_string = ft_strnew(0);
-	if ((int)ft_strlen(substring->output_string) < substring->precision)
-		add_min_mum_of_digits(substring, pre_string);
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-		add_min_mum_of_chars(substring, pre_string);
-	ft_strdel(&pre_string);
-	return ;
-}
-
-static long long			read_int_param(t_type type, va_list *ap)
-{
-	long long	nbr;
-
-	if (type == hh)
-		nbr = (char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (short)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (long)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (long long)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (intmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = (int)(va_arg(*ap, void *));
-	return (nbr);
-}
-
-static long long			read_un_int_param(t_type type, va_list *ap)
+static long long	read_hex_param(t_type type, va_list *ap)
 {
 	long long	nbr;
 
@@ -98,25 +62,8 @@ static long long			read_un_int_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-char						*conv_int(va_list *ap, t_substring *substring,
-											int *attrs)
-{
-	long long		nbr;
-	char			*s;
-	char			*output_string;
-
-	(*attrs)++;
-	if (!substring->param_type)
-		nbr = (int)(va_arg(*ap, void *));
-	else
-		nbr = read_int_param(substring->param_type->type, ap);
-	s = ft_lltoa_base(nbr, 10);
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
-char						*conv_unsigned_int(va_list *ap,
-										t_substring *substring, int *attrs)
+char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
+																int *attrs)
 {
 	unsigned long long		nbr;
 	char					*s;
@@ -126,11 +73,29 @@ char						*conv_unsigned_int(va_list *ap,
 	if (!substring->param_type)
 		nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		nbr = read_un_int_param(substring->param_type->type, ap);
-	s = ft_ulltoa_base(nbr, 10);
-	if (s[0] == '-')
-		output_string = format_string(s + 1, substring);
+		nbr = read_hex_param(substring->param_type->type, ap);
+	s = ft_ulltoa_base(nbr, 16);
+	output_string = format_string(s, substring);
+	return (output_string);
+}
+
+char				*conv_unsigned_hex_up(va_list *ap,
+										t_substring *substring, int *attrs)
+{
+	unsigned long long		nbr;
+	char					*s;
+	char					*output_string;
+	int						i;
+
+	(*attrs)++;
+	if (!substring->param_type)
+		nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		output_string = format_string(s, substring);
+		nbr = read_hex_param(substring->param_type->type, ap);
+	s = ft_ulltoa_base(nbr, 16);
+	output_string = format_string(s, substring);
+	i = -1;
+	while (*(output_string + ++i))
+		*(output_string + i) = ft_toupper(*(output_string + i));
 	return (output_string);
 }

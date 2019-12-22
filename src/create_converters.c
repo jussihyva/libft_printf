@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 14:38:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 20:44:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,44 +87,6 @@ static char				*no_conv(va_list *ap, t_substring *substring,
 	return (ft_strdup(input_string));
 }
 
-static char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	unsigned int	nbr;
-	char			*s;
-	char			*output_string;
-	char			*input_string;
-
-	input_string = substring->input_string;
-	(void)input_string;
-	(*attrs)++;
-	nbr = (unsigned int)(va_arg(*ap, void *));
-	s = ft_lltoa_base(nbr, 16);
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
-static char				*conv_unsigned_hex_up(va_list *ap,
-										t_substring *substring, int *attrs)
-{
-	unsigned int	nbr;
-	char			*s;
-	char			*output_string;
-	int				i;
-	char			*input_string;
-
-	input_string = substring->input_string;
-	(void)input_string;
-	(*attrs)++;
-	nbr = (unsigned int)va_arg(*ap, void *);
-	s = ft_lltoa_base(nbr, 16);
-	output_string = format_string(s, substring);
-	i = -1;
-	while (*(output_string + ++i))
-		*(output_string + i) = ft_toupper(*(output_string + i));
-	return (output_string);
-}
-
 static char				*conv_float(va_list *ap, t_substring *substring,
 															int *attrs)
 {
@@ -146,32 +108,6 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 static void				no_adjust(t_substring *substring)
 {
 	(void)substring;
-	return ;
-}
-
-void					adjust_unsigned_hex(t_substring *substring)
-{
-	char		*new_string;
-
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
-	return ;
-}
-
-void					adjust_unsigned_hex_up(t_substring *substring)
-{
-	char		*new_string;
-
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
 	return ;
 }
 
@@ -229,7 +165,7 @@ t_list					**create_converters(void)
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex, 'x',
 													adjust_unsigned_hex));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex_up, 'X',
-													adjust_unsigned_hex_up));
+													adjust_unsigned_hex));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_float, 'f', adjust_float));
 	return (conv_list);
 }

@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 14:39:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:57:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				add_min_mum_of_digits(t_substring *substring, char c)
+static void				add_min_mum_of_digits_1(t_substring *substring, char c)
 {
 	char		*new_string;
 
@@ -32,7 +32,7 @@ static void				add_min_mum_of_digits(t_substring *substring, char c)
 	return ;
 }
 
-static void				add_min_mum_of_chars(t_substring *substring, char c)
+static void				add_min_mum_of_chars_1(t_substring *substring, char c)
 {
 	if (substring->left_adjust)
 		substring->output_string = left_adjust(substring->output_string,
@@ -59,10 +59,10 @@ void					adjust_unsigned_octal(t_substring *substring)
 	char		*new_string;
 
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
-		add_min_mum_of_digits(substring, '@');
+		add_min_mum_of_digits_1(substring, '@');
 	if ((int)ft_strlen(substring->output_string) < substring->width)
 	{
-		add_min_mum_of_chars(substring, '@');
+		add_min_mum_of_chars_1(substring, '@');
 	}
 	if (substring->output_string[0] == '\0' && substring->precision == -1)
 	{

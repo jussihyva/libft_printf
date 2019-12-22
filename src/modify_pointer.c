@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 14:38:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:56:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	add_min_mum_of_digits(t_substring *substring)
+static void	add_min_mum_of_digits_1(t_substring *substring)
 {
 	char		*new_string;
 
@@ -27,7 +27,7 @@ static void	add_min_mum_of_digits(t_substring *substring)
 	return ;
 }
 
-static void	add_min_mum_of_chars(t_substring *substring)
+static void	add_min_mum_of_chars_1(t_substring *substring)
 {
 	char		*new_string;
 
@@ -58,11 +58,11 @@ void		adjust_pointer(t_substring *substring)
 		substring->output_string[2] = '\0';
 	if ((int)ft_strlen(substring->output_string + 2) < substring->precision)
 	{
-		add_min_mum_of_digits(substring);
+		add_min_mum_of_digits_1(substring);
 	}
 	if ((int)ft_strlen(substring->output_string) < substring->width)
 	{
-		add_min_mum_of_chars(substring);
+		add_min_mum_of_chars_1(substring);
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 14:34:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 20:45:23 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,11 @@ char		*right_adjust(char filler, char *string, size_t width,
 														char *pre_string);
 void		adjust_unsigned_int(t_substring *substring);
 char		*conv_unsigned_int(va_list *ap, t_substring *substring, int *attrs);
+void		add_min_mum_of_digits(t_substring *substring, char *pre_string);
+void		add_min_mum_of_chars(t_substring *substring, char *pre_string);
+void		adjust_unsigned_hex(t_substring *substring);
+char		*conv_unsigned_hex(va_list *ap, t_substring *substring, int *attrs);
+char		*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
+																int *attrs);
 
 #endif
