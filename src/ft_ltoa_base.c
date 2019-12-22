@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 15:59:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 18:34:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:36:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char					*long_to_string(unsigned long long nbr,
 	return (s);
 }
 
-char						*ft_ltoa_base(long long nbr, int base)
+char						*ft_lltoa_base(long long nbr, int base)
 {
 	char				*s;
 	int					neg;
@@ -57,5 +57,20 @@ char						*ft_ltoa_base(long long nbr, int base)
 	if (neg)
 		s[0] = '-';
 	s = long_to_string(un_nbr, base, num_of_chars + neg - 1, s);
+	return (s);
+}
+
+char						*ft_ulltoa_base(unsigned long long nbr, int base)
+{
+	char				*s;
+	int					neg;
+	int					num_of_chars;
+
+	neg = 0;
+	num_of_chars = count_chars(nbr, base);
+	s = (char *)ft_strnew(sizeof(*s) * (num_of_chars + neg));
+	if (neg)
+		s[0] = '-';
+	s = long_to_string(nbr, base, num_of_chars + neg - 1, s);
 	return (s);
 }

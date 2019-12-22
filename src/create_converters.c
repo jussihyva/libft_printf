@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 13:15:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:38:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void				add_converter(t_substring *substring,
 			substring->converter = (t_converter *)(elem->content);
 			if (input_string[0] == '%' &&
 							input_string[ft_strlen(input_string) - 1] != '%')
-				substring->formatter_list = get_formatters(substring,
-															formatter_list);
+				get_formatters(substring, formatter_list);
 			break ;
 		}
 		elem = elem->next;
@@ -100,7 +99,7 @@ static char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 	(void)input_string;
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
-	s = ft_ltoa_base(nbr, 16);
+	s = ft_lltoa_base(nbr, 16);
 	output_string = format_string(s, substring);
 	return (output_string);
 }
@@ -118,7 +117,7 @@ static char				*conv_unsigned_hex_up(va_list *ap,
 	(void)input_string;
 	(*attrs)++;
 	nbr = (unsigned int)va_arg(*ap, void *);
-	s = ft_ltoa_base(nbr, 16);
+	s = ft_lltoa_base(nbr, 16);
 	output_string = format_string(s, substring);
 	i = -1;
 	while (*(output_string + ++i))
@@ -140,7 +139,7 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 	tmp = (unsigned long)va_arg(*ap, void *);
 	nbr = (double)tmp;
 	nbr *= 1000000;
-	s = ft_ltoa_base(nbr, 10);
+	s = ft_lltoa_base(nbr, 10);
 	return (s);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 18:33:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:34:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ void		add_width_and_prediction(t_list **substring_list);
 int			convert_substrings(t_list **list, va_list *ap,
 							t_list **converter_list, t_list **formatter_list);
 void		width_adjust(t_substring *substring);
-char		*ft_ltoa_base(long long nbr, int base);
-t_list		**get_formatters(t_substring *substring, t_list **formatter_list);
+char		*ft_lltoa_base(long long nbr, int base);
+char		*ft_ulltoa_base(unsigned long long nbr, int base);
+void		get_formatters(t_substring *substring, t_list **formatter_list);
 char		*format_string(char *output_string, t_substring *substring);
 char		*modify_substring(t_substring *substring);
 void		adjust_character(t_substring *substring);

@@ -6,20 +6,23 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 18:50:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 13:38:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void		set_default_values(t_substring *substring_elem)
+static void		set_default_values(t_substring *substring)
 {
-	substring_elem->converter = NULL;
-	substring_elem->output_string = NULL;
-	substring_elem->filler = ' ';
-	substring_elem->left_adjust = 0;
-	substring_elem->precision = -1;
-	substring_elem->width = -1;
+	substring->converter = NULL;
+	substring->output_string = NULL;
+	substring->filler = ' ';
+	substring->left_adjust = 0;
+	substring->precision = -1;
+	substring->width = -1;
+	substring->formatter_list =
+					(t_list **)ft_memalloc(sizeof(*substring->formatter_list));
+	*substring->formatter_list = NULL;
 }
 
 static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)

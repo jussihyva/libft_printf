@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 17:39:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:02:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ static char		*format_plus(t_substring *substring, char *s, char character)
 		new_string = ft_strdup(s);
 	else if (character == 's')
 		new_string = ft_strdup(s);
-	else if (s[0] != '-')
-		new_string = ft_strjoin("+", s);
+	else if (character == 'd' || character == 'i')
+		if (s[0] == '-')
+			new_string = ft_strdup(s);
+		else
+			new_string = ft_strjoin("+", s);
 	else
 		new_string = ft_strdup(s);
 	ft_strdel(&s);
@@ -70,9 +73,13 @@ static char		*format_space(t_substring *substring, char *s, char character)
 	{
 		if (*s == '-')
 			new_string = ft_strdup(s);
+		else if (*s == '+')
+			new_string = ft_strdup(s);
 		else
 			new_string = ft_strjoin(" ", s);
 	}
+	else if (character == 'u')
+		new_string = ft_strdup(s);
 	else
 		new_string = ft_strjoin(" ", s);
 	ft_strdel(&s);
@@ -105,41 +112,30 @@ static char		*format_hash(t_substring *substring, char *s, char character)
 	return (new_string);
 }
 
-t_list			**get_formatters(t_substring *substring,
-												t_list **formatter_list)
+void			get_formatters(t_substring *substring, t_list **formatter_list)
 {
 	int				s_len;
-	t_list			**valid_formatters_list;
 	t_list			*elem;
-	char			*s;
-	int				plus_added;
+	t_formatter		*formatter;
 
-	plus_added = 0;
-	s = substring->input_string;
-	valid_formatters_list =
-					(t_list **)ft_memalloc(sizeof(*valid_formatters_list));
-	*valid_formatters_list = NULL;
 	elem = *formatter_list;
 	while (elem)
 	{
+		formatter = (t_formatter *)elem->content;
 		s_len = substring->end_ptr - substring->input_string + 1;
 		while (s_len--)
 		{
-			if (s[s_len] == ((t_formatter *)(elem->content))->character)
+			if (substring->input_string[s_len] == formatter->character &&
+				!(substring->flags & formatter->flag))
 			{
-				if (((t_formatter *)(elem->content))->character == '+')
-					plus_added = 1;
-				if (!plus_added || ((t_formatter *)(elem->content))->character != ' ')
-				{
-					ft_lstadd_e(valid_formatters_list,
-						ft_lstnew(elem->content, elem->content_size));
-					break ;
-				}
+				substring->flags |= formatter->flag;
+				ft_lstadd_e(substring->formatter_list,
+					ft_lstnew(elem->content, elem->content_size));
+				break ;
 			}
 		}
 		elem = elem->next;
 	}
-	return (valid_formatters_list);
 }
 
 static t_list	*new_formatter(void *function, char character, t_flag flag)

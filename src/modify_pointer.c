@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 17:33:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:38:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
 
 	(*attrs)++;
 	ptr = (uintptr_t)(va_arg(*ap, void *));
-	ptr_string = ft_ltoa_base(ptr, 16);
+	ptr_string = ft_lltoa_base(ptr, 16);
 	s = ft_strjoin("0x", ptr_string);
 	ft_strdel(&ptr_string);
 	output_string = format_string(s, substring);

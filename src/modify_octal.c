@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 12:21:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/22 14:39:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char					*conv_unsigned_octal(va_list *ap,
 	(void)input_string;
 	(*attrs)++;
 	nbr = (unsigned int)(va_arg(*ap, void *));
-	s = ft_ltoa_base(nbr, 8);
+	s = ft_lltoa_base(nbr, 8);
 	if (!nbr)
 		*s = '\0';
 	output_string = format_string(s, substring);
