@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 22:09:42 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/23 08:50:16 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ void				adjust_unsigned_hex(t_substring *substring)
 	{
 		if (substring->precision != -1)
 			substring->precision += 2;
-		if (substring->output_string[2] == '0')
-			substring->output_string[0] = '\0';
 		pre_string = ft_strnew(2);
 		*pre_string = substring->output_string[0];
 		*(pre_string + 1) = substring->output_string[1];
 	}
 	else
+	{
+		if (substring->precision == 0 && substring->output_string[0] == '0')
+			substring->output_string[0] = '\0';
 		pre_string = ft_strnew(0);
+	}
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
 		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)

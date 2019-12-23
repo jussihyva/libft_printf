@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 22:06:06 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/23 08:44:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,13 @@ static char		*format_hash(t_substring *substring, char *s, char character)
 	char		*new_string;
 
 	(void)substring;
-	if (character == 'x')
-		new_string = ft_strjoin("0x", s);
-	else if (character == 'X')
-		new_string = ft_strjoin("0X", s);
+	if (character == 'x' || character == 'X')
+	{
+		if (s[0] == '0')
+			new_string = ft_strdup(s);
+		else
+			new_string = ft_strjoin("0x", s);
+	}
 	else if (character == 'o')
 		new_string = ft_strjoin("0", s);
 	else if (character == 'c')

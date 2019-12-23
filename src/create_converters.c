@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 20:44:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/23 09:21:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,6 @@ int						convert_substrings(t_list **list, va_list *ap,
 	return (attrs);
 }
 
-static char				*no_conv(va_list *ap, t_substring *substring,
-															int *attrs)
-{
-	char			*input_string;
-
-	input_string = substring->input_string;
-	(void)ap;
-	(void)*attrs;
-	input_string[ft_strlen(input_string) - 1] = '\0';
-	return (ft_strdup(input_string));
-}
-
 static char				*conv_float(va_list *ap, t_substring *substring,
 															int *attrs)
 {
@@ -103,12 +91,6 @@ static char				*conv_float(va_list *ap, t_substring *substring,
 	nbr *= 1000000;
 	s = ft_lltoa_base(nbr, 10);
 	return (s);
-}
-
-static void				no_adjust(t_substring *substring)
-{
-	(void)substring;
-	return ;
 }
 
 void					adjust_float(t_substring *substring)
@@ -151,7 +133,8 @@ t_list					**create_converters(void)
 	t_list			**conv_list;
 
 	conv_list = (t_list **)ft_memalloc(sizeof(*conv_list));
-	ft_lstadd_e(conv_list, new_conv((void *)no_conv, '%', no_adjust));
+	ft_lstadd_e(conv_list, new_conv((void *)conv_percent_char, '%',
+																adjust_string));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_character, 'c',
 													adjust_character));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_string, 's', adjust_string));
