@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/23 08:44:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:24:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static char		*format_space(t_substring *substring, char *s, char character)
 	if (character == 'c')
 		new_string = ft_strdup(s);
 	else if (character == 's')
+		new_string = ft_strdup(s);
+	else if (character == '%')
 		new_string = ft_strdup(s);
 	else if (character == 'd' || character == 'i')
 	{

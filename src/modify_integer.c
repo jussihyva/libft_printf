@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 20:28:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:47:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void						adjust_int(t_substring *substring)
 	}
 	else
 		pre_string = ft_strnew(0);
+	if (substring->precision == 0 && substring->output_string[0] == '0')
+		substring->output_string[substring->precision] = '\0';
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
 		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)

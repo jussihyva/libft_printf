@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/23 09:23:18 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:35:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@ void		adjust_string(t_substring *substring)
 
 	if (substring->precision >= 0)
 	{
+		if ((int)ft_strlen(substring->output_string) > substring->precision)
+			substring->output_string[substring->precision] = '\0';
+	}
+	if ((int)ft_strlen(substring->output_string) < substring->width)
+	{
+		new_string = modify_substring(substring);
+		ft_strdel(&substring->output_string);
+		substring->output_string = new_string;
+	}
+	return ;
+}
+
+void		adjust_percent_char(t_substring *substring)
+{
+	char		*new_string;
+
+	if (substring->precision >= 0)
+	{
+		if (substring->precision == 0)
+			substring->precision++;
 		if ((int)ft_strlen(substring->output_string) > substring->precision)
 			substring->output_string[substring->precision] = '\0';
 	}
@@ -50,8 +70,7 @@ char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs)
 
 	(void)ap;
 	(void)attrs;
-	s = ft_strdup(substring->input_string);
-	s[ft_strlen(s) - 1] = '\0';
+	s = ft_strdup("%");
 	output_string = format_string(s, substring);
 	return (output_string);
 }

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/23 08:58:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:34:14 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ char		*conv_unsigned_hex(va_list *ap, t_substring *substring, int *attrs);
 char		*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
 																int *attrs);
 char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs);
+void		adjust_percent_char(t_substring *substring);
 
 #endif

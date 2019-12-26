@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/23 09:21:29 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:33:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ static void				add_converter(t_substring *substring,
 		if (character == ((t_converter *)(elem->content))->character)
 		{
 			substring->converter = (t_converter *)(elem->content);
-			if (input_string[0] == '%' &&
-							input_string[ft_strlen(input_string) - 1] != '%')
-				get_formatters(substring, formatter_list);
+			get_formatters(substring, formatter_list);
 			break ;
 		}
 		elem = elem->next;
@@ -121,10 +119,7 @@ static t_list			*new_conv(void *function, char character,
 	converter->valid_flags = valid_flags;
 	converter->function_ptr = function;
 	converter->adjust_width_prediction_ptr = adjust_width_prediction_ptr;
-	elem = (t_list *)ft_memalloc(sizeof(*elem));
-	elem->content = (void *)converter;
-	elem->content_size = converter_size;
-	elem->next = NULL;
+	elem = ft_lstnew(converter, converter_size);
 	return (elem);
 }
 
@@ -134,7 +129,7 @@ t_list					**create_converters(void)
 
 	conv_list = (t_list **)ft_memalloc(sizeof(*conv_list));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_percent_char, '%',
-																adjust_string));
+													adjust_percent_char));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_character, 'c',
 													adjust_character));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_string, 's', adjust_string));

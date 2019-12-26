@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 13:38:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 09:05:25 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,20 @@ static char		*create_chars_string(t_list **converter_list)
 static char		*string_for_converter(char *start_ptr,
 					char *chars_string)
 {
-	char			*end_ptr;
-
-	end_ptr = start_ptr;
-	while (*end_ptr && !ft_strchr(chars_string, *end_ptr))
-		end_ptr++;
-	return (end_ptr);
+	if (*start_ptr == '%')
+	{
+		start_ptr++;
+		while (*start_ptr && !ft_strchr(chars_string, *start_ptr))
+			start_ptr++;
+	}
+	else
+	{
+		start_ptr++;
+		while (*start_ptr && *start_ptr != '%')
+			start_ptr++;
+		start_ptr--;
+	}
+	return (start_ptr);
 }
 
 t_list			**split_string(char *input_string, t_list **converter_list)
@@ -96,18 +104,12 @@ t_list			**split_string(char *input_string, t_list **converter_list)
 	start_ptr = input_string;
 	while (start_ptr && *start_ptr)
 	{
-		end_ptr = ft_strchr(start_ptr, '%');
-		if (input_string != end_ptr)
-			save_substring(substring_list, start_ptr, end_ptr);
-		start_ptr = end_ptr;
-		if (start_ptr && *start_ptr)
-		{
-			end_ptr = string_for_converter(start_ptr + 1, chars_string);
-			save_substring(substring_list, start_ptr, end_ptr);
-		}
-		start_ptr = end_ptr;
-		if (start_ptr)
-			start_ptr += 1;
+		end_ptr = string_for_converter(start_ptr, chars_string);
+		save_substring(substring_list, start_ptr, end_ptr);
+		if (end_ptr && *end_ptr)
+			start_ptr = end_ptr + 1;
+		else
+			break ;
 	}
 	ft_strdel(&chars_string);
 	return (substring_list);
