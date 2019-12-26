@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 09:47:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 15:46:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void						adjust_unsigned_int(t_substring *substring)
 	char	*pre_string;
 
 	pre_string = ft_strnew(0);
+	if (substring->precision == 0 && substring->output_string[0] == '0')
+		substring->output_string[substring->precision] = '\0';
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
 		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)

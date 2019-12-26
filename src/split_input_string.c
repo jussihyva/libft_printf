@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 09:05:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 10:04:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static char		*string_for_converter(char *start_ptr,
 		start_ptr++;
 		while (*start_ptr && *start_ptr != '%')
 			start_ptr++;
-		start_ptr--;
+		if (*start_ptr)
+			start_ptr--;
 	}
 	return (start_ptr);
 }

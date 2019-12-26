@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/19 12:22:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 15:27:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,37 @@ static void		del_converter(void *converter, size_t size)
 	return ;
 }
 
+static void		del_param_type(void *type, size_t size)
+{
+	(void)size;
+	free(type);
+	type = NULL;
+	return ;
+}
+
+static int		is_null(t_substring *substring, size_t *words)
+{
+	size_t		c;
+	size_t		len;
+
+	if (substring->converter && substring->converter->character == 'c')
+	{
+		len = ft_strlen(substring->output_string);
+		c = -1;
+		while (++c < len)
+		{
+			if (substring->output_string[c] == 0x01)
+				ft_putchar('\0');
+			else
+				ft_putchar(substring->output_string[c]);
+		}
+		*words += len;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 static size_t	print_formatted_string(t_list **substring_list)
 {
 	t_list			*substring_elem;
@@ -60,8 +91,11 @@ static size_t	print_formatted_string(t_list **substring_list)
 		substring = (t_substring *)(substring_elem->content);
 		if (substring->output_string)
 		{
-			ft_putstr(substring->output_string);
-			words += ft_strlen(substring->output_string);
+			if (!is_null(substring, &words))
+			{
+				ft_putstr(substring->output_string);
+				words += ft_strlen(substring->output_string);
+			}
 		}
 		substring_elem = substring_elem->next;
 	}
@@ -69,7 +103,7 @@ static size_t	print_formatted_string(t_list **substring_list)
 }
 
 static void		release_memory(t_list **substring_list, t_list **converter_list,
-									t_list **formatter_list)
+									t_list **formatter_list, t_list **type_list)
 {
 	ft_lstdel(substring_list, *del_substring);
 	free(substring_list);
@@ -80,6 +114,9 @@ static void		release_memory(t_list **substring_list, t_list **converter_list,
 	ft_lstdel(formatter_list, *del_formatter);
 	free(formatter_list);
 	formatter_list = NULL;
+	ft_lstdel(type_list, *del_param_type);
+	free(type_list);
+	type_list = NULL;
 	return ;
 }
 
@@ -101,7 +138,7 @@ static int		create_output_string(va_list *ap, const char *format)
 	attrs = convert_substrings(substring_list, ap, converter_list,
 														formatter_list);
 	attrs = print_formatted_string(substring_list);
-	release_memory(substring_list, converter_list, formatter_list);
+	release_memory(substring_list, converter_list, formatter_list, type_list);
 	return (attrs);
 }
 

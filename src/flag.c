@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:59:09 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 09:24:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 12:09:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char			*format_string(char *s, t_substring *substring)
 	char			*tmp;
 	char			character;
 
-	output_string = s;
+	output_string = ft_strdup(s);
 	elem = *substring->formatter_list;
 	while (elem)
 	{
@@ -30,14 +30,19 @@ char			*format_string(char *s, t_substring *substring)
 		output_string = formatter->function_ptr(substring, tmp, character);
 		elem = elem->next;
 	}
+	ft_strdel(&s);
 	return (output_string);
 }
 
 static char		*format_minus(t_substring *substring, char *s, char character)
 {
+	char		*new_string;
+
 	(void)character;
 	substring->left_adjust = 1;
-	return (s);
+	new_string = ft_strdup(s);
+	ft_strdel(&s);
+	return (new_string);
 }
 
 static char		*format_plus(t_substring *substring, char *s, char character)
@@ -90,9 +95,13 @@ static char		*format_space(t_substring *substring, char *s, char character)
 
 static char		*format_zero(t_substring *substring, char *s, char character)
 {
+	char		*new_string;
+
 	(void)character;
 	substring->filler = '0';
-	return (s);
+	new_string = ft_strdup(s);
+	ft_strdel(&s);
+	return (new_string);
 }
 
 static char		*format_hash(t_substring *substring, char *s, char character)

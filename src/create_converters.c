@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 09:33:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 12:32:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ static t_list			*new_conv(void *function, char character,
 	converter->function_ptr = function;
 	converter->adjust_width_prediction_ptr = adjust_width_prediction_ptr;
 	elem = ft_lstnew(converter, converter_size);
+	free(converter);
+	converter = NULL;
 	return (elem);
 }
 

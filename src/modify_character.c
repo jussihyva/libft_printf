@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:33:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/18 12:55:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/26 15:27:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char		*conv_character(va_list *ap, t_substring *substring,
 	(*attrs)++;
 	s = ft_strnew(1);
 	s[0] = (char)va_arg(*ap, void *);
+	if (!s[0])
+		s[0] = 0x01;
 	output_string = format_string(s, substring);
 	return (output_string);
 }
