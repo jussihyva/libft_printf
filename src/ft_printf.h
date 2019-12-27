@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 16:44:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 18:13:10 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,14 @@ char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_percent_char(t_substring *substring);
 long long	read_o_u_x_param(t_type type, va_list *ap);
 void		adjust_common(t_substring *substring, int offset, char *pre_string);
+void		release_memory(t_list **substring_list, t_list **converter_list,
+								t_list **formatter_list, t_list **type_list);
+void		adjust_float(t_substring *substring);
+char		*conv_float(va_list *ap, t_substring *substring, int *attrs);
+char		*format_minus(t_substring *substring, char *s, char character);
+char		*format_plus(t_substring *substring, char *s, char character);
+char		*format_space(t_substring *substring, char *s, char character);
+char		*format_zero(t_substring *substring, char *s, char character);
+char		*format_hash(t_substring *substring, char *s, char character);
 
 #endif

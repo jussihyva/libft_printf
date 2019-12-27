@@ -6,36 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 09:30:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 16:45:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 17:57:45 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-long long		read_o_u_x_param(t_type type, va_list *ap)
-{
-	long long	nbr;
-
-	if (type == hh)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (unsigned short)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (unsigned long)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (unsigned long long)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (uintmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	return (nbr);
-}
 
 char			*left_adjust(char *string, size_t width)
 {
