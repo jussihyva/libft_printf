@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 10:04:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 09:37:33 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 	t_substring		*substring_elem;
 	size_t			substring_elem_size;
 
-	if (!end_ptr)
+	if (!(*end_ptr))
+	{
+		if (*start_ptr == '%')
+			return ;
 		end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
+	}
 	end_ptr++;
 	substring_elem_size = sizeof(*substring) * (end_ptr - start_ptr);
 	substring = (char *)ft_strnew(substring_elem_size);
@@ -107,7 +111,7 @@ t_list			**split_string(char *input_string, t_list **converter_list)
 	{
 		end_ptr = string_for_converter(start_ptr, chars_string);
 		save_substring(substring_list, start_ptr, end_ptr);
-		if (end_ptr && *end_ptr)
+		if (*end_ptr)
 			start_ptr = end_ptr + 1;
 		else
 			break ;

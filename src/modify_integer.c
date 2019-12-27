@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/26 15:46:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 09:40:01 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,6 @@ static long long			read_int_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-static long long			read_un_int_param(t_type type, va_list *ap)
-{
-	long long	nbr;
-
-	if (type == hh)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (unsigned short)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (unsigned long)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (unsigned long long)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (uintmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	return (nbr);
-}
-
 char						*conv_int(va_list *ap, t_substring *substring,
 											int *attrs)
 {
@@ -130,7 +105,7 @@ char						*conv_unsigned_int(va_list *ap,
 	if (!substring->param_type)
 		nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		nbr = read_un_int_param(substring->param_type->type, ap);
+		nbr = read_o_u_x_param(substring->param_type->type, ap);
 	s = ft_ulltoa_base(nbr, 10);
 	if (s[0] == '-')
 		output_string = format_string(s + 1, substring);

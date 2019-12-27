@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/23 08:50:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 09:41:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,6 @@ void				adjust_unsigned_hex(t_substring *substring)
 	return ;
 }
 
-static long long	read_hex_param(t_type type, va_list *ap)
-{
-	long long	nbr;
-
-	if (type == hh)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else if (type == h)
-		nbr = (unsigned short)(va_arg(*ap, void *));
-	else if (type == l)
-		nbr = (unsigned long)(va_arg(*ap, void *));
-	else if (type == ll)
-		nbr = (unsigned long long)(va_arg(*ap, void *));
-	else if (type == j)
-		nbr = (uintmax_t)(va_arg(*ap, void *));
-	else if (type == z)
-		nbr = (size_t)(va_arg(*ap, void *));
-	else if (type == t)
-		nbr = (ptrdiff_t)(va_arg(*ap, void *));
-	else if (type == L)
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	else
-		nbr = (unsigned char)(va_arg(*ap, void *));
-	return (nbr);
-}
-
 char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 																int *attrs)
 {
@@ -75,7 +50,7 @@ char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 	if (!substring->param_type)
 		nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		nbr = read_hex_param(substring->param_type->type, ap);
+		nbr = read_o_u_x_param(substring->param_type->type, ap);
 	s = ft_ulltoa_base(nbr, 16);
 	output_string = format_string(s, substring);
 	return (output_string);
@@ -93,7 +68,7 @@ char				*conv_unsigned_hex_up(va_list *ap,
 	if (!substring->param_type)
 		nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		nbr = read_hex_param(substring->param_type->type, ap);
+		nbr = read_o_u_x_param(substring->param_type->type, ap);
 	s = ft_ulltoa_base(nbr, 16);
 	output_string = format_string(s, substring);
 	i = -1;

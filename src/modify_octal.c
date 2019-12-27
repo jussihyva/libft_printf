@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 19:57:52 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 09:16:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,16 @@ void					adjust_unsigned_octal(t_substring *substring)
 char					*conv_unsigned_octal(va_list *ap,
 										t_substring *substring, int *attrs)
 {
-	unsigned int	nbr;
-	char			*s;
-	char			*output_string;
-	char			*input_string;
+	unsigned long long		nbr;
+	char					*s;
+	char					*output_string;
 
-	input_string = substring->input_string;
-	(void)input_string;
 	(*attrs)++;
-	nbr = (unsigned int)(va_arg(*ap, void *));
-	s = ft_lltoa_base(nbr, 8);
+	if (!substring->param_type)
+		nbr = (unsigned int)(va_arg(*ap, void *));
+	else
+		nbr = read_o_u_x_param(substring->param_type->type, ap);
+	s = ft_ulltoa_base(nbr, 8);
 	if (!nbr)
 		*s = '\0';
 	output_string = format_string(s, substring);

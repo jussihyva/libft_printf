@@ -6,65 +6,39 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 19:56:58 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 10:06:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	add_min_mum_of_digits_1(t_substring *substring)
+void		adjust_pointer(t_substring *substring)
 {
-	char		*new_string;
+	char	*pre_string;
 
-	new_string = ft_strnew(sizeof(*new_string) * (substring->precision + 2));
-	*new_string = '\0';
-	ft_strcat(new_string, "0x");
-	ft_memset(new_string + 2, '0', substring->precision -
-									ft_strlen(substring->output_string) + 2);
-	ft_strcat(new_string, substring->output_string + 2);
-	ft_strdel(&substring->output_string);
-	substring->output_string = new_string;
-	return ;
-}
-
-static void	add_min_mum_of_chars_1(t_substring *substring)
-{
-	char		*new_string;
-
-	new_string = ft_strnew(sizeof(*new_string) * (substring->width));
-	*new_string = '\0';
-	if (substring->filler == ' ' || substring->precision != -1)
+	if (substring->output_string[1] == 'x' ||
+		substring->output_string[1] == 'X')
 	{
-		ft_memset(new_string, ' ', substring->width -
-									ft_strlen(substring->output_string));
-		ft_strcat(new_string, substring->output_string);
+		if (substring->precision != -1)
+			substring->precision += 2;
+		pre_string = ft_strnew(2);
+		*pre_string = substring->output_string[0];
+		*(pre_string + 1) = substring->output_string[1];
 	}
 	else
 	{
-		ft_strcat(new_string, "0x");
-		ft_memset(new_string + 2, substring->filler, substring->width -
-									ft_strlen(substring->output_string));
-		ft_strcat(new_string, substring->output_string + 2);
+		if (substring->precision == 0 && substring->output_string[0] == '0')
+			substring->output_string[0] = '\0';
+		pre_string = ft_strnew(0);
 	}
-	ft_strdel(&substring->output_string);
-	substring->output_string = new_string;
-	return ;
-}
-
-void		adjust_pointer(t_substring *substring)
-{
 	if (substring->precision == 0 && substring->output_string[2] == '0' &&
 			ft_strlen(substring->output_string) == 3)
 		substring->output_string[2] = '\0';
-	if ((int)ft_strlen(substring->output_string + 2) < substring->precision)
-	{
-		add_min_mum_of_digits_1(substring);
-	}
+	if ((int)ft_strlen(substring->output_string) < substring->precision)
+		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		add_min_mum_of_chars_1(substring);
-	}
-	return ;
+		add_min_mum_of_chars(substring, pre_string);
+	ft_strdel(&pre_string);
 }
 
 char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
