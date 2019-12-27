@@ -6,36 +6,16 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 14:03:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 16:48:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void					adjust_unsigned_octal(t_substring *substring)
+void					special_adjust(t_substring *substring)
 {
 	char	*new_string;
-	char	*pre_string;
-	int		offset;
 
-	offset = 0;
-	if (substring->flags & hash && substring->output_string[1] == '0')
-	{
-		if (substring->precision != -1)
-			substring->precision++;
-		pre_string = ft_strnew(1);
-		*pre_string = substring->output_string[0];
-		offset = 1;
-	}
-	else
-		pre_string = ft_strnew(0);
-	if (substring->precision == offset &&
-									substring->output_string[offset] == '0')
-		substring->output_string[offset] = '\0';
-	if ((int)ft_strlen(substring->output_string) < substring->precision)
-		add_min_mum_of_digits(substring, pre_string);
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-		add_min_mum_of_chars(substring, pre_string);
 	if (substring->output_string[0] == '\0' && substring->precision == -1)
 	{
 		new_string = ft_strnew(1);
@@ -43,6 +23,32 @@ void					adjust_unsigned_octal(t_substring *substring)
 		ft_strdel(&substring->output_string);
 		substring->output_string = new_string;
 	}
+	return ;
+}
+
+void					adjust_unsigned_octal(t_substring *substring)
+{
+	char	*pre_string;
+	int		offset;
+
+	offset = 0;
+	if (substring->flags & hash)
+	{
+		pre_string = ft_strnew(1);
+		offset = 1;
+		*pre_string = substring->output_string[0];
+		if (substring->output_string[1] == '0')
+		{
+			if (substring->precision != -1)
+				substring->precision++;
+			if (substring->output_string[offset] == '0')
+				substring->output_string[offset] = '\0';
+		}
+	}
+	else
+		pre_string = ft_strnew(0);
+	adjust_common(substring, offset, pre_string);
+	special_adjust(substring);
 	ft_strdel(&pre_string);
 	return ;
 }
@@ -60,8 +66,6 @@ char					*conv_unsigned_octal(va_list *ap,
 	else
 		nbr = read_o_u_x_param(substring->param_type->type, ap);
 	s = ft_ulltoa_base(nbr, 8);
-//	if (!nbr)
-//		*s = '\0';
 	output_string = format_string(s, substring);
 	return (output_string);
 }

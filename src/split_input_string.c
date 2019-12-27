@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 09:37:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 16:55:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,17 @@ static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)
 		end_ptr = start_ptr + ft_strlen(start_ptr) - 1;
 	}
 	end_ptr++;
-	substring_elem_size = sizeof(*substring) * (end_ptr - start_ptr);
-	substring = (char *)ft_strnew(substring_elem_size);
+	substring = (char *)ft_strnew(end_ptr - start_ptr);
 	substring = ft_strncpy(substring, start_ptr, end_ptr - start_ptr);
-	substring_elem = (t_substring *)ft_memalloc(sizeof(*substring_elem));
+	substring_elem_size = sizeof(*substring_elem);
+	substring_elem = (t_substring *)ft_memalloc(substring_elem_size);
 	substring_elem->input_string = substring;
 	substring_elem->output_string = NULL;
 	set_default_values(substring_elem);
 	substring_elem->end_ptr = substring + ft_strlen(substring) - 2;
-	elem = (t_list *)ft_memalloc(sizeof(*elem));
-	elem->content = (void *)substring_elem;
-	elem->content_size = substring_elem_size;
-	elem->next = NULL;
+	elem = ft_lstnew(substring_elem, substring_elem_size);
+	free(substring_elem);
+	substring_elem = NULL;
 	ft_lstadd_e(list, elem);
 	return ;
 }
