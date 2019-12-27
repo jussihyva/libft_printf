@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 09:40:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 12:59:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void						adjust_int(t_substring *substring)
 {
 	char	*pre_string;
+	int		offset;
 
+	offset = 0;
 	if (substring->output_string[0] == '+' ||
 		substring->output_string[0] == '-' ||
 		substring->output_string[0] == ' ')
@@ -24,11 +26,13 @@ void						adjust_int(t_substring *substring)
 			substring->precision++;
 		pre_string = ft_strnew(1);
 		*pre_string = substring->output_string[0];
+		offset = 1;
 	}
 	else
 		pre_string = ft_strnew(0);
-	if (substring->precision == 0 && substring->output_string[0] == '0')
-		substring->output_string[substring->precision] = '\0';
+	if (substring->precision == offset &&
+									substring->output_string[offset] == '0')
+		substring->output_string[offset] = '\0';
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
 		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)

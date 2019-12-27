@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 10:06:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/27 13:03:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void		adjust_pointer(t_substring *substring)
 {
 	char	*pre_string;
+	int		offset;
 
+	offset = 0;
 	if (substring->output_string[1] == 'x' ||
 		substring->output_string[1] == 'X')
 	{
@@ -24,21 +26,19 @@ void		adjust_pointer(t_substring *substring)
 		pre_string = ft_strnew(2);
 		*pre_string = substring->output_string[0];
 		*(pre_string + 1) = substring->output_string[1];
+		offset = 2;
 	}
 	else
-	{
-		if (substring->precision == 0 && substring->output_string[0] == '0')
-			substring->output_string[0] = '\0';
 		pre_string = ft_strnew(0);
-	}
-	if (substring->precision == 0 && substring->output_string[2] == '0' &&
-			ft_strlen(substring->output_string) == 3)
-		substring->output_string[2] = '\0';
+	if (substring->precision == offset &&
+									substring->output_string[offset] == '0')
+		substring->output_string[offset] = '\0';
 	if ((int)ft_strlen(substring->output_string) < substring->precision)
 		add_min_mum_of_digits(substring, pre_string);
 	if ((int)ft_strlen(substring->output_string) < substring->width)
 		add_min_mum_of_chars(substring, pre_string);
 	ft_strdel(&pre_string);
+	return ;
 }
 
 char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
