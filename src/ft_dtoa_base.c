@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/28 18:28:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/28 18:50:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static unsigned long long	get_decimals(size_t precision, double nbr,
 {
 	while (precision--)
 		nbr *= 10;
+	nbr *= 10;
 	return (unsign((long long)nbr, neg));
 }
 
@@ -47,17 +48,21 @@ static unsigned long long	count_decimals(size_t precision,
 {
 	size_t		num_of_zeros;
 	size_t		num_of_chars;
+	size_t		decrease;
 
-	num_of_chars = ft_numlen(nbr_decimal, base);
-	num_of_zeros = precision - num_of_chars;
-	nbr_decimal *= 10;
+	num_of_chars = ft_numlen(nbr_decimal, base) - 1;
+//	nbr_decimal *= 10;
 	nbr_decimal += 5;
 	nbr_decimal /= 10;
 	if (num_of_chars != ft_numlen(nbr_decimal, base))
 	{
-		nbr_decimal /= 10;
-		num_of_zeros--;
+		decrease = 10;
+		while (--num_of_chars)
+			decrease *= 10;
+		nbr_decimal -= decrease;
 	}
+	num_of_chars = ft_numlen(nbr_decimal, base);
+	num_of_zeros = precision - num_of_chars;
 	while (num_of_zeros--)
 		s = ft_strcat(s, "0");
 	return (nbr_decimal);
