@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 18:13:10 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/28 18:09:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ struct		s_param_type
 
 typedef struct s_param_type	t_param_type;
 
+struct		s_output_string
+{
+	int		add_null;
+	char	*pre_filler;
+	char	*prefix;
+	char	*zero_filler;
+	char	*parameter;
+	char	*post_filler;
+};
+
+typedef struct s_output_string	t_output_string;
+
 struct		s_substring
 {
 	char			*input_string;
@@ -83,6 +95,7 @@ struct		s_substring
 	int				width;
 	char			filler;
 	int				left_adjust;
+	t_output_string	o_string;
 };
 
 typedef struct s_substring	t_substring;
@@ -136,5 +149,7 @@ char		*format_plus(t_substring *substring, char *s, char character);
 char		*format_space(t_substring *substring, char *s, char character);
 char		*format_zero(t_substring *substring, char *s, char character);
 char		*format_hash(t_substring *substring, char *s, char character);
+char		*ft_dtoa_base(double nbr, size_t base, size_t precision);
+size_t		ft_numlen(unsigned long long nbr, size_t base);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 18:04:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/28 16:04:36 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 char					*conv_float(va_list *ap, t_substring *substring,
 															int *attrs)
 {
-	unsigned long	tmp;
 	double			nbr;
 	char			*s;
-	char			*input_string;
+	size_t			precision;
 
-	input_string = substring->input_string;
-	(void)input_string;
+	(void)substring;
 	(*attrs)++;
-	tmp = (unsigned long)va_arg(*ap, void *);
-	nbr = (double)tmp;
-	nbr *= 1000000;
-	s = ft_lltoa_base(nbr, 10);
+	nbr = (double)va_arg(*ap, double);
+	precision = 6;
+	s = ft_dtoa_base(nbr, 10, precision);
 	return (s);
 }
 

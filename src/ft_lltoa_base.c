@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ltoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_lltoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/08 15:59:01 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/22 14:36:53 by jkauppi          ###   ########.fr       */
+/*   Created: 2019/12/28 14:55:26 by jkauppi           #+#    #+#             */
+/*   Updated: 2019/12/28 15:00:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,25 @@ static unsigned long long	unsign(long long nbr, int neg)
 }
 
 static char					*long_to_string(unsigned long long nbr,
-										unsigned int base, int index, char *s)
+									unsigned int base, size_t index, char *s)
 {
 	static char		*letter = "0123456789abcdef";
 
-	if (nbr >= base)
-		long_to_string(nbr / base, base, index - 1, s);
-	s[index] = letter[nbr % base];
+	while (nbr >= (unsigned long long)base)
+	{
+		s[--index] = letter[nbr % base];
+		nbr /= base;
+	}
+	s[--index] = letter[nbr % base];
 	return (s);
 }
 
 char						*ft_lltoa_base(long long nbr, int base)
 {
-	char				*s;
-	int					neg;
-	int					num_of_chars;
-	unsigned long long	un_nbr;
+	char					*s;
+	int						neg;
+	size_t					num_of_chars;
+	unsigned long long		un_nbr;
 
 	neg = 0;
 	if (nbr < 0 && base == 10)
@@ -56,21 +59,6 @@ char						*ft_lltoa_base(long long nbr, int base)
 	s = (char *)ft_strnew(sizeof(*s) * (num_of_chars + neg));
 	if (neg)
 		s[0] = '-';
-	s = long_to_string(un_nbr, base, num_of_chars + neg - 1, s);
-	return (s);
-}
-
-char						*ft_ulltoa_base(unsigned long long nbr, int base)
-{
-	char				*s;
-	int					neg;
-	int					num_of_chars;
-
-	neg = 0;
-	num_of_chars = count_chars(nbr, base);
-	s = (char *)ft_strnew(sizeof(*s) * (num_of_chars + neg));
-	if (neg)
-		s[0] = '-';
-	s = long_to_string(nbr, base, num_of_chars + neg - 1, s);
+	s = long_to_string(un_nbr, base, num_of_chars + neg, s);
 	return (s);
 }
