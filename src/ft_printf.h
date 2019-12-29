@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/28 18:09:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 08:16:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ struct		s_output_string
 {
 	int		add_null;
 	char	*pre_filler;
+	char	*sign;
 	char	*prefix;
 	char	*zero_filler;
 	char	*parameter;
@@ -151,5 +152,6 @@ char		*format_zero(t_substring *substring, char *s, char character);
 char		*format_hash(t_substring *substring, char *s, char character);
 char		*ft_dtoa_base(double nbr, size_t base, size_t precision);
 size_t		ft_numlen(unsigned long long nbr, size_t base);
+double		ft_round(double nbr, int base, size_t precision, int neg);
 
 #endif

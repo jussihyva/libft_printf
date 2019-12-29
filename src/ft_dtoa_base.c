@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/28 18:50:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 08:19:24 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,37 +35,15 @@ static char					*long_to_string(unsigned long long nbr,
 }
 
 static unsigned long long	get_decimals(size_t precision, double nbr,
-																int neg)
+													int neg, char *s)
 {
 	while (precision--)
-		nbr *= 10;
-	nbr *= 10;
-	return (unsign((long long)nbr, neg));
-}
-
-static unsigned long long	count_decimals(size_t precision,
-						unsigned long long nbr_decimal, char *s, size_t base)
-{
-	size_t		num_of_zeros;
-	size_t		num_of_chars;
-	size_t		decrease;
-
-	num_of_chars = ft_numlen(nbr_decimal, base) - 1;
-//	nbr_decimal *= 10;
-	nbr_decimal += 5;
-	nbr_decimal /= 10;
-	if (num_of_chars != ft_numlen(nbr_decimal, base))
 	{
-		decrease = 10;
-		while (--num_of_chars)
-			decrease *= 10;
-		nbr_decimal -= decrease;
+		nbr *= 10;
+		if (nbr < 1 && nbr > -1)
+			s = ft_strcat(s, "0");
 	}
-	num_of_chars = ft_numlen(nbr_decimal, base);
-	num_of_zeros = precision - num_of_chars;
-	while (num_of_zeros--)
-		s = ft_strcat(s, "0");
-	return (nbr_decimal);
+	return (unsign((long long)nbr, neg));
 }
 
 static void					add_digits(char *s, unsigned long long un_nbr,
@@ -93,6 +71,7 @@ char						*ft_dtoa_base(double nbr, size_t base,
 	neg = 0;
 	if (nbr < 0 && base == 10)
 		neg = 1;
+	nbr = ft_round(nbr, base, precision, neg);
 	nbr_integer = unsign((long long)nbr, neg);
 	num_of_chars = ft_numlen(nbr_integer, base);
 	s = (char *)ft_strnew(sizeof(*s) * (num_of_chars + precision + neg + 1));
@@ -101,8 +80,8 @@ char						*ft_dtoa_base(double nbr, size_t base,
 	add_digits(s, nbr_integer, base);
 	s = ft_strcat(s, ".");
 	nbr -= (long long)nbr;
-	nbr_decimal = get_decimals(precision, nbr, neg);
-	nbr_decimal = count_decimals(precision, nbr_decimal, s, base);
-	add_digits(s, nbr_decimal, base);
+	nbr_decimal = get_decimals(precision, nbr, neg, s);
+	if (nbr_decimal)
+		add_digits(s, nbr_decimal, base);
 	return (s);
 }
