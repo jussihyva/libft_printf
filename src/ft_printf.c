@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 17:39:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 09:26:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,47 @@ static int		is_null(t_substring *substring, size_t *words)
 		return (0);
 }
 
+static	size_t	count_len(t_substring *substring)
+{
+	size_t		string_len;
+
+	string_len = 0;
+	string_len += substring->o_string.pre_filler.content_size;
+	string_len += substring->o_string.sign.content_size;
+	string_len += substring->o_string.prefix.content_size;
+	string_len += substring->o_string.zero_filler.content_size;
+	string_len += substring->o_string.parameter.content_size;
+	string_len += substring->o_string.post_filler.content_size;
+	return (string_len);
+}
+
+static void		write_output_string(size_t *words, t_substring *substring)
+{
+	size_t		string_len;
+	char		*s;
+
+	string_len = count_len(substring);
+	*words += string_len;
+	if (string_len)
+	{
+		s = ft_strnew(string_len);
+		s[0] = '\0';
+		if (substring->o_string.pre_filler.content)
+			ft_strcat(s, substring->o_string.pre_filler.content);
+		if (substring->o_string.sign.content)
+			ft_strcat(s, substring->o_string.sign.content);
+		if (substring->o_string.prefix.content)
+			ft_strcat(s, substring->o_string.prefix.content);
+		if (substring->o_string.zero_filler.content)
+			ft_strcat(s, substring->o_string.zero_filler.content);
+		if (substring->o_string.parameter.content)
+			ft_strcat(s, substring->o_string.parameter.content);
+		if (substring->o_string.post_filler.content)
+			ft_strcat(s, substring->o_string.post_filler.content);
+		ft_putstr(s);
+	}
+}
+
 static size_t	print_formatted_string(t_list **substring_list)
 {
 	t_list			*substring_elem;
@@ -46,7 +87,9 @@ static size_t	print_formatted_string(t_list **substring_list)
 	while (substring_elem)
 	{
 		substring = (t_substring *)(substring_elem->content);
-		if (substring->output_string)
+		if (substring->converter && substring->converter->character == 'f')
+			write_output_string(&words, substring);
+		else if (substring->output_string)
 		{
 			if (!is_null(substring, &words))
 			{

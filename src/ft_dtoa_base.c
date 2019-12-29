@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 08:19:24 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 15:11:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void					add_digits(char *s, unsigned long long un_nbr,
 }
 
 char						*ft_dtoa_base(double nbr, size_t base,
-															size_t precision)
+												size_t precision, int add_dot)
 {
 	char					*s;
 	int						neg;
@@ -78,8 +78,9 @@ char						*ft_dtoa_base(double nbr, size_t base,
 	if (neg)
 		s = ft_strcat(s, "-");
 	add_digits(s, nbr_integer, base);
-	s = ft_strcat(s, ".");
 	nbr -= (long long)nbr;
+	if (precision || add_dot)
+		s = ft_strcat(s, ".");
 	nbr_decimal = get_decimals(precision, nbr, neg, s);
 	if (nbr_decimal)
 		add_digits(s, nbr_decimal, base);

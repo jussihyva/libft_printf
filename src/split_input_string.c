@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 08:07:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 09:11:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static void		set_default_values(t_substring *substring)
 {
+	t_list		deafult_string;
+
+	deafult_string.content = NULL;
+	deafult_string.content_size = 0;
 	substring->converter = NULL;
 	substring->output_string = NULL;
 	substring->filler = ' ';
@@ -21,12 +25,12 @@ static void		set_default_values(t_substring *substring)
 	substring->precision = -1;
 	substring->width = -1;
 	substring->o_string.add_null = 0;
-	substring->o_string.sign = NULL;
-	substring->o_string.parameter = NULL;
-	substring->o_string.post_filler = NULL;
-	substring->o_string.pre_filler = NULL;
-	substring->o_string.prefix = NULL;
-	substring->o_string.zero_filler = NULL;
+	substring->o_string.sign = deafult_string;
+	substring->o_string.parameter = deafult_string;
+	substring->o_string.post_filler = deafult_string;
+	substring->o_string.pre_filler = deafult_string;
+	substring->o_string.prefix = deafult_string;
+	substring->o_string.zero_filler = deafult_string;
 	substring->formatter_list =
 					(t_list **)ft_memalloc(sizeof(*substring->formatter_list));
 	*substring->formatter_list = NULL;
