@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 14:19:21 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 18:23:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ char		*format_plus(t_substring *substring, char *s, char character);
 char		*format_space(t_substring *substring, char *s, char character);
 char		*format_zero(t_substring *substring, char *s, char character);
 char		*format_hash(t_substring *substring, char *s, char character);
-char		*ft_dtoa_base(double nbr, size_t base, size_t precision,
+char		*ft_dtoa_base(long double nbr, size_t base, size_t precision,
 																int add_dot);
 size_t		ft_numlen(unsigned long long nbr, size_t base);
 double		ft_round(double nbr, int base, size_t precision, int neg);
@@ -158,5 +158,7 @@ void		set_pre_filler(t_substring *substring);
 void		set_post_filler(t_substring *substring);
 void		set_sign(t_substring *substring);
 void		set_zero_filler(t_substring *substring);
+size_t		print_formatted_string(t_list **substring_list);
+long double	read_f_param(t_type type, va_list *ap);
 
 #endif

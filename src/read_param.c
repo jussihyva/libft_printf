@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:54:26 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 17:57:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 18:24:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,30 @@ long long		read_o_u_x_param(t_type type, va_list *ap)
 		nbr = (unsigned char)(va_arg(*ap, void *));
 	else
 		nbr = (unsigned char)(va_arg(*ap, void *));
+	return (nbr);
+}
+
+long double		read_f_param(t_type type, va_list *ap)
+{
+	long double		nbr;
+
+	if (type == hh)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == h)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == l)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == ll)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == j)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == z)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == t)
+		nbr = (double)(va_arg(*ap, double));
+	else if (type == L)
+		nbr = (long double)(va_arg(*ap, long double));
+	else
+		nbr = (double)(va_arg(*ap, double));
 	return (nbr);
 }

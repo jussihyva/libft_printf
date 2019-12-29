@@ -6,115 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 14:35:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/29 17:54:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void			set_pre_filler(t_substring *substring)
-{
-	int			num_of_fillers;
-	char		*s;
-
-	if (substring->width == -1 || substring->flags & minus)
-		num_of_fillers = 0;
-	else
-	{
-		num_of_fillers = substring->width -
-						substring->o_string.parameter.content_size -
-						substring->o_string.zero_filler.content_size -
-						substring->o_string.sign.content_size;
-		if (num_of_fillers > 0)
-		{
-			s = ft_strnew(num_of_fillers);
-			*(s + num_of_fillers) = '\0';
-			substring->o_string.pre_filler.content_size = num_of_fillers;
-			substring->o_string.pre_filler.content = s;
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = substring->filler;
-		}
-	}
-	return ;
-}
-
-void			set_post_filler(t_substring *substring)
-{
-	int			num_of_fillers;
-	char		*s;
-
-	if (substring->width == -1 || !(substring->flags & minus))
-		num_of_fillers = 0;
-	else
-	{
-		num_of_fillers = substring->width -
-						substring->o_string.parameter.content_size -
-						substring->o_string.zero_filler.content_size -
-						substring->o_string.sign.content_size;
-		if (num_of_fillers > 0)
-		{
-			s = ft_strnew(num_of_fillers);
-			*(s + num_of_fillers) = '\0';
-			substring->o_string.post_filler.content_size = num_of_fillers;
-			substring->o_string.post_filler.content = s;
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = substring->filler;
-		}
-	}
-	return ;
-}
-
-void			set_zero_filler(t_substring *substring)
-{
-	int			num_of_fillers;
-	char		*s;
-	size_t		max_len;
-
-	if (substring->flags & zero &&
-					(substring->precision != -1 || substring->width != -1))
-	{
-		if (substring->precision != -1)
-			max_len = substring->precision;
-		else
-			max_len = substring->width;
-		num_of_fillers = max_len -
-						substring->o_string.parameter.content_size -
-						substring->o_string.zero_filler.content_size -
-						substring->o_string.sign.content_size;
-		if (num_of_fillers > 0)
-		{
-			s = ft_strnew(num_of_fillers);
-			*(s + num_of_fillers) = '\0';
-			substring->o_string.zero_filler.content_size = num_of_fillers;
-			substring->o_string.zero_filler.content = s;
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = '0';
-		}
-	}
-	else
-		num_of_fillers = 0;
-	return ;
-}
-
-void			set_sign(t_substring *substring)
-{
-	if (substring->flags & plus)
-	{
-		if (((char *)substring->o_string.parameter.content)[0] != '-')
-		{
-			substring->o_string.sign.content = ft_strdup("+");
-			substring->o_string.sign.content_size = 1;
-		}
-	}
-	else if (substring->flags & space)
-	{
-		if (((char *)substring->o_string.parameter.content)[0] != '-')
-		{
-			substring->o_string.sign.content = ft_strdup(" ");
-			substring->o_string.sign.content_size = 1;
-		}
-	}
-}
 
 char			*modify_substring(t_substring *substring)
 {
