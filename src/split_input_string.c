@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 09:11:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 15:10:52 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void		set_default_values(t_substring *substring)
 	substring->left_adjust = 0;
 	substring->precision = -1;
 	substring->width = -1;
+	substring->conv_type = 0;
+	substring->par_value = NULL;
 	substring->o_string.add_null = 0;
 	substring->o_string.sign = deafult_string;
 	substring->o_string.parameter = deafult_string;
@@ -34,6 +36,7 @@ static void		set_default_values(t_substring *substring)
 	substring->formatter_list =
 					(t_list **)ft_memalloc(sizeof(*substring->formatter_list));
 	*substring->formatter_list = NULL;
+	return ;
 }
 
 static void		save_substring(t_list **list, char *start_ptr, char *end_ptr)

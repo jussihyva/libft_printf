@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 09:29:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 15:32:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void				add_converter(t_substring *substring,
 		if (character == ((t_converter *)(elem->content))->character)
 		{
 			substring->converter = (t_converter *)(elem->content);
+			substring->conv_type = substring->converter->character;
 			get_formatters(substring, formatter_list);
 			break ;
 		}
@@ -41,13 +42,8 @@ static void				convert_substring(t_substring *substring, va_list *ap,
 	if (!substring->converter || !substring->converter->function_ptr)
 		substring->output_string = ft_strdup(substring->input_string);
 	else
-	{
 		substring->output_string = substring->converter->function_ptr(ap,
 									substring, attrs);
-		substring->o_string.parameter.content = substring->output_string;
-		substring->o_string.parameter.content_size =
-										ft_strlen(substring->output_string);
-	}
 	return ;
 }
 

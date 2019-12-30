@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output_string.c                                    :+:      :+:    :+:   */
+/*   set_output_substring_1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 18:13:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 17:12:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			set_zero_filler(t_substring *substring)
 	int			num_of_fillers;
 	char		*s;
 
-	if (substring->flags & zero &&
+	if (!(substring->flags & minus) && substring->flags & zero &&
 					(substring->precision != -1 || substring->width != -1))
 	{
 		if (substring->width != -1)
@@ -99,17 +99,22 @@ void			set_zero_filler(t_substring *substring)
 
 void			set_sign(t_substring *substring)
 {
-	if (substring->flags & plus)
+	char		conv_type;
+
+	conv_type = substring->conv_type;
+	if (conv_type == 'f')
 	{
-		if (((char *)substring->o_string.parameter.content)[0] != '-')
+		if (*(long double *)substring->par_value < 0)
+		{
+			substring->o_string.sign.content = ft_strdup("-");
+			substring->o_string.sign.content_size = 1;
+		}
+		else if (substring->flags & plus)
 		{
 			substring->o_string.sign.content = ft_strdup("+");
 			substring->o_string.sign.content_size = 1;
 		}
-	}
-	else if (substring->flags & space)
-	{
-		if (((char *)substring->o_string.parameter.content)[0] != '-')
+		else if (substring->flags & space)
 		{
 			substring->o_string.sign.content = ft_strdup(" ");
 			substring->o_string.sign.content_size = 1;

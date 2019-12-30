@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 18:23:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 17:12:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ struct		s_substring
 	int				width;
 	char			filler;
 	int				left_adjust;
+	char			conv_type;
+	void			*par_value;
 	t_output_string	o_string;
 };
 
@@ -160,5 +162,6 @@ void		set_sign(t_substring *substring);
 void		set_zero_filler(t_substring *substring);
 size_t		print_formatted_string(t_list **substring_list);
 long double	read_f_param(t_type type, va_list *ap);
+void		save_parameter(t_substring *substring, char *s);
 
 #endif
