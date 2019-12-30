@@ -2,3 +2,4 @@
 *.swp
 *.o
 ft_printf.code-workspace
+*.odp#

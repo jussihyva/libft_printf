@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 18:18:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 13:21:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static char					*long_to_string(unsigned long long nbr,
 	return (s);
 }
 
-static size_t				get_decimals(size_t precision, long double *nbr,
-																	char *s)
+static size_t				get_decimals(size_t precision, long double *nbr)
 {
 	static size_t	max_precision = 20;
 	size_t			added_zeros;
@@ -48,7 +47,6 @@ static size_t				get_decimals(size_t precision, long double *nbr,
 		*nbr *= 10;
 		if (*nbr < 1 && *nbr > -1)
 		{
-			s = ft_strcat(s, "0");
 			added_zeros++;
 		}
 	}
@@ -80,17 +78,25 @@ char						*ft_dtoa_base(long double nbr, size_t base,
 	neg = 0;
 	if (nbr < 0 && base == 10)
 		neg = 1;
-	nbr = ft_round(nbr, base, precision, neg);
 	nbr_integer = unsign((long long)nbr, neg);
+	nbr -= (long long)nbr;
+	nbr = ft_round(nbr, base, precision, neg);
+	if (nbr >= 1 || nbr <= -1)
+	{
+		nbr -= (int)nbr;
+		nbr_integer++;
+	}
+	added_zeros = get_decimals(precision, &nbr);
+	nbr_decimal = unsign((long long)nbr, neg);
 	s = (char *)ft_strnew((ft_numlen(nbr_integer, base) + precision + neg + 1));
 	if (neg)
 		s = ft_strcat(s, "-");
 	add_digits(s, nbr_integer, base);
-	nbr -= (long long)nbr;
 	if (precision || add_dot)
 		s = ft_strcat(s, ".");
-	added_zeros = get_decimals(precision, &nbr, s);
-	nbr_decimal = unsign((long long)nbr, neg);
+	precision -= added_zeros++;
+	while (--added_zeros)
+		s = ft_strcat(s, "0");
 	if (nbr_decimal)
 		add_digits(s, nbr_decimal, base);
 	while (added_zeros++ + ft_numlen(nbr_decimal, base) < precision)
