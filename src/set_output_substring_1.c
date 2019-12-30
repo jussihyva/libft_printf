@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 17:12:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/30 18:37:38 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int		count_num_of_fillers(t_substring *substring, int min_len)
 	num_of_fillers = min_len -
 						substring->o_string.parameter.content_size -
 						substring->o_string.zero_filler.content_size -
+						substring->o_string.prefix.content_size -
 						substring->o_string.sign.content_size;
 	return (num_of_fillers);
 }
