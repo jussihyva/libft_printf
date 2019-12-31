@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 17:30:23 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 12:15:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void		write_output_string(size_t *words, t_substring *substring)
 		if (substring->o_string.post_filler.content)
 			ft_strcat(s, substring->o_string.post_filler.content);
 		ft_putstr(s);
+		ft_strdel(&s);
 	}
 }
 

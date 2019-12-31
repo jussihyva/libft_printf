@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:35:39 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 17:37:53 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 11:40:28 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ static void		del_formatter(void *formatter, size_t size)
 static void		del_substring(void *substring_elem, size_t size)
 {
 	t_substring		*elem;
+	char			*ptr;
 
 	(void)size;
 	elem = (t_substring *)substring_elem;
 	ft_strdel(&elem->input_string);
 	ft_strdel(&elem->output_string);
+	ptr = (char *)elem->par_value;
+	ft_strdel(&ptr);
 	if (elem->formatter_list)
 	{
 		ft_lstdel(elem->formatter_list, *del_formatter);

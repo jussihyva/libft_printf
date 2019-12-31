@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 07:33:04 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 11:47:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void				set_double_parameter(t_substring *substring)
 	par_value = *(long double *)substring->par_value;
 	s = ft_dtoa_base(par_value, 10, substring->precision, add_dot);
 	if (par_value < 0)
-		save_parameter(substring, s + 1);
+	{
+		save_parameter(substring, ft_strdup(s + 1));
+		ft_strdel(&s);
+	}
 	else
 		save_parameter(substring, s);
 }

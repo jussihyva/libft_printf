@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 08:37:46 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 12:54:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,27 @@ void			set_pre_filler(t_substring *substring)
 		{
 			s = ft_strnew(num_of_fillers);
 			*(s + num_of_fillers) = '\0';
-			if (substring->conv_type == 'f' && substring->filler == '0')
+			if (substring->conv_type == 'f' && substring->flags & zero)
 			{
 				substring->o_string.zero_filler.content_size = num_of_fillers;
 				substring->o_string.zero_filler.content = s;
+				while (num_of_fillers--)
+					*(s + num_of_fillers) = substring->filler;
+			}
+			else if (substring->conv_type == 'o' && substring->precision == -1)
+			{
+				substring->o_string.pre_filler.content_size = num_of_fillers;
+				substring->o_string.pre_filler.content = s;
+				while (num_of_fillers--)
+					*(s + num_of_fillers) = substring->filler;
 			}
 			else
 			{
 				substring->o_string.pre_filler.content_size = num_of_fillers;
 				substring->o_string.pre_filler.content = s;
+				while (num_of_fillers--)
+					*(s + num_of_fillers) = ' ';
 			}
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = substring->filler;
 		}
 	}
 	return ;
