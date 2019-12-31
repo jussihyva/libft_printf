@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:11:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 17:52:35 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 07:53:55 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		save_parameter(t_substring *substring, char *s)
 
 void			set_prefix(t_substring *substring)
 {
-	if (substring->flags & hash)
+	if (substring->flags & hash && ((char *)(substring->o_string.parameter.content))[0] != '0')
 	{
 		substring->o_string.prefix.content_size = 1;
 		substring->o_string.prefix.content = ft_strdup("0");

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 17:15:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 07:33:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char					*conv_float(va_list *ap, t_substring *substring,
 	if (substring->precision == -1)
 		substring->precision = 6;
 	substring->par_value = nbr;
+	format_string(ft_strnew(0), substring);
 	return (NULL);
 }
 

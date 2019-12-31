@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 18:39:36 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 08:31:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void				set_octal_parameter(t_substring *substring)
 	unsigned long long		par_value;
 
 	par_value = *(unsigned long long *)substring->par_value;
-	if (par_value || substring->precision != 0)
+	if (substring->flags & hash || par_value || substring->precision != 0)
 	{
 		s = ft_ulltoa_base(par_value, 8);
 		save_parameter(substring, s);
@@ -48,5 +48,6 @@ char					*conv_unsigned_octal(va_list *ap,
 	else
 		*nbr = read_o_u_x_param(substring->param_type->type, ap);
 	substring->par_value = nbr;
+	format_string(ft_strnew(0), substring);
 	return (NULL);
 }

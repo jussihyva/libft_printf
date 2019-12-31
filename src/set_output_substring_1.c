@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 18:37:38 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 08:37:46 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,16 @@ void			set_pre_filler(t_substring *substring)
 		{
 			s = ft_strnew(num_of_fillers);
 			*(s + num_of_fillers) = '\0';
-			substring->o_string.pre_filler.content_size = num_of_fillers;
-			substring->o_string.pre_filler.content = s;
+			if (substring->conv_type == 'f' && substring->filler == '0')
+			{
+				substring->o_string.zero_filler.content_size = num_of_fillers;
+				substring->o_string.zero_filler.content = s;
+			}
+			else
+			{
+				substring->o_string.pre_filler.content_size = num_of_fillers;
+				substring->o_string.pre_filler.content = s;
+			}
 			while (num_of_fillers--)
 				*(s + num_of_fillers) = substring->filler;
 		}
@@ -64,7 +72,7 @@ void			set_post_filler(t_substring *substring)
 			substring->o_string.post_filler.content_size = num_of_fillers;
 			substring->o_string.post_filler.content = s;
 			while (num_of_fillers--)
-				*(s + num_of_fillers) = substring->filler;
+				*(s + num_of_fillers) = ' ';
 		}
 	}
 	return ;
@@ -75,14 +83,9 @@ void			set_zero_filler(t_substring *substring)
 	int			num_of_fillers;
 	char		*s;
 
-	if (!(substring->flags & minus) && substring->flags & zero &&
-					(substring->precision != -1 || substring->width != -1))
+	if (substring->precision != -1)
 	{
-		if (substring->width != -1)
-			num_of_fillers = count_num_of_fillers(substring, substring->width);
-		else
-			num_of_fillers =
-						count_num_of_fillers(substring, substring->precision);
+		num_of_fillers = count_num_of_fillers(substring, substring->precision);
 		if (num_of_fillers > 0)
 		{
 			s = ft_strnew(num_of_fillers);
