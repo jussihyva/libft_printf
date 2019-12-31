@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 12:54:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2019/12/31 14:36:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			set_pre_filler(t_substring *substring)
 {
 	int			num_of_fillers;
 	char		*s;
+	char		filler;
 
 	if (substring->width == -1 || substring->flags & minus)
 		num_of_fillers = 0;
@@ -38,27 +39,14 @@ void			set_pre_filler(t_substring *substring)
 		{
 			s = ft_strnew(num_of_fillers);
 			*(s + num_of_fillers) = '\0';
-			if (substring->conv_type == 'f' && substring->flags & zero)
-			{
-				substring->o_string.zero_filler.content_size = num_of_fillers;
-				substring->o_string.zero_filler.content = s;
-				while (num_of_fillers--)
-					*(s + num_of_fillers) = substring->filler;
-			}
-			else if (substring->conv_type == 'o' && substring->precision == -1)
-			{
-				substring->o_string.pre_filler.content_size = num_of_fillers;
-				substring->o_string.pre_filler.content = s;
-				while (num_of_fillers--)
-					*(s + num_of_fillers) = substring->filler;
-			}
+			substring->o_string.pre_filler.content_size = num_of_fillers;
+			substring->o_string.pre_filler.content = s;
+			if (substring->conv_type == 'o' && substring->precision == -1)
+				filler = substring->filler;
 			else
-			{
-				substring->o_string.pre_filler.content_size = num_of_fillers;
-				substring->o_string.pre_filler.content = s;
-				while (num_of_fillers--)
-					*(s + num_of_fillers) = ' ';
-			}
+				filler = ' ';
+			while (num_of_fillers--)
+				*(s + num_of_fillers) = filler;
 		}
 	}
 	return ;
@@ -91,22 +79,27 @@ void			set_zero_filler(t_substring *substring)
 {
 	int			num_of_fillers;
 	char		*s;
+	char		filler;
 
-	if (substring->precision != -1)
+	num_of_fillers = 0;
+	filler = substring->filler;
+	if (substring->width != -1 && !(substring->flags & minus) &&
+			substring->conv_type == 'f' && (substring->flags & zero))
+		num_of_fillers = count_num_of_fillers(substring, substring->width);
+	else if (substring->precision != -1)
 	{
 		num_of_fillers = count_num_of_fillers(substring, substring->precision);
-		if (num_of_fillers > 0)
-		{
-			s = ft_strnew(num_of_fillers);
-			*(s + num_of_fillers) = '\0';
-			substring->o_string.zero_filler.content_size = num_of_fillers;
-			substring->o_string.zero_filler.content = s;
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = '0';
-		}
+		filler = '0';
 	}
-	else
-		num_of_fillers = 0;
+	if (num_of_fillers > 0)
+	{
+		s = ft_strnew(num_of_fillers);
+		*(s + num_of_fillers) = '\0';
+		substring->o_string.zero_filler.content_size = num_of_fillers;
+		substring->o_string.zero_filler.content = s;
+		while (num_of_fillers--)
+			*(s + num_of_fillers) = filler;
+	}
 	return ;
 }
 
