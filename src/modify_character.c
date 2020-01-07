@@ -6,39 +6,40 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:33:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 12:12:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/07 11:47:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		adjust_character(t_substring *substring)
+static void			set_char_parameter(t_substring *substring)
 {
-	char		*new_string;
+	char			*s;
 
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
+	s = (char *)substring->par_value;
+	save_parameter(substring, s);
+	substring->o_string.parameter.content_size = 1;
 	return ;
 }
 
-char		*conv_character(va_list *ap, t_substring *substring,
+void				adjust_character(t_substring *substring)
+{
+	set_char_parameter(substring);
+	set_sign(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
+	return ;
+}
+
+char				*conv_character(va_list *ap, t_substring *substring,
 															int *attrs)
 {
-	char			*s;
-	char			*output_string;
-
 	(*attrs)++;
-	s = ft_strnew(1);
-	s[0] = (char)va_arg(*ap, void *);
-	if (!s[0])
-	{
-		s[0] = 0x01;
+	substring->par_value = ft_strnew(1);
+	((char *)(substring->par_value))[0] = (char)va_arg(*ap, void *);
+	if (!((char *)(substring->par_value))[0])
 		substring->o_string.add_null = 1;
-	}
-	output_string = format_string(s, substring);
-	return (output_string);
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }

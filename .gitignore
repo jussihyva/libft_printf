@@ -4,3 +4,6 @@
 ft_printf.code-workspace
 *.odp#
 pft/
+printf.srctrlbm
+printf.srctrldb
+printf.srctrlprj

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 14:36:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/07 11:47:19 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ void			set_pre_filler(t_substring *substring)
 			substring->o_string.pre_filler.content = s;
 			if (substring->conv_type == 'o' && substring->precision == -1)
 				filler = substring->filler;
+			else if (substring->conv_type == 'c')
+				filler = substring->filler;
 			else
 				filler = ' ';
 			while (num_of_fillers--)
 				*(s + num_of_fillers) = filler;
 		}
 	}
-	return ;
 }
 
 void			set_post_filler(t_substring *substring)
@@ -86,7 +87,7 @@ void			set_zero_filler(t_substring *substring)
 	if (substring->width != -1 && !(substring->flags & minus) &&
 			substring->conv_type == 'f' && (substring->flags & zero))
 		num_of_fillers = count_num_of_fillers(substring, substring->width);
-	else if (substring->precision != -1)
+	else if (substring->precision != -1 && substring->conv_type != 'c')
 	{
 		num_of_fillers = count_num_of_fillers(substring, substring->precision);
 		filler = '0';

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 12:15:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/07 12:13:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,34 @@ static	size_t	count_len(t_substring *substring)
 	return (string_len);
 }
 
+static void		add_substrings(t_substring *substring, char *s)
+{
+	size_t				i;
+	t_output_string		o_s;
+
+	o_s = substring->o_string;
+	i = 0;
+	if (o_s.pre_filler.content)
+		ft_strcat(s + i, o_s.pre_filler.content);
+	if (o_s.sign.content)
+		ft_strcat((s += o_s.pre_filler.content_size), o_s.sign.content);
+	if (o_s.prefix.content)
+		ft_strcat((s += o_s.sign.content_size), o_s.prefix.content);
+	if (o_s.zero_filler.content)
+		ft_strcat((s += o_s.prefix.content_size), o_s.zero_filler.content);
+	if (o_s.parameter.content)
+	{
+		if (o_s.add_null)
+			ft_strcat((s += o_s.zero_filler.content_size), "");
+		else
+			ft_strcat((s += o_s.zero_filler.content_size),
+													o_s.parameter.content);
+	}
+	if (o_s.post_filler.content)
+		ft_strcat((s += o_s.parameter.content_size), o_s.post_filler.content);
+	return ;
+}
+
 static void		write_output_string(size_t *words, t_substring *substring)
 {
 	size_t		string_len;
@@ -37,19 +65,8 @@ static void		write_output_string(size_t *words, t_substring *substring)
 	{
 		s = ft_strnew(string_len);
 		s[0] = '\0';
-		if (substring->o_string.pre_filler.content)
-			ft_strcat(s, substring->o_string.pre_filler.content);
-		if (substring->o_string.sign.content)
-			ft_strcat(s, substring->o_string.sign.content);
-		if (substring->o_string.prefix.content)
-			ft_strcat(s, substring->o_string.prefix.content);
-		if (substring->o_string.zero_filler.content)
-			ft_strcat(s, substring->o_string.zero_filler.content);
-		if (substring->o_string.parameter.content)
-			ft_strcat(s, substring->o_string.parameter.content);
-		if (substring->o_string.post_filler.content)
-			ft_strcat(s, substring->o_string.post_filler.content);
-		ft_putstr(s);
+		add_substrings(substring, s);
+		ft_putlstr(s, string_len);
 		ft_strdel(&s);
 	}
 }
@@ -90,7 +107,8 @@ size_t			print_formatted_string(t_list **substring_list)
 	{
 		substring = (t_substring *)(substring_elem->content);
 		if (substring->converter && (substring->converter->character == 'f' ||
-									substring->converter->character == 'o'))
+									substring->converter->character == 'o' ||
+									substring->converter->character == 'c'))
 			write_output_string(&words, substring);
 		else if (substring->output_string)
 		{

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 11:47:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/07 10:56:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void				set_double_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, s);
+	return ;
 }
 
 char					*conv_float(va_list *ap, t_substring *substring,

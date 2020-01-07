@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2019/12/30 17:14:31 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/01/07 12:17:19 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
 					release_memory.c read_param.c modify_float.c \
 					formatters.c ft_dtoa_base.c ft_numlen.c ft_round.c \
 					set_output_substring_1.c set_output_substring_2.c \
-					print_output_string.c
+					print_output_string.c ft_putlstr.c
 HEADER_FILE		=	ft_printf.h
 SRC_PATHS		=	${addprefix ${SRC_FOLDER}/, ${SRC_FILES}}
 OBJ_PATHS		=	${addprefix ${OBJ_FOLDER}/, ${patsubst %.c,%.o,${SRC_FILES}}}

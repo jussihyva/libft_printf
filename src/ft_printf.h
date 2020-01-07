@@ -6,13 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 12:10:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/07 12:14:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# include <unistd.h>
 # include "libft.h"
 # include <stdarg.h>
 # include <stdlib.h>
@@ -164,5 +165,6 @@ size_t		print_formatted_string(t_list **substring_list);
 long double	read_f_param(t_type type, va_list *ap);
 void		save_parameter(t_substring *substring, char *s);
 void		set_prefix(t_substring *substring);
+void		ft_putlstr(char *s, size_t string_len);
 
 #endif
