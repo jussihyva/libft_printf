@@ -6,53 +6,50 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 13:03:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 21:37:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		adjust_pointer(t_substring *substring)
+static void				set_pointer_parameter(t_substring *substring)
 {
-	char	*pre_string;
-	int		offset;
+	char			*s;
+	uintptr_t		par_value;
 
-	offset = 0;
-	if (substring->output_string[1] == 'x' ||
-		substring->output_string[1] == 'X')
+	par_value = *(uintptr_t *)substring->par_value;
+	s = ft_lltoa_base(par_value, 16);
+	if (par_value == 0 && substring->precision == 0)
+		save_parameter(substring, "");
+	else if (par_value < 0)
 	{
-		if (substring->precision != -1)
-			substring->precision += 2;
-		pre_string = ft_strnew(2);
-		*pre_string = substring->output_string[0];
-		*(pre_string + 1) = substring->output_string[1];
-		offset = 2;
+		save_parameter(substring, ft_strdup(s + 1));
+		ft_strdel(&s);
 	}
 	else
-		pre_string = ft_strnew(0);
-	if (substring->precision == offset &&
-									substring->output_string[offset] == '0')
-		substring->output_string[offset] = '\0';
-	if ((int)ft_strlen(substring->output_string) < substring->precision)
-		add_min_mum_of_digits(substring, pre_string);
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-		add_min_mum_of_chars(substring, pre_string);
-	ft_strdel(&pre_string);
+		save_parameter(substring, s);
+	return ;
+}
+
+void		adjust_pointer(t_substring *substring)
+{
+	set_pointer_parameter(substring);
+	set_sign(substring);
+	set_prefix(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
 	return ;
 }
 
 char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
 {
-	uintptr_t		ptr;
-	char			*ptr_string;
-	char			*s;
-	char			*output_string;
+	uintptr_t		**ptr;
 
 	(*attrs)++;
-	ptr = (uintptr_t)(va_arg(*ap, void *));
-	ptr_string = ft_lltoa_base(ptr, 16);
-	s = ft_strjoin("0x", ptr_string);
-	ft_strdel(&ptr_string);
-	output_string = format_string(s, substring);
-	return (output_string);
+	ptr = (uintptr_t **)ft_memalloc(sizeof(*ptr));
+	*ptr = (uintptr_t *)(va_arg(*ap, void *));
+	substring->par_value = ptr;
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }

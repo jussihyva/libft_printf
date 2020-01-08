@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 20:59:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 21:30:02 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int		count_num_of_zero_fillers(t_substring *substring, int min_len)
 	int		num_of_fillers;
 
 	if (substring->conv_type == 'd' || substring->conv_type == 'i' ||
-		substring->conv_type == 'x' || substring->conv_type == 'X')
+		substring->conv_type == 'x' || substring->conv_type == 'X' ||
+		substring->conv_type == 'p')
 			num_of_fillers = min_len -
 						substring->o_string.parameter.content_size -
 						substring->o_string.zero_filler.content_size;
@@ -139,6 +140,7 @@ void			set_zero_filler(t_substring *substring)
 				substring->conv_type == 'i' ||
 				substring->conv_type == 'x' ||
 				substring->conv_type == 'X' ||
+				substring->conv_type == 'p' ||
 				substring->conv_type == 'u')
 	{
 		if (substring->width != -1 && !(substring->flags & minus) &&

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:11:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 20:50:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 21:28:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void			set_prefix(t_substring *substring)
 			substring->o_string.prefix.content_size = 2;
 			substring->o_string.prefix.content = ft_strdup("0X");
 		}
+	}
+	else if (substring->conv_type == 'p')
+	{
+		substring->o_string.prefix.content_size = 2;
+		substring->o_string.prefix.content = ft_strdup("0x");
 	}
 	return ;
 }
