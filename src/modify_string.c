@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 22:14:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:39:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static void			set_string_parameter(t_substring *substring)
 
 void		adjust_string(t_substring *substring)
 {
-	char		*new_string;
-
 	set_string_parameter(substring);
 	set_sign(substring);
 	set_zero_filler(substring);
@@ -40,8 +38,6 @@ void		adjust_string(t_substring *substring)
 
 void		adjust_percent_char(t_substring *substring)
 {
-	char		*new_string;
-
 	set_string_parameter(substring);
 	set_sign(substring);
 	set_zero_filler(substring);
