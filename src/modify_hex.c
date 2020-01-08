@@ -6,16 +6,49 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 09:41:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 20:58:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static void				set_unsigned_hex_parameter(t_substring *substring)
+{
+	char					*s;
+	unsigned long long		par_value;
+	size_t					i;
+
+	par_value = *(unsigned long long *)substring->par_value;
+	s = ft_ulltoa_base(par_value, 16);
+	if (substring->conv_type == 'X')
+	{
+		i = -1;
+		while (*(s + ++i))
+			*(s + i) = ft_toupper(*(s + i));
+	}
+	if (par_value == 0 && substring->precision == 0)
+		save_parameter(substring, "");
+	else if (par_value < 0)
+	{
+		save_parameter(substring, ft_strdup(s + 1));
+		ft_strdel(&s);
+	}
+	else
+		save_parameter(substring, s);
+	return ;
+}
+
 void				adjust_unsigned_hex(t_substring *substring)
 {
 	char	*pre_string;
 
+	set_unsigned_hex_parameter(substring);
+	set_sign(substring);
+	set_prefix(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
+	return ;
 	if (substring->output_string[1] == 'x' ||
 		substring->output_string[1] == 'X')
 	{
@@ -42,37 +75,17 @@ void				adjust_unsigned_hex(t_substring *substring)
 char				*conv_unsigned_hex(va_list *ap, t_substring *substring,
 																int *attrs)
 {
-	unsigned long long		nbr;
-	char					*s;
-	char					*output_string;
+	unsigned long long		*nbr;
 
 	(*attrs)++;
+	nbr = (unsigned long long *)ft_memalloc(sizeof(*nbr));
 	if (!substring->param_type)
-		nbr = (unsigned int)(va_arg(*ap, void *));
+		*nbr = (unsigned int)(va_arg(*ap, void *));
 	else
-		nbr = read_o_u_x_param(substring->param_type->type, ap);
-	s = ft_ulltoa_base(nbr, 16);
-	output_string = format_string(s, substring);
-	return (output_string);
-}
-
-char				*conv_unsigned_hex_up(va_list *ap,
-										t_substring *substring, int *attrs)
-{
-	unsigned long long		nbr;
-	char					*s;
-	char					*output_string;
-	int						i;
-
-	(*attrs)++;
-	if (!substring->param_type)
-		nbr = (unsigned int)(va_arg(*ap, void *));
-	else
-		nbr = read_o_u_x_param(substring->param_type->type, ap);
-	s = ft_ulltoa_base(nbr, 16);
-	output_string = format_string(s, substring);
-	i = -1;
-	while (*(output_string + ++i))
-		*(output_string + i) = ft_toupper(*(output_string + i));
-	return (output_string);
+		*nbr = read_o_u_x_param(substring->param_type->type, ap);
+	substring->par_value = nbr;
+	if (*nbr < 0)
+		substring->par_value_is_neg = 1;
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }

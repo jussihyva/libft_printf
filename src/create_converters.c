@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/30 15:32:13 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 21:00:43 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_list					**create_converters(void)
 													adjust_unsigned_int));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex, 'x',
 													adjust_unsigned_hex));
-	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex_up, 'X',
+	ft_lstadd_e(conv_list, new_conv((void *)conv_unsigned_hex, 'X',
 													adjust_unsigned_hex));
 	ft_lstadd_e(conv_list, new_conv((void *)conv_float, 'f', adjust_float));
 	return (conv_list);

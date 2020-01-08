@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 08:31:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 20:17:22 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void				set_octal_parameter(t_substring *substring)
 		s = ft_ulltoa_base(par_value, 8);
 		save_parameter(substring, s);
 	}
+	else
+		save_parameter(substring, "");
 }
 
 void					adjust_unsigned_octal(t_substring *substring)
