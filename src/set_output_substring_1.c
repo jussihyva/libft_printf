@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 17:00:27 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 19:06:30 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,39 +94,54 @@ void			set_post_filler(t_substring *substring)
 	return ;
 }
 
+static void		add_filler(t_list *elem, int num_of_fillers, char filler)
+{
+	char		*s;
+
+	if (num_of_fillers > 0)
+	{
+		s = ft_strnew(num_of_fillers);
+		*(s + num_of_fillers) = '\0';
+		elem->content_size = num_of_fillers;
+		elem->content = s;
+		while (num_of_fillers--)
+			*(s + num_of_fillers) = filler;
+	}
+	return ;
+}
+
 void			set_zero_filler(t_substring *substring)
 {
 	int			num_of_fillers;
-	char		*s;
 	char		filler;
 
 	num_of_fillers = 0;
 	filler = substring->filler;
 	if (substring->conv_type == 'c')
 		;
-	else if (substring->width != -1 && !(substring->flags & minus) &&
-			substring->conv_type == 'f' && (substring->flags & zero))
-		num_of_fillers = count_num_of_fillers(substring, substring->width);
+	else if (substring->conv_type == 'f')
+	{
+		if (substring->width != -1 && !(substring->flags & minus) &&
+				(substring->flags & zero))
+			num_of_fillers = count_num_of_fillers(substring, substring->width);
+		else if (substring->precision != -1)
+		{
+			num_of_fillers = count_num_of_zero_fillers(substring, substring->precision);
+			filler = '0';
+		}
+	}
 	else if (substring->precision != -1)
 	{
 		num_of_fillers = count_num_of_zero_fillers(substring, substring->precision);
 		filler = '0';
 	}
-	else if (substring->width != -1 && !(substring->flags & minus) &&
-			substring->conv_type == 'd' && (substring->flags & zero))
-		num_of_fillers = count_num_of_fillers(substring, substring->width);
-	else if (substring->width != -1 && !(substring->flags & minus) &&
-			substring->conv_type == 'i' && (substring->flags & zero))
-		num_of_fillers = count_num_of_fillers(substring, substring->width);
-	if (num_of_fillers > 0)
+	else if (substring->conv_type == 'd' || substring->conv_type == 'i')
 	{
-		s = ft_strnew(num_of_fillers);
-		*(s + num_of_fillers) = '\0';
-		substring->o_string.zero_filler.content_size = num_of_fillers;
-		substring->o_string.zero_filler.content = s;
-		while (num_of_fillers--)
-			*(s + num_of_fillers) = filler;
+		if (substring->width != -1 && !(substring->flags & minus) &&
+			(substring->flags & zero))
+			num_of_fillers = count_num_of_fillers(substring, substring->width);
 	}
+	add_filler(&substring->o_string.zero_filler, num_of_fillers, filler);
 	return ;
 }
 
