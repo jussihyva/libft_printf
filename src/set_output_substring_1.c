@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 19:06:30 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 19:28:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void			set_zero_filler(t_substring *substring)
 		num_of_fillers = count_num_of_zero_fillers(substring, substring->precision);
 		filler = '0';
 	}
-	else if (substring->conv_type == 'd' || substring->conv_type == 'i')
+	else if (substring->conv_type == 'd' || substring->conv_type == 'i' ||
+											substring->conv_type == 'u')
 	{
 		if (substring->width != -1 && !(substring->flags & minus) &&
 			(substring->flags & zero))

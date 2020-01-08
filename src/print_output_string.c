@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/07 12:28:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 19:26:42 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ size_t			print_formatted_string(t_list **substring_list)
 									substring->converter->character == 'o' ||
 									substring->converter->character == 'd' ||
 									substring->converter->character == 'i' ||
+									substring->converter->character == 'u' ||
 									substring->converter->character == 'c'))
 			write_output_string(&words, substring);
 		else if (substring->output_string)
