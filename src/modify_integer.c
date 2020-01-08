@@ -6,17 +6,40 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 12:59:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 12:12:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void				set_int_parameter(t_substring *substring)
+{
+	char			*s;
+	long long		par_value;
+
+	par_value = *(long long *)substring->par_value;
+	s = ft_lltoa_base(par_value, 10);
+	if (par_value < 0)
+	{
+		save_parameter(substring, ft_strdup(s + 1));
+		ft_strdel(&s);
+	}
+	else
+		save_parameter(substring, s);
+	return ;
+}
 
 void						adjust_int(t_substring *substring)
 {
 	char	*pre_string;
 	int		offset;
 
+	set_int_parameter(substring);
+	set_sign(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
+	return ;
 	offset = 0;
 	if (substring->output_string[0] == '+' ||
 		substring->output_string[0] == '-' ||
@@ -84,18 +107,19 @@ static long long			read_int_param(t_type type, va_list *ap)
 char						*conv_int(va_list *ap, t_substring *substring,
 											int *attrs)
 {
-	long long		nbr;
-	char			*s;
-	char			*output_string;
+	long long		*nbr;
 
 	(*attrs)++;
+	nbr = (long long *)ft_memalloc(sizeof(*nbr));
 	if (!substring->param_type)
-		nbr = (int)(va_arg(*ap, void *));
+		*nbr = (int)(va_arg(*ap, void *));
 	else
-		nbr = read_int_param(substring->param_type->type, ap);
-	s = ft_lltoa_base(nbr, 10);
-	output_string = format_string(s, substring);
-	return (output_string);
+		*nbr = read_int_param(substring->param_type->type, ap);
+	substring->par_value = nbr;
+	if (*nbr < 0)
+		substring->par_value_is_neg = 1;
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }
 
 char						*conv_unsigned_int(va_list *ap,

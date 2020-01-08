@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/07 11:47:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 12:06:56 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ void			set_sign(t_substring *substring)
 	char		conv_type;
 
 	conv_type = substring->conv_type;
-	if (conv_type == 'f')
+	if (conv_type == 'f' || conv_type == 'd' || conv_type == 'i')
 	{
-		if (*(long double *)substring->par_value < 0)
+		if (substring->par_value_is_neg)
 		{
 			substring->o_string.sign.content = ft_strdup("-");
 			substring->o_string.sign.content_size = 1;

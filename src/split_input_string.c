@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 12:12:25 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 12:08:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void		set_default_values(t_substring *substring)
 	substring->width = -1;
 	substring->conv_type = 0;
 	substring->par_value = NULL;
+	substring->par_value_is_neg = 0;
 	substring->o_string.add_null = 0;
 	substring->o_string.sign = deafult_string;
 	substring->o_string.parameter = deafult_string;
