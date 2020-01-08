@@ -6,27 +6,35 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 09:49:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:14:20 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static void			set_string_parameter(t_substring *substring)
+{
+	char			*s;
+
+	s = (char *)substring->par_value;
+	if (substring->precision >= 0 && substring->conv_type == 's')
+	{
+		if ((int)ft_strlen(s) > substring->precision)
+			s[substring->precision] = '\0';
+	}
+	save_parameter(substring, s);
+	return ;
+}
+
 void		adjust_string(t_substring *substring)
 {
 	char		*new_string;
 
-	if (substring->precision >= 0)
-	{
-		if ((int)ft_strlen(substring->output_string) > substring->precision)
-			substring->output_string[substring->precision] = '\0';
-	}
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
+	set_string_parameter(substring);
+	set_sign(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
 	return ;
 }
 
@@ -34,43 +42,29 @@ void		adjust_percent_char(t_substring *substring)
 {
 	char		*new_string;
 
-	if (substring->precision >= 0)
-	{
-		if (substring->precision == 0)
-			substring->precision++;
-		if ((int)ft_strlen(substring->output_string) > substring->precision)
-			substring->output_string[substring->precision] = '\0';
-	}
-	if ((int)ft_strlen(substring->output_string) < substring->width)
-	{
-		new_string = modify_substring(substring);
-		ft_strdel(&substring->output_string);
-		substring->output_string = new_string;
-	}
+	set_string_parameter(substring);
+	set_sign(substring);
+	set_zero_filler(substring);
+	set_pre_filler(substring);
+	set_post_filler(substring);
 	return ;
 }
 
 char		*conv_string(va_list *ap, t_substring *substring, int *attrs)
 {
-	char			*s;
-	char			*output_string;
-
 	(*attrs)++;
-	s = ft_strdup((char *)va_arg(*ap, void *));
-	if (!s)
-		s = ft_strdup("(null)");
-	output_string = format_string(s, substring);
-	return (output_string);
+	substring->par_value = ft_strdup((char *)va_arg(*ap, void *));
+	if (!(char *)substring->par_value)
+		substring->par_value = ft_strdup("(null)");
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }
 
 char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs)
 {
-	char			*s;
-	char			*output_string;
-
 	(void)ap;
 	(void)attrs;
-	s = ft_strdup("%");
-	output_string = format_string(s, substring);
-	return (output_string);
+	substring->par_value = ft_strdup("%");
+	format_string(ft_strnew(0), substring);
+	return (NULL);
 }

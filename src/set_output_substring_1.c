@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 21:30:02 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 22:05:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ void			set_pre_filler(t_substring *substring)
 			substring->o_string.pre_filler.content = s;
 			if (substring->conv_type == 'o' && substring->precision == -1)
 				filler = substring->filler;
-			else if (substring->conv_type == 'c')
+			else if (substring->conv_type == 'c' ||
+						substring->conv_type == '%' ||
+						substring->conv_type == 's')
 				filler = substring->filler;
 			else
 				filler = ' ';
@@ -118,7 +120,7 @@ void			set_zero_filler(t_substring *substring)
 
 	num_of_fillers = 0;
 	filler = substring->filler;
-	if (substring->conv_type == 'c')
+	if (substring->conv_type == 'c' || substring->conv_type == 's' || substring->conv_type == '%')
 		;
 	else if (substring->conv_type == 'f')
 	{
