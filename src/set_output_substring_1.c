@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 12:06:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/08 17:00:27 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@ static int		count_num_of_fillers(t_substring *substring, int min_len)
 	int		num_of_fillers;
 
 	num_of_fillers = min_len -
+				substring->o_string.parameter.content_size -
+				substring->o_string.zero_filler.content_size -
+				substring->o_string.prefix.content_size -
+				substring->o_string.sign.content_size;
+	return (num_of_fillers);
+}
+
+static int		count_num_of_zero_fillers(t_substring *substring, int min_len)
+{
+	int		num_of_fillers;
+
+	if (substring->conv_type == 'd' || substring->conv_type == 'i')
+			num_of_fillers = min_len -
+						substring->o_string.parameter.content_size -
+						substring->o_string.zero_filler.content_size -
+						substring->o_string.prefix.content_size;
+	else
+			num_of_fillers = min_len -
 						substring->o_string.parameter.content_size -
 						substring->o_string.zero_filler.content_size -
 						substring->o_string.prefix.content_size -
@@ -84,14 +102,22 @@ void			set_zero_filler(t_substring *substring)
 
 	num_of_fillers = 0;
 	filler = substring->filler;
-	if (substring->width != -1 && !(substring->flags & minus) &&
+	if (substring->conv_type == 'c')
+		;
+	else if (substring->width != -1 && !(substring->flags & minus) &&
 			substring->conv_type == 'f' && (substring->flags & zero))
 		num_of_fillers = count_num_of_fillers(substring, substring->width);
-	else if (substring->precision != -1 && substring->conv_type != 'c')
+	else if (substring->precision != -1)
 	{
-		num_of_fillers = count_num_of_fillers(substring, substring->precision);
+		num_of_fillers = count_num_of_zero_fillers(substring, substring->precision);
 		filler = '0';
 	}
+	else if (substring->width != -1 && !(substring->flags & minus) &&
+			substring->conv_type == 'd' && (substring->flags & zero))
+		num_of_fillers = count_num_of_fillers(substring, substring->width);
+	else if (substring->width != -1 && !(substring->flags & minus) &&
+			substring->conv_type == 'i' && (substring->flags & zero))
+		num_of_fillers = count_num_of_fillers(substring, substring->width);
 	if (num_of_fillers > 0)
 	{
 		s = ft_strnew(num_of_fillers);
