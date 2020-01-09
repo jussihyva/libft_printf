@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 12:08:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:55:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void		set_default_values(t_substring *substring)
 	substring->converter = NULL;
 	substring->output_string = NULL;
 	substring->filler = ' ';
-	substring->left_adjust = 0;
 	substring->precision = -1;
 	substring->width = -1;
 	substring->conv_type = 0;

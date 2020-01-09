@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 10:49:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:53:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ struct		s_substring
 	int				precision;
 	int				width;
 	char			filler;
-	int				left_adjust;
 	char			conv_type;
 	void			*par_value;
 	int				par_value_is_neg;

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 09:30:35 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/27 17:57:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:59:40 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			add_min_mum_of_digits(t_substring *substring, char *pre_string)
 
 void			add_min_mum_of_chars(t_substring *substring, char *pre_string)
 {
-	if (substring->left_adjust)
+	if (substring->flags & minus)
 		substring->output_string = left_adjust(substring->output_string,
 												substring->width);
 	else

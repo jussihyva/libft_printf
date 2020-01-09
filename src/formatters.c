@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:08:24 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 10:48:54 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:55:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,12 @@ void			get_formatters(t_substring *substring, t_list **formatter_list)
 	}
 }
 
-static t_list	*new_formatter(void *function, char character, t_flag flag)
+static t_list	*new_formatter(char character, t_flag flag)
 {
 	t_formatter		*formatter;
 	size_t			formatter_size;
 	t_list			*elem;
 
-	(void)function;
 	formatter_size = sizeof(*formatter);
 	formatter = (t_formatter *)ft_memalloc(formatter_size);
 	formatter->character = character;
@@ -82,12 +81,10 @@ t_list			**create_formatters(void)
 	t_list			**formatter_list;
 
 	formatter_list = (t_list **)ft_memalloc(sizeof(*formatter_list));
-	ft_lstadd_e(formatter_list, new_formatter((void *)format_minus, '-',
-																	minus));
-	ft_lstadd_e(formatter_list, new_formatter((void *)format_plus, '+', plus));
-	ft_lstadd_e(formatter_list, new_formatter((void *)format_space, ' ',
-																	space));
-	ft_lstadd_e(formatter_list, new_formatter((void *)format_zero, '0', zero));
-	ft_lstadd_e(formatter_list, new_formatter((void *)format_hash, '#', hash));
+	ft_lstadd_e(formatter_list, new_formatter('-', minus));
+	ft_lstadd_e(formatter_list, new_formatter('+', plus));
+	ft_lstadd_e(formatter_list, new_formatter(' ', space));
+	ft_lstadd_e(formatter_list, new_formatter('0', zero));
+	ft_lstadd_e(formatter_list, new_formatter('#', hash));
 	return (formatter_list);
 }

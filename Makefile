@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/01/08 18:33:23 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/01/09 11:01:31 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDES		=	-I ${SRC_FOLDER} -I ${LIBFT_FOLDER}
 CFLAGS			=	-Wall -Werror -Wextra -g ${INCLUDES}
 
 SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
-					ft_lltoa_base.c ft_ulltoa_base.c flag.c param_type.c \
+					ft_lltoa_base.c ft_ulltoa_base.c param_type.c \
 					width_and_prediction.c modify_character.c \
 					modify_string.c modify_pointer.c modify_integer.c \
 					modify_octal.c modify_common.c modify_hex.c \

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 17:54:19 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:59:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char			*modify_substring(t_substring *substring)
 	char		*new_string;
 
 	new_string = ft_strnew(sizeof(*new_string) * (substring->width));
-	if (substring->left_adjust)
+	if (substring->flags & minus)
 	{
 		ft_strcat(new_string, substring->output_string);
 		ft_memset(new_string + ft_strlen(substring->output_string),
