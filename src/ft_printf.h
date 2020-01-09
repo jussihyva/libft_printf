@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 10:53:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:17:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,10 @@ void		add_param_type(t_list **list, t_list **type_list);
 void		add_width_and_prediction(t_list **substring_list);
 int			convert_substrings(t_list **list, va_list *ap,
 							t_list **converter_list, t_list **formatter_list);
-void		width_adjust(t_substring *substring);
 char		*ft_lltoa_base(long long nbr, int base);
 char		*ft_ulltoa_base(unsigned long long nbr, int base);
 void		get_formatters(t_substring *substring, t_list **formatter_list);
 char		*format_string(char *output_string, t_substring *substring);
-char		*modify_substring(t_substring *substring);
 void		adjust_character(t_substring *substring);
 char		*conv_character(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_string(t_substring *substring);
@@ -128,13 +126,8 @@ char		*conv_int(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_unsigned_octal(t_substring *substring);
 char		*conv_unsigned_octal(va_list *ap, t_substring *substring,
 																int *attrs);
-char		*left_adjust(char *string, size_t width);
-char		*right_adjust(char filler, char *string, size_t width,
-														char *pre_string);
 void		adjust_unsigned_int(t_substring *substring);
 char		*conv_unsigned_int(va_list *ap, t_substring *substring, int *attrs);
-void		add_min_mum_of_digits(t_substring *substring, char *pre_string);
-void		add_min_mum_of_chars(t_substring *substring, char *pre_string);
 void		adjust_unsigned_hex(t_substring *substring);
 char		*conv_unsigned_hex(va_list *ap, t_substring *substring, int *attrs);
 char		*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
@@ -142,16 +135,10 @@ char		*conv_unsigned_hex_up(va_list *ap, t_substring *substring,
 char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_percent_char(t_substring *substring);
 long long	read_o_u_x_param(t_type type, va_list *ap);
-void		adjust_common(t_substring *substring, int offset, char *pre_string);
 void		release_memory(t_list **substring_list, t_list **converter_list,
 								t_list **formatter_list, t_list **type_list);
 void		adjust_float(t_substring *substring);
 char		*conv_float(va_list *ap, t_substring *substring, int *attrs);
-char		*format_minus(t_substring *substring, char *s, char character);
-char		*format_plus(t_substring *substring, char *s, char character);
-char		*format_space(t_substring *substring, char *s, char character);
-char		*format_zero(t_substring *substring, char *s, char character);
-char		*format_hash(t_substring *substring, char *s, char character);
 char		*ft_dtoa_base(long double nbr, size_t base, size_t precision,
 																int add_dot);
 size_t		ft_numlen(unsigned long long nbr, size_t base);

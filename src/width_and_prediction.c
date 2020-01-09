@@ -6,39 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 10:59:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:17:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char			*modify_substring(t_substring *substring)
-{
-	char		*new_string;
-
-	new_string = ft_strnew(sizeof(*new_string) * (substring->width));
-	if (substring->flags & minus)
-	{
-		ft_strcat(new_string, substring->output_string);
-		ft_memset(new_string + ft_strlen(substring->output_string),
-									' ', substring->width -
-									ft_strlen(substring->output_string));
-	}
-	else
-	{
-		ft_memset(new_string, substring->filler, substring->width -
-									ft_strlen(substring->output_string));
-		ft_strcat(new_string, substring->output_string);
-	}
-	return (new_string);
-}
-
-void			width_adjust(t_substring *substring)
-{
-	if (substring->converter)
-		substring->converter->adjust_width_prediction_ptr(substring);
-	return ;
-}
 
 static void		save_width_and_prediction(char **ptr,
 												t_list *substring_elem)

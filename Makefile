@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/01/09 11:01:31 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/01/09 11:21:05 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_FILES		=	ft_printf.c split_input_string.c create_converters.c \
 					ft_lltoa_base.c ft_ulltoa_base.c param_type.c \
 					width_and_prediction.c modify_character.c \
 					modify_string.c modify_pointer.c modify_integer.c \
-					modify_octal.c modify_common.c modify_hex.c \
+					modify_octal.c modify_hex.c \
 					release_memory.c read_param.c modify_float.c \
 					formatters.c ft_dtoa_base.c ft_numlen.c ft_round.c \
 					set_output_substring_1.c set_output_substring_2.c \
