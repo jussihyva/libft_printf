@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:35:39 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:58:01 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 21:36:17 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,52 +20,28 @@ static void		del_formatter(void *formatter, size_t size)
 	return ;
 }
 
-static void		del_o_string(t_substring *elem)
+static void		reset_elem(t_list *elem)
 {
 	char	*s;
 
-	if (elem->o_string.pre_filler.content_size)
+	if ((*elem).content_size)
 	{
-		s = elem->o_string.pre_filler.content;
+		s = (*elem).content;
 		ft_strdel(&s);
-		elem->o_string.pre_filler.content_size = 0;
-		elem->o_string.pre_filler.next = 0;
+		(*elem).content_size = 0;
+		(*elem).next = NULL;
 	}
-	if (elem->o_string.sign.content_size)
-	{
-		s = elem->o_string.sign.content;
-		ft_strdel(&s);
-		elem->o_string.sign.content_size = 0;
-		elem->o_string.sign.next = 0;
-	}
-	if (elem->o_string.prefix.content_size)
-	{
-		s = elem->o_string.prefix.content;
-		ft_strdel(&s);
-		elem->o_string.prefix.content_size = 0;
-		elem->o_string.prefix.next = 0;
-	}
-	if (elem->o_string.zero_filler.content_size)
-	{
-		s = elem->o_string.zero_filler.content;
-		ft_strdel(&s);
-		elem->o_string.zero_filler.content_size = 0;
-		elem->o_string.zero_filler.next = 0;
-	}
-	if (elem->o_string.parameter.content_size)
-	{
-		s = elem->o_string.parameter.content;
-		ft_strdel(&s);
-		elem->o_string.parameter.content_size = 0;
-		elem->o_string.parameter.next = 0;
-	}
-	if (elem->o_string.post_filler.content_size)
-	{
-		s = elem->o_string.post_filler.content;
-		ft_strdel(&s);
-		elem->o_string.post_filler.content_size = 0;
-		elem->o_string.post_filler.next = 0;
-	}
+	return ;
+}
+
+static void		del_o_string(t_substring *elem)
+{
+	reset_elem(&elem->o_string.pre_filler);
+	reset_elem(&elem->o_string.sign);
+	reset_elem(&elem->o_string.prefix);
+	reset_elem(&elem->o_string.zero_filler);
+	reset_elem(&elem->o_string.parameter);
+	reset_elem(&elem->o_string.post_filler);
 }
 
 static void		del_substring(void *substring_elem, size_t size)

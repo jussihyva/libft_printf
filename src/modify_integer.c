@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 18:43:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:05:00 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void				set_unsigned_int_parameter(t_substring *substring)
 	return ;
 }
 
-void						adjust_int(t_substring *substring)
+void					adjust_int(t_substring *substring)
 {
 	set_int_parameter(substring);
 	set_sign(substring);
@@ -70,7 +70,7 @@ void						adjust_int(t_substring *substring)
 	return ;
 }
 
-void						adjust_unsigned_int(t_substring *substring)
+void					adjust_unsigned_int(t_substring *substring)
 {
 	set_unsigned_int_parameter(substring);
 	set_sign(substring);
@@ -80,7 +80,7 @@ void						adjust_unsigned_int(t_substring *substring)
 	return ;
 }
 
-static long long			read_int_param(t_type type, va_list *ap)
+static long long		read_int_param(t_type type, va_list *ap)
 {
 	long long	nbr;
 
@@ -105,7 +105,7 @@ static long long			read_int_param(t_type type, va_list *ap)
 	return (nbr);
 }
 
-char						*conv_int(va_list *ap, t_substring *substring,
+char					*conv_int(va_list *ap, t_substring *substring,
 											int *attrs)
 {
 	long long		*nbr;
@@ -122,7 +122,7 @@ char						*conv_int(va_list *ap, t_substring *substring,
 	return (NULL);
 }
 
-char						*conv_unsigned_int(va_list *ap,
+char					*conv_unsigned_int(va_list *ap,
 										t_substring *substring, int *attrs)
 {
 	unsigned long long		*nbr;

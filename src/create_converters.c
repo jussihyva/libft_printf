@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 13:12:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:06:15 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:03:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ static void				convert_substring(t_substring *substring, va_list *ap,
 {
 	if (!substring->converter || !substring->converter->function_ptr)
 	{
-		substring->o_string.parameter.content = ft_strdup(substring->input_string);
-		substring->o_string.parameter.content_size = ft_strlen(substring->o_string.parameter.content);
+		substring->o_string.parameter.content =
+											ft_strdup(substring->input_string);
+		substring->o_string.parameter.content_size =
+							ft_strlen(substring->o_string.parameter.content);
 		substring->o_string.parameter.next = NULL;
 	}
 	else

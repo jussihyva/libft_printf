@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:11:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 18:28:40 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 21:03:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,32 @@ void			save_parameter(t_substring *substring, char *s)
 	return ;
 }
 
+static void		set_elem_values(t_substring *substring, size_t content_size,
+																char *content)
+{
+	substring->o_string.prefix.content_size = content_size;
+	substring->o_string.prefix.content = content;
+	substring->o_string.prefix.next = NULL;
+	return ;
+}
+
 void			set_prefix(t_substring *substring)
 {
-	if (substring->flags & hash && 
-					((char *)(substring->o_string.parameter.content))[0] != '0')
+	t_list		elem;
+	char		conv_type;
+
+	elem = substring->o_string.parameter;
+	conv_type = substring->conv_type;
+	if (substring->flags & hash && ((char *)(elem.content))[0] != '0')
 	{
-		if (substring->conv_type == 'o')
-		{
-			substring->o_string.prefix.content_size = 1;
-			substring->o_string.prefix.content = ft_strdup("0");
-		}
-		else if (substring->conv_type == 'x' && ((char *)(substring->o_string.parameter.content))[0] != '\0')
-		{
-			substring->o_string.prefix.content_size = 2;
-			substring->o_string.prefix.content = ft_strdup("0x");
-		}
-		else if (substring->conv_type == 'X' && ((char *)(substring->o_string.parameter.content))[0] != '\0')
-		{
-			substring->o_string.prefix.content_size = 2;
-			substring->o_string.prefix.content = ft_strdup("0X");
-		}
+		if (conv_type == 'o')
+			set_elem_values(substring, 1, ft_strdup("0"));
+		else if (conv_type == 'x' && ((char *)(elem.content))[0] != '\0')
+			set_elem_values(substring, 2, ft_strdup("0x"));
+		else if (conv_type == 'X' && ((char *)(elem.content))[0] != '\0')
+			set_elem_values(substring, 2, ft_strdup("0X"));
 	}
-	else if (substring->conv_type == 'p')
-	{
-		substring->o_string.prefix.content_size = 2;
-		substring->o_string.prefix.content = ft_strdup("0x");
-	}
+	else if (conv_type == 'p')
+		set_elem_values(substring, 2, ft_strdup("0x"));
 	return ;
 }

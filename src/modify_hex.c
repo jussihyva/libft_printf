@@ -6,38 +6,43 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 18:35:47 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 21:16:06 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void				set_unsigned_hex_parameter(t_substring *substring)
+static void			conv_to_upper(char *s)
+{
+	size_t					i;
+
+	i = -1;
+	while (*(s + ++i))
+		*(s + i) = ft_toupper(*(s + i));
+	return ;
+}
+
+static void			set_unsigned_hex_parameter(t_substring *substring)
 {
 	char					*s;
 	unsigned long long		par_value;
-	size_t					i;
 
 	par_value = *(unsigned long long *)substring->par_value;
-	s = ft_ulltoa_base(par_value, 16);
-	if (substring->conv_type == 'X')
-	{
-		i = -1;
-		while (*(s + ++i))
-			*(s + i) = ft_toupper(*(s + i));
-	}
 	if (par_value == 0 && substring->precision == 0)
-	{
 		save_parameter(substring, "");
-		ft_strdel(&s);
-	}
-	else if (par_value < 0)
-	{
-		save_parameter(substring, ft_strdup(s + 1));
-		ft_strdel(&s);
-	}
 	else
-		save_parameter(substring, s);
+	{
+		s = ft_ulltoa_base(par_value, 16);
+		if (substring->conv_type == 'X')
+			conv_to_upper(s);
+		if (par_value < 0)
+		{
+			save_parameter(substring, ft_strdup(s + 1));
+			ft_strdel(&s);
+		}
+		else
+			save_parameter(substring, s);
+	}
 	free(substring->par_value);
 	substring->par_value = NULL;
 	return ;
