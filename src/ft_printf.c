@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 18:04:43 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:44:41 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		create_output_string(va_list *ap, const char *format)
 	return (attrs);
 }
 
-int				ft_printf(const char *restrict format, ...)
+int				ft_printf(const char *format, ...)
 {
 	va_list			ap;
 	int				attrs;

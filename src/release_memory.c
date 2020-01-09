@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 17:35:39 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/31 11:40:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 16:15:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,67 @@ static void		del_formatter(void *formatter, size_t size)
 	return ;
 }
 
+static void		del_o_string(t_substring *elem)
+{
+	char	*s;
+
+	if (elem->o_string.pre_filler.content_size)
+	{
+		s = elem->o_string.pre_filler.content;
+		ft_strdel(&s);
+		elem->o_string.pre_filler.content_size = 0;
+		elem->o_string.pre_filler.next = 0;
+	}
+	if (elem->o_string.sign.content_size)
+	{
+		s = elem->o_string.sign.content;
+		ft_strdel(&s);
+		elem->o_string.sign.content_size = 0;
+		elem->o_string.sign.next = 0;
+	}
+	if (elem->o_string.prefix.content_size)
+	{
+		s = elem->o_string.prefix.content;
+		ft_strdel(&s);
+		elem->o_string.prefix.content_size = 0;
+		elem->o_string.prefix.next = 0;
+	}
+	if (elem->o_string.zero_filler.content_size)
+	{
+		s = elem->o_string.zero_filler.content;
+		ft_strdel(&s);
+		elem->o_string.zero_filler.content_size = 0;
+		elem->o_string.zero_filler.next = 0;
+	}
+	if (elem->o_string.parameter.content_size)
+	{
+		s = elem->o_string.parameter.content;
+		ft_strdel(&s);
+		elem->o_string.parameter.content_size = 0;
+		elem->o_string.parameter.next = 0;
+	}
+	if (elem->o_string.post_filler.content_size)
+	{
+		s = elem->o_string.post_filler.content;
+		ft_strdel(&s);
+		elem->o_string.post_filler.content_size = 0;
+		elem->o_string.post_filler.next = 0;
+	}
+}
+
 static void		del_substring(void *substring_elem, size_t size)
 {
 	t_substring		*elem;
-	char			*ptr;
 
 	(void)size;
 	elem = (t_substring *)substring_elem;
 	ft_strdel(&elem->input_string);
 	ft_strdel(&elem->output_string);
-	ptr = (char *)elem->par_value;
-	ft_strdel(&ptr);
 	if (elem->formatter_list)
 	{
 		ft_lstdel(elem->formatter_list, *del_formatter);
 		free(elem->formatter_list);
+		del_o_string(elem);
 		elem->formatter_list = NULL;
 	}
 	free(substring_elem);

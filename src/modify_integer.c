@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:25:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:01:26 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void				set_int_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, s);
+	free(substring->par_value);
+	substring->par_value = NULL;
 	return ;
 }
 
@@ -47,6 +49,8 @@ static void				set_unsigned_int_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, s);
+	free(substring->par_value);
+	substring->par_value = NULL;
 	return ;
 }
 

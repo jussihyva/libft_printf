@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:25:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:05:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void				set_double_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, s);
+	free(substring->par_value);
+	substring->par_value = NULL;
 	return ;
 }
 

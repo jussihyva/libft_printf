@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 17:11:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 21:28:20 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 13:41:35 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void			save_parameter(t_substring *substring, char *s)
 {
 	substring->o_string.parameter.content = s;
 	substring->o_string.parameter.content_size = ft_strlen(s);
+	substring->o_string.parameter.next = NULL;
 }
 
 void			set_prefix(t_substring *substring)

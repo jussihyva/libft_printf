@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 16:46:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:25:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:05:18 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ static void				set_octal_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, "");
+	free(substring->par_value);
+	substring->par_value = NULL;
+	substring->par_value = NULL;
 }
 
 void					adjust_unsigned_octal(t_substring *substring)
