@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 16:14:03 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:07:39 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,6 @@ static void		write_output_string(size_t *words, t_substring *substring)
 	}
 }
 
-static int		is_null(t_substring *substring, size_t *words)
-{
-	size_t		c;
-	size_t		len;
-
-	if (substring->converter && substring->converter->character == 'c')
-	{
-		len = ft_strlen(substring->output_string);
-		c = -1;
-		while (++c < len)
-		{
-			if (substring->output_string[c] == 0x01 &&
-												substring->o_string.add_null)
-				ft_putchar('\0');
-			else
-				ft_putchar(substring->output_string[c]);
-		}
-		*words += len;
-		return (1);
-	}
-	else
-		return (0);
-}
-
 size_t			print_formatted_string(t_list **substring_list)
 {
 	t_list			*substring_elem;
@@ -106,26 +82,7 @@ size_t			print_formatted_string(t_list **substring_list)
 	while (substring_elem)
 	{
 		substring = (t_substring *)(substring_elem->content);
-		if (substring->converter && (substring->converter->character == 'f' ||
-									substring->converter->character == 'o' ||
-									substring->converter->character == 'd' ||
-									substring->converter->character == 'i' ||
-									substring->converter->character == 'u' ||
-									substring->converter->character == 'x' ||
-									substring->converter->character == 'X' ||
-									substring->converter->character == 'p' ||
-									substring->converter->character == '%' ||
-									substring->converter->character == 's' ||
-									substring->converter->character == 'c'))
-			write_output_string(&words, substring);
-		else if (substring->output_string)
-		{
-			if (!is_null(substring, &words))
-			{
-				ft_putstr(substring->output_string);
-				words += ft_strlen(substring->output_string);
-			}
-		}
+		write_output_string(&words, substring);
 		substring_elem = substring_elem->next;
 	}
 	return (words);

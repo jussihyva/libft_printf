@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:01:45 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 15:05:34 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:36:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void				set_double_parameter(t_substring *substring)
 	add_dot = substring->flags & hash;
 	par_value = *(long double *)substring->par_value;
 	s = ft_dtoa_base(par_value, 10, substring->precision, add_dot);
-	if (par_value < 0)
+	if (substring->par_value_is_neg)
 	{
 		save_parameter(substring, ft_strdup(s + 1));
 		ft_strdel(&s);
