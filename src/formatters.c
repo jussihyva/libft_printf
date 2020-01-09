@@ -6,32 +6,11 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:08:24 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 10:55:17 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:24:13 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char			*format_string(char *s, t_substring *substring)
-{
-	t_list			*elem;
-	t_formatter		*formatter;
-	char			*output_string;
-	char			*tmp;
-	char			character;
-
-	output_string = ft_strdup(s);
-	elem = *substring->formatter_list;
-	while (elem)
-	{
-		formatter = (t_formatter *)(elem->content);
-		tmp = output_string;
-		character = substring->converter->character;
-		elem = elem->next;
-	}
-	ft_strdel(&s);
-	return (output_string);
-}
 
 void			get_formatters(t_substring *substring, t_list **formatter_list)
 {

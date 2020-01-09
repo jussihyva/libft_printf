@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 22:39:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:26:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char		*conv_string(va_list *ap, t_substring *substring, int *attrs)
 	substring->par_value = ft_strdup((char *)va_arg(*ap, void *));
 	if (!(char *)substring->par_value)
 		substring->par_value = ft_strdup("(null)");
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }
 
@@ -61,6 +60,5 @@ char		*conv_percent_char(va_list *ap, t_substring *substring, int *attrs)
 	(void)ap;
 	(void)attrs;
 	substring->par_value = ft_strdup("%");
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }

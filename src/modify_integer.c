@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 19:33:33 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:25:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ char						*conv_int(va_list *ap, t_substring *substring,
 	substring->par_value = nbr;
 	if (*nbr < 0)
 		substring->par_value_is_neg = 1;
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }
 
@@ -127,6 +126,5 @@ char						*conv_unsigned_int(va_list *ap,
 	substring->par_value = nbr;
 	if (*nbr < 0)
 		substring->par_value_is_neg = 1;
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }

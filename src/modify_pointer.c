@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 21:37:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:25:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@ char		*conv_pointer(va_list *ap, t_substring *substring, int *attrs)
 	ptr = (uintptr_t **)ft_memalloc(sizeof(*ptr));
 	*ptr = (uintptr_t *)(va_arg(*ap, void *));
 	substring->par_value = ptr;
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }

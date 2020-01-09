@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:33:06 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/07 11:47:56 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:24:51 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ char				*conv_character(va_list *ap, t_substring *substring,
 	((char *)(substring->par_value))[0] = (char)va_arg(*ap, void *);
 	if (!((char *)(substring->par_value))[0])
 		substring->o_string.add_null = 1;
-	format_string(ft_strnew(0), substring);
 	return (NULL);
 }

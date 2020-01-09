@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:17:44 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 11:26:29 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int			convert_substrings(t_list **list, va_list *ap,
 char		*ft_lltoa_base(long long nbr, int base);
 char		*ft_ulltoa_base(unsigned long long nbr, int base);
 void		get_formatters(t_substring *substring, t_list **formatter_list);
-char		*format_string(char *output_string, t_substring *substring);
 void		adjust_character(t_substring *substring);
 char		*conv_character(va_list *ap, t_substring *substring, int *attrs);
 void		adjust_string(t_substring *substring);
