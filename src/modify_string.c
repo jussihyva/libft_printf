@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:53:59 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:26:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:37:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ static void			set_string_parameter(t_substring *substring)
 	{
 		if ((int)ft_strlen(s) > substring->precision)
 			s[substring->precision] = '\0';
+		if (substring->precision)
+			save_parameter(substring, s);
+		else
+		{
+			ft_strdel(&s);
+			save_parameter(substring, "");
+		}
 	}
-	save_parameter(substring, s);
+	else
+		save_parameter(substring, s);
 	return ;
 }
 

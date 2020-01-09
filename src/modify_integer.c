@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 15:24:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 15:01:26 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:43:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void				set_int_parameter(t_substring *substring)
 	par_value = *(long long *)substring->par_value;
 	s = ft_lltoa_base(par_value, 10);
 	if (par_value == 0 && substring->precision == 0)
+	{
 		save_parameter(substring, "");
+		ft_strdel(&s);
+	}
 	else if (par_value < 0)
 	{
 		save_parameter(substring, ft_strdup(s + 1));
@@ -41,7 +44,10 @@ static void				set_unsigned_int_parameter(t_substring *substring)
 	par_value = *(unsigned long long *)substring->par_value;
 	s = ft_ulltoa_base(par_value, 10);
 	if (par_value == 0 && substring->precision == 0)
+	{
 		save_parameter(substring, "");
+		ft_strdel(&s);
+	}
 	else if (par_value < 0)
 	{
 		save_parameter(substring, ft_strdup(s + 1));

@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 15:41:12 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 15:01:49 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:35:47 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void				set_unsigned_hex_parameter(t_substring *substring)
 			*(s + i) = ft_toupper(*(s + i));
 	}
 	if (par_value == 0 && substring->precision == 0)
+	{
 		save_parameter(substring, "");
+		ft_strdel(&s);
+	}
 	else if (par_value < 0)
 	{
 		save_parameter(substring, ft_strdup(s + 1));

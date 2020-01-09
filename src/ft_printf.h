@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 16:14:12 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:51:11 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ struct		s_substring
 	t_converter		*converter;
 	int				flags;
 	t_list			**formatter_list;
-	char			*output_string;
 	t_param_type	*param_type;
 	char			*end_ptr;
 	int				precision;

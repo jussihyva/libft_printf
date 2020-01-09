@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:58:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 11:25:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:20:58 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void				set_pointer_parameter(t_substring *substring)
 	par_value = *(uintptr_t *)substring->par_value;
 	s = ft_lltoa_base(par_value, 16);
 	if (par_value == 0 && substring->precision == 0)
+	{
 		save_parameter(substring, "");
+		ft_strdel(&s);
+	}
 	else if (par_value < 0)
 	{
 		save_parameter(substring, ft_strdup(s + 1));
@@ -28,6 +31,8 @@ static void				set_pointer_parameter(t_substring *substring)
 	}
 	else
 		save_parameter(substring, s);
+	free(substring->par_value);
+	substring->par_value = NULL;
 	return ;
 }
 
