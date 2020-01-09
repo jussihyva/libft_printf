@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 22:05:32 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:44:04 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ void			set_pre_filler(t_substring *substring)
 	char		*s;
 	char		filler;
 
+	if (substring->flags & zero)
+		filler = '0';
+	else
+		filler = ' ';
 	if (substring->width == -1 || substring->flags & minus)
 		num_of_fillers = 0;
 	else
@@ -61,11 +65,11 @@ void			set_pre_filler(t_substring *substring)
 			substring->o_string.pre_filler.content_size = num_of_fillers;
 			substring->o_string.pre_filler.content = s;
 			if (substring->conv_type == 'o' && substring->precision == -1)
-				filler = substring->filler;
+				;
 			else if (substring->conv_type == 'c' ||
 						substring->conv_type == '%' ||
 						substring->conv_type == 's')
-				filler = substring->filler;
+				;
 			else
 				filler = ' ';
 			while (num_of_fillers--)
@@ -119,7 +123,10 @@ void			set_zero_filler(t_substring *substring)
 	char		filler;
 
 	num_of_fillers = 0;
-	filler = substring->filler;
+	if (substring->flags & zero)
+		filler = '0';
+	else
+		filler = ' ';
 	if (substring->conv_type == 'c' || substring->conv_type == 's' || substring->conv_type == '%')
 		;
 	else if (substring->conv_type == 'f')

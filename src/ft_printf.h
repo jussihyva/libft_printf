@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/08 12:14:14 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:49:03 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ struct		s_formatter
 {
 	char			character;
 	t_flag			flag;
-	void			*(*function_ptr)(void *substring, char *s, char character);
 };
 
 typedef struct s_formatter	t_formatter;

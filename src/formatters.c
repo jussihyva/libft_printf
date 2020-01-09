@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:08:24 by jkauppi           #+#    #+#             */
-/*   Updated: 2019/12/29 09:42:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:48:54 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char			*format_string(char *s, t_substring *substring)
 		formatter = (t_formatter *)(elem->content);
 		tmp = output_string;
 		character = substring->converter->character;
-		output_string = formatter->function_ptr(substring, tmp, character);
 		elem = elem->next;
 	}
 	ft_strdel(&s);
@@ -66,11 +65,11 @@ static t_list	*new_formatter(void *function, char character, t_flag flag)
 	size_t			formatter_size;
 	t_list			*elem;
 
+	(void)function;
 	formatter_size = sizeof(*formatter);
 	formatter = (t_formatter *)ft_memalloc(formatter_size);
 	formatter->character = character;
 	formatter->flag = flag;
-	formatter->function_ptr = function;
 	elem = (t_list *)ft_memalloc(sizeof(*elem));
 	elem->content = (void *)formatter;
 	elem->content_size = formatter_size;
