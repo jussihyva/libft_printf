@@ -6,13 +6,13 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 12:13:54 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/07 12:14:28 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/10 13:00:09 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_putlstr(char *s, size_t string_len)
+void		ft_putlstr_fd(char *s, size_t string_len, int fd)
 {
-	write(1, s, string_len);
+	write(fd, s, string_len);
 }

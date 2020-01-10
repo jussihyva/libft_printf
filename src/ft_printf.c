@@ -6,13 +6,14 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 10:55:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 15:44:41 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/10 13:31:57 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		create_output_string(va_list *ap, const char *format)
+static int		create_output_string(va_list *ap, const char *format, int fd,
+																	char **str)
 {
 	size_t			attrs;
 	t_list			**substring_list;
@@ -29,7 +30,7 @@ static int		create_output_string(va_list *ap, const char *format)
 	add_width_and_prediction(substring_list);
 	attrs = convert_substrings(substring_list, ap, converter_list,
 														formatter_list);
-	attrs = print_formatted_string(substring_list);
+	attrs = print_formatted_string(substring_list, fd, str);
 	release_memory(substring_list, converter_list, formatter_list, type_list);
 	return (attrs);
 }
@@ -40,7 +41,29 @@ int				ft_printf(const char *format, ...)
 	int				attrs;
 
 	va_start(ap, format);
-	attrs = create_output_string(&ap, format);
+	attrs = create_output_string(&ap, format, 1, NULL);
+	va_end(ap);
+	return (attrs);
+}
+
+int				ft_dprintf(int fd, const char *format, ...)
+{
+	va_list			ap;
+	int				attrs;
+
+	va_start(ap, format);
+	attrs = create_output_string(&ap, format, fd, NULL);
+	va_end(ap);
+	return (attrs);
+}
+
+int				ft_sprintf(char *str, const char *format, ...)
+{
+	va_list			ap;
+	int				attrs;
+
+	va_start(ap, format);
+	attrs = create_output_string(&ap, format, 0, &str);
 	va_end(ap);
 	return (attrs);
 }

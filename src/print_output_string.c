@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:07:39 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/10 13:27:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,36 +54,47 @@ static void		add_substrings(t_substring *substring, char *s)
 	return ;
 }
 
-static void		write_output_string(size_t *words, t_substring *substring)
+static void		write_output_string(size_t *words, t_list **substring_list,
+																char *buffer)
 {
-	size_t		string_len;
-	char		*s;
-
-	string_len = count_len(substring);
-	*words += string_len;
-	if (string_len)
-	{
-		s = ft_strnew(string_len);
-		s[0] = '\0';
-		add_substrings(substring, s);
-		ft_putlstr(s, string_len);
-		ft_strdel(&s);
-	}
-}
-
-size_t			print_formatted_string(t_list **substring_list)
-{
+	size_t			string_len;
 	t_list			*substring_elem;
 	t_substring		*substring;
-	size_t			words;
+	char			*s;
 
-	words = 0;
 	substring_elem = *substring_list;
 	while (substring_elem)
 	{
 		substring = (t_substring *)(substring_elem->content);
-		write_output_string(&words, substring);
+		string_len = count_len(substring);
+		if (string_len && buffer)
+		{
+			s = ft_strnew(string_len);
+			s[0] = '\0';
+			add_substrings(substring, s);
+			ft_memcpy(buffer + *words, s, string_len);
+			ft_strdel(&s);
+		}
+		*words += string_len;
 		substring_elem = substring_elem->next;
 	}
+}
+
+size_t			print_formatted_string(t_list **substring_list, int fd,
+																char **str)
+{
+	size_t			words;
+	char			*buffer;
+
+	words = 0;
+	write_output_string(&words, substring_list, NULL);
+	buffer = ft_strnew(words);
+	words = 0;
+	write_output_string(&words, substring_list, buffer);
+	if (str)
+		ft_memcpy(*str, buffer, words);
+	else
+		ft_putlstr_fd(buffer, words, fd);
+	ft_strdel(&buffer);
 	return (words);
 }
