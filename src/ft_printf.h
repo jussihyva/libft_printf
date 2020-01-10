@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/09 17:51:11 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/10 09:25:50 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ enum		e_type
 };
 
 typedef enum e_type			t_type;
+
+struct		s_float
+{
+	long double				nbr;
+	int						neg;
+	unsigned long long		nbr_integer;
+	unsigned long long		nbr_decimal;
+};
+
+typedef struct s_float		t_float;
 
 struct		s_formatter
 {
