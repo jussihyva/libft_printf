@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 09:25:50 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/10 10:25:44 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,8 @@ long double	read_f_param(t_type type, va_list *ap);
 void		save_parameter(t_substring *substring, char *s);
 void		set_prefix(t_substring *substring);
 void		ft_putlstr(char *s, size_t string_len);
+void		del_substring(void *substring_elem, size_t size);
+void		del_formatter(void *formatter, size_t size);
+int			count_num_of_fillers(t_substring *substring, int min_len);
 
 #endif
