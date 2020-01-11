@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 15:05:00 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 09:48:00 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/11 08:13:15 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static unsigned long long	unsign(long long nbr, int neg)
 
 static size_t				get_decimals(size_t precision, long double *nbr)
 {
-	static size_t	max_precision = 20;
+	static size_t	max_precision = 22;
 	size_t			added_zeros;
 	size_t			c;
 

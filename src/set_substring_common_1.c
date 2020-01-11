@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 10:26:09 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/11 09:11:32 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void			set_post_filler(t_substring *substring)
 {
 	int			num_of_fillers;
 	char		*s;
+	char		filler;
 
-	if (substring->width == -1 || !(substring->flags & minus))
-		num_of_fillers = 0;
-	else
+	if ((substring->flags & minus) && substring->width != -1)
 	{
 		num_of_fillers = count_num_of_fillers(substring, substring->width);
 		if (num_of_fillers > 0)
 		{
+			filler = ' ';
 			s = ft_strnew(num_of_fillers);
 			*(s + num_of_fillers) = '\0';
 			substring->o_string.post_filler.content_size = num_of_fillers;
