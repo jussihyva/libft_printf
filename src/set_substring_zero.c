@@ -6,17 +6,18 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 10:21:18 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/11 09:07:45 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/11 09:23:08 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		count_zero_fillers(t_substring *substring, int min_len)
+static int		count_zero_fillers(t_substring *substring)
 {
 	int		num_of_fillers;
 
-	num_of_fillers = min_len - substring->o_string.parameter.content_size;
+	num_of_fillers = substring->precision -
+								substring->o_string.parameter.content_size;
 	if (ft_strchr("o", substring->conv_type))
 		num_of_fillers -= substring->o_string.prefix.content_size;
 	return (num_of_fillers);
@@ -53,12 +54,12 @@ void			set_zero_filler(t_substring *substring)
 				(substring->flags & zero))
 				num_fillers = count_num_of_fillers(substring, substring->width);
 			else if (substring->precision != -1)
-				num_fillers = count_zero_fillers(substring, substring->precision);
+				num_fillers = count_zero_fillers(substring);
 		}
 		else
 		{
 			if (substring->precision != -1)
-				num_fillers = count_zero_fillers(substring, substring->precision);
+				num_fillers = count_zero_fillers(substring);
 			else if (substring->width != -1 && !(substring->flags & minus) &&
 				(substring->flags & zero))
 				num_fillers = count_num_of_fillers(substring, substring->width);
