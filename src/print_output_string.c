@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:00:30 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/01/10 13:27:48 by jkauppi          ###   ########.fr       */
+/*   Updated: 2020/01/11 12:14:48 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ size_t			print_formatted_string(t_list **substring_list, int fd,
 	words = 0;
 	write_output_string(&words, substring_list, buffer);
 	if (str)
-		ft_memcpy(*str, buffer, words);
+		ft_memcpy(*str, buffer, words + 1);
 	else
 		ft_putlstr_fd(buffer, words, fd);
 	ft_strdel(&buffer);
