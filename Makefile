@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2020/01/11 08:05:33 by jkauppi          ###   ########.fr        #
+#    Updated: 2020/01/11 13:03:47 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,9 +50,12 @@ all: ${NAME}
 ${NAME}:  ${OBJ_PATHS}
 	ar -rcs ${NAME} ${OBJ_PATHS} ${LIBFT_PATHS}
 
-${OBJ_PATHS}:${OBJ_FOLDER}/%.o: ${SRC_FOLDER}/%.c ${SRC_FOLDER}/${HEADER_FILE}
+${OBJ_PATHS}:${OBJ_FOLDER}/%.o: ${SRC_FOLDER}/%.c ${SRC_FOLDER}/${HEADER_FILE} | $(OBJ_FOLDER)
 	make -C ${LIBFT_FOLDER}
 	${CC} ${CFLAGS} -c -o $@ $<
+
+$(OBJ_FOLDER):
+	mkdir $(OBJ_FOLDER)
 
 clean:
 	\rm -f ${OBJ_FOLDER}/*.o
