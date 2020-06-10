@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/10 08:57:18 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/10 10:00:27 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ struct		s_substring
 
 typedef struct s_substring	t_substring;
 
+int			ft_printf(const char *format, ...);
+int			ft_dprintf(int fd, const char *format, ...);
+int			ft_sprintf(char *str, const char *format, ...);
 t_list		**split_string(char *input_string, t_list **converter_array);
 t_list		**create_formatters(void);
 t_list		**create_converters(void);
