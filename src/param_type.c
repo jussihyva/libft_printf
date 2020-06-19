@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 16:43:33 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 10:02:19 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/19 12:51:44 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void				set_param_type(t_list **type_list,
 															param_type->length))
 			{
 				substring->param_type = param_type;
+				if (substring->input_string < start_ptr)
+					substring->end_ptr = start_ptr - 1;
 				break ;
 			}
 		}
