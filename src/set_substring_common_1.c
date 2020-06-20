@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 17:52:22 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 14:33:41 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/19 15:18:15 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,21 @@ void			set_post_filler(t_substring *substring)
 	char		*s;
 	char		filler;
 
-	if ((substring->flags & minus) && substring->width != -1)
+	if (substring->conv_type != '%')
 	{
-		num_of_fillers = count_num_of_fillers(substring, substring->width);
-		if (num_of_fillers > 0)
+		if ((substring->flags & minus) && substring->width != -1)
 		{
-			filler = ' ';
-			s = ft_strnew(num_of_fillers);
-			*(s + num_of_fillers) = '\0';
-			substring->o_string.post_filler.content_size = num_of_fillers;
-			substring->o_string.post_filler.content = s;
-			while (num_of_fillers--)
-				*(s + num_of_fillers) = filler;
+			num_of_fillers = count_num_of_fillers(substring, substring->width);
+			if (num_of_fillers > 0)
+			{
+				filler = ' ';
+				s = ft_strnew(num_of_fillers);
+				*(s + num_of_fillers) = '\0';
+				substring->o_string.post_filler.content_size = num_of_fillers;
+				substring->o_string.post_filler.content = s;
+				while (num_of_fillers--)
+					*(s + num_of_fillers) = filler;
+			}
 		}
 	}
 	return ;
