@@ -6,7 +6,7 @@
 /*   By: ubuntu <ubuntu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 13:16:14 by jkauppi           #+#    #+#             */
-/*   Updated: 2020/06/19 14:45:46 by ubuntu           ###   ########.fr       */
+/*   Updated: 2020/06/24 06:45:23 by ubuntu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void			add_width_and_prediction(t_list **substring_list)
 		if (substring->input_string[0] == '%')
 		{
 			ptr = substring->end_ptr;
-			while (ptr > substring->input_string &&  *ptr && (ft_isdigit(*ptr)))
+			while (ptr > substring->input_string && *ptr && (ft_isdigit(*ptr)))
 				ptr--;
 			if (*ptr == '.' || ptr < substring->end_ptr)
 				save_width_and_prediction(&ptr, substring_elem);
