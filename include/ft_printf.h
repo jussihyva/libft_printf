@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 11:23:34 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 12:21:59 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/08/26 23:55:49 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ struct		s_substring
 	char			*input_string;
 	t_converter		*converter;
 	int				flags;
-	t_list			**formatter_list;
+	t_list			*formatter_list;
 	t_param_type	*param_type;
 	char			*end_ptr;
 	int				precision;
@@ -164,8 +164,8 @@ long double	read_f_param(t_type type, va_list *ap);
 void		save_parameter(t_substring *substring, char *s);
 void		set_prefix(t_substring *substring);
 void		ft_putlstr_fd(char *s, size_t string_len, int fd);
-void		del_substring(void *substring_elem, size_t size);
-void		del_formatter(void *formatter, size_t size);
+void		del_substring(void *content, size_t size);
+void		del_formatter(void *content, size_t size);
 int			count_num_of_fillers(t_substring *substring, int min_len);
 
 #endif

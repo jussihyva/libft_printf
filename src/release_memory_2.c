@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 09:59:49 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 12:30:51 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/08/27 00:06:53 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,25 @@ static void	reset_elem(t_list elem)
 	return ;
 }
 
-static void	del_o_string(t_substring *elem)
+static void	del_o_string(t_substring *substring)
 {
-	reset_elem(elem->o_string.pre_filler);
-	reset_elem(elem->o_string.sign);
-	reset_elem(elem->o_string.prefix);
-	reset_elem(elem->o_string.zero_filler);
-	reset_elem(elem->o_string.parameter);
-	reset_elem(elem->o_string.post_filler);
+	reset_elem(substring->o_string.pre_filler);
+	reset_elem(substring->o_string.sign);
+	reset_elem(substring->o_string.prefix);
+	reset_elem(substring->o_string.zero_filler);
+	reset_elem(substring->o_string.parameter);
+	reset_elem(substring->o_string.post_filler);
 }
 
-void	del_substring(void *substring_elem, size_t size)
+void	del_substring(void *content, size_t size)
 {
-	t_substring		*elem;
+	t_substring		*substring;
 
 	(void)size;
-	elem = (t_substring *)substring_elem;
-	ft_strdel(&elem->input_string);
-	if (elem->formatter_list)
-	{
-		ft_lstdel(elem->formatter_list, *del_formatter);
-		free(elem->formatter_list);
-		elem->formatter_list = NULL;
-		del_o_string(elem);
-		elem->formatter_list = NULL;
-	}
-	free(substring_elem);
-	substring_elem = NULL;
+	substring = (t_substring *)content;
+	ft_strdel(&substring->input_string);
+	if (substring->formatter_list)
+		ft_lstdel(&substring->formatter_list, *del_formatter);
+	del_o_string(substring);
 	return ;
 }

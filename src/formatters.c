@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 18:08:24 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 12:33:16 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/08/26 22:54:07 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	get_formatters(t_substring *substring, t_list **formatter_list)
 				&& !(substring->flags & formatter->flag))
 			{
 				substring->flags |= formatter->flag;
-				ft_lstadd_e(substring->formatter_list,
+				ft_lstadd_e(&substring->formatter_list,
 					ft_lstnew(elem->content, elem->content_size));
 				break ;
 			}

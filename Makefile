@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/04 11:34:07 by jkauppi           #+#    #+#              #
-#    Updated: 2021/06/03 10:15:50 by jkauppi          ###   ########.fr        #
+#    Updated: 2021/08/19 19:39:42 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ re: fclean all
 .PHONY: norm
 norm:
 ifeq ($(OS), Darwin)
-	norminette-beta $(SRC)/* $(INCLUDE)/*
+	norminette-beta
 else
-	norminette $(SRC)/* $(INCLUDE)/*
+	norminette
 endif

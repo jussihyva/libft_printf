@@ -6,7 +6,7 @@
 /*   By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:09:58 by jkauppi           #+#    #+#             */
-/*   Updated: 2021/03/27 12:44:57 by jkauppi          ###   ########.fr       */
+/*   Updated: 2021/08/26 23:28:34 by jkauppi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	set_default_values(t_substring *substring)
 	substring->filler = ' ';
 	substring->precision = -1;
 	substring->width = -1;
-	substring->formatter_list
-		= (t_list **)ft_memalloc(sizeof(*substring->formatter_list));
 	return ;
 }
 
